@@ -28,12 +28,11 @@
     "scripts": {
         "tests": [
             "phpunit -vvvv --coverage-clover=phpunit.clover",
-            "phpstan analyse -c ./phpstan.neon .php_cs.dist src PHPStan Tests",
+            "phpstan analyse -c ./phpstan.neon src PHPStan Tests",
             "psalm",
             "phpcpd ./src/ ./Tests/ ./tests-src/",
             "phpmnd ./ --exclude=./phpdoc/ --exclude=./phpunit/ --exclude=./vendor/ --non-zero-exit-on-violation --hint",
-            "composer-require-checker check ./composer.json",
-            "php-cs-fixer fix --verbose --allow-risky=yes --dry-run"
+            "composer-require-checker check ./composer.json"
         ],
         "check-coverage-on-tests": [
             "php ./vendor/phpunit/phpunit/phpunit -vc ./phpunit-coverage-on-tests.xml"
@@ -53,7 +52,6 @@
         "povils/phpmnd": "^2.0",
         "roave/security-advisories": "dev-master",
         "sebastian/phpcpd": "^4.0",
-        "signpostmarv/php-cs-fixer-config": "^0.6.0",
         "vimeo/psalm": "^2.0"
     }
 }
