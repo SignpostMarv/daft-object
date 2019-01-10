@@ -35,10 +35,6 @@
             "composer-require-checker check ./composer.json",
             "php-cs-fixer fix --verbose --allow-risky=yes --dry-run"
         ],
-        "infection": [
-            "@tests",
-            "infection"
-        ],
         "check-coverage-on-tests": [
             "php ./vendor/phpunit/phpunit/phpunit -vc ./phpunit-coverage-on-tests.xml"
         ]
@@ -49,7 +45,6 @@
         "ext-mbstring": "*"
     },
     "require-dev": {
-        "infection/infection": "^0.8",
         "maglnet/composer-require-checker": "^0.1.6",
         "phpstan/phpstan": "^0.9.2",
         "phpstan/phpstan-phpunit": "^0.9.4",
