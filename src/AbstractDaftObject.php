@@ -85,7 +85,7 @@ abstract class AbstractDaftObject implements DaftObject
     */
     public function __set(string $property, $v)
     {
-        $this->DoGetSet($property, true, $v);
+        return $this->DoGetSet($property, true, $v);
     }
 
     /**
