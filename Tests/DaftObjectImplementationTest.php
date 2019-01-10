@@ -1300,16 +1300,16 @@ class DaftObjectImplementationTest extends TestCase
                         }
                     }
                 } else {
-                static::assertTrue(
-                    $reflectorGetter->hasReturnType(),
-                    (
-                        $reflectorGetter->getNumberOfParameters() .
-                        $reflectorGetter->getDeclaringClass()->getName() .
-                        '::' .
-                        $reflectorGetter->getName() .
-                        '() must have a return type.'
-                    )
-                );
+                    static::assertTrue(
+                        $reflectorGetter->hasReturnType(),
+                        (
+                            $reflectorGetter->getNumberOfParameters() .
+                            $reflectorGetter->getDeclaringClass()->getName() .
+                            '::' .
+                            $reflectorGetter->getName() .
+                            '() must have a return type.'
+                        )
+                    );
                 }
 
                 $returnType = null;
@@ -1320,29 +1320,29 @@ class DaftObjectImplementationTest extends TestCase
                 $returnType = $reflectorGetter->getReturnType();
 
                 if ($reflectorGetter->hasReturnType() && static::SupportsVoidReturn()) {
-                static::assertTrue(
-                    ('void' !== $returnType->__toString()),
-                    (
-                        $reflectorGetter->getNumberOfParameters() .
-                        $reflectorGetter->getDeclaringClass()->getName() .
-                        '::' .
-                        $reflectorGetter->getName() .
-                        '() must have a non-void return type.'
-                    )
-                );
-
-                if ($isNullable) {
                     static::assertTrue(
-                        $returnType->allowsNull(),
+                        ('void' !== $returnType->__toString()),
                         (
                             $reflectorGetter->getNumberOfParameters() .
                             $reflectorGetter->getDeclaringClass()->getName() .
                             '::' .
                             $reflectorGetter->getName() .
-                            '() must have a nullable return type.'
+                            '() must have a non-void return type.'
                         )
                     );
-                }
+
+                    if ($isNullable) {
+                        static::assertTrue(
+                            $returnType->allowsNull(),
+                            (
+                                $reflectorGetter->getNumberOfParameters() .
+                                $reflectorGetter->getDeclaringClass()->getName() .
+                                '::' .
+                                $reflectorGetter->getName() .
+                                '() must have a nullable return type.'
+                            )
+                        );
+                    }
                 } elseif ( ! $reflectorGetter->hasReturnType()) {
                     static::assertNull($returnType);
                 }
@@ -1379,23 +1379,23 @@ class DaftObjectImplementationTest extends TestCase
 
 
                 if (static::SupportsVoidReturn()) {
-                /**
-                * @var ReflectionType
-                */
-                $returnType = $reflectorSetter->getReturnType();
+                    /**
+                    * @var ReflectionType
+                    */
+                    $returnType = $reflectorSetter->getReturnType();
 
-                static::assertSame(
-                    'void',
-                    $returnType->__toString(),
-                    (
-                        $reflectorSetter->getDeclaringClass()->getName() .
-                        '::' .
-                        $reflectorSetter->getName() .
-                        '() must specify a void return type, "' .
-                        $returnType->__toString() .
-                        '" found.'
-                    )
-                );
+                    static::assertSame(
+                        'void',
+                        $returnType->__toString(),
+                        (
+                            $reflectorSetter->getDeclaringClass()->getName() .
+                            '::' .
+                            $reflectorSetter->getName() .
+                            '() must specify a void return type, "' .
+                            $returnType->__toString() .
+                            '" found.'
+                        )
+                    );
                 } else {
                     static::assertFalse($reflectorSetter->hasReturnType());
                 }
