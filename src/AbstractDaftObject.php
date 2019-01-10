@@ -82,8 +82,6 @@ abstract class AbstractDaftObject implements DaftObject
 
     /**
     * @param mixed $v
-    *
-    * @return null
     */
     public function __set(string $property, $v)
     {

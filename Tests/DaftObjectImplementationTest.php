@@ -1376,8 +1376,6 @@ class DaftObjectImplementationTest extends TestCase
                     )
                 );
 
-
-
                 if (static::SupportsVoidReturn()) {
                     /**
                     * @var ReflectionType
