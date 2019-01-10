@@ -10,6 +10,8 @@ namespace SignpostMarv\DaftObject;
 
 class DaftObjectMemoryRepository extends AbstractDaftObjectRepository
 {
+    const BOOL_DEFAULT_ASSUMEDOESNOTEXIST = false;
+
     /**
     * @var DefinesOwnIdPropertiesInterface[]
     */
@@ -63,7 +65,7 @@ class DaftObjectMemoryRepository extends AbstractDaftObjectRepository
 
     public function RememberDaftObjectData(
         DefinesOwnIdPropertiesInterface $object,
-        bool $assumeDoesNotExist = false
+        bool $assumeDoesNotExist = self::BOOL_DEFAULT_ASSUMEDOESNOTEXIST
     ) : void {
         $hashId = $object::DaftObjectIdHash($object);
 
@@ -73,7 +75,7 @@ class DaftObjectMemoryRepository extends AbstractDaftObjectRepository
             $getter = TypeUtilities::MethodNameFromProperty($property);
 
             /**
-            * @var scalar|null|array|object
+            * @var scalar|array|object|null
             */
             $val = $object->$getter();
 
@@ -90,7 +92,7 @@ class DaftObjectMemoryRepository extends AbstractDaftObjectRepository
     {
         $hashId = $this->ObjectHashId($id);
 
-        if (true === isset($this->data[$hashId])) {
+        if (isset($this->data[$hashId])) {
             $type = $this->type;
 
             /**
@@ -109,19 +111,23 @@ class DaftObjectMemoryRepository extends AbstractDaftObjectRepository
     *
     * @param mixed $id
     */
-    protected function ObjectHashId($id) : string
+    private function ObjectHashId($id) : string
     {
-        return (string) ($this->type::DaftObjectIdValuesHash((array) $id));
+        return TypeParanoia::EnsureArgumentIsString(
+            $this->type::DaftObjectIdValuesHash(
+                TypeParanoia::ForceArgumentAsArray($id)
+            )
+        );
     }
 
-    protected function ForgetDaftObjectByHashId(string $hashId) : void
+    private function ForgetDaftObjectByHashId(string $hashId) : void
     {
         if (true === isset($this->memory[$hashId])) {
             unset($this->memory[$hashId]);
         }
     }
 
-    protected function RemoveDaftObjectByHashId(string $hashId) : void
+    private function RemoveDaftObjectByHashId(string $hashId) : void
     {
         $this->ForgetDaftObjectByHashId($hashId);
 

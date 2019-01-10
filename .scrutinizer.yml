@@ -25,3 +25,4 @@ filter:
   excluded_paths:
     - './Tests/'
     - './tests-src/'
+    - './PHPStan/'

@@ -12,68 +12,9 @@ class JsonTypeUtilities
 {
     public static function ThrowIfNotDaftJson(string $class) : void
     {
-        if (false === is_a($class, DaftJson::class, true)) {
+        if ( ! TypeParanoia::IsThingStrings($class, DaftJson::class)) {
             throw new DaftObjectNotDaftJsonBadMethodCallException($class);
         }
-    }
-
-    public static function ThrowIfNotJsonType(string $jsonType) : void
-    {
-        if (false === is_a($jsonType, DaftJson::class, true)) {
-            throw new ClassDoesNotImplementClassException($jsonType, DaftJson::class);
-        }
-    }
-
-    public static function MakeMapperThrowIfJsonDefNotValid(
-        string $class,
-        array $jsonDef,
-        array $array
-    ) : Closure {
-        $mapper =
-            /**
-            * @return mixed
-            */
-            function (string $prop) use ($jsonDef, $array, $class) {
-                if (isset($jsonDef[$prop]) && false === is_array($array[$prop])) {
-                    static::ThrowBecauseArrayJsonTypeNotValid(
-                        $class,
-                        (string) $jsonDef[$prop],
-                        $prop
-                    );
-                }
-
-                return $array[$prop];
-            };
-
-        return $mapper;
-    }
-
-    public static function FilterThrowIfJsonDefNotValid(
-        string $class,
-        array $jsonProps,
-        array $array
-    ) : array {
-        $filter = function (string $prop) use ($jsonProps, $array, $class) : bool {
-            if (false === in_array($prop, $jsonProps, true)) {
-                throw new PropertyNotJsonDecodableException($class, $prop);
-            }
-
-            return false === is_null($array[$prop]);
-        };
-
-        return array_filter($array, $filter, ARRAY_FILTER_USE_KEY);
-    }
-
-    public static function ArrayToJsonType(string $type, array $value, bool $writeAll) : DaftJson
-    {
-        self::ThrowIfNotJsonType($type);
-
-        /**
-        * @var DaftJson
-        */
-        $type = $type;
-
-        return $type::DaftObjectFromJsonArray($value, $writeAll);
     }
 
     /**
@@ -102,9 +43,9 @@ class JsonTypeUtilities
     public static function ThrowIfJsonDefNotValid(string $type, array $array) : array
     {
         self::ThrowIfNotDaftJson($type);
-        $jsonProps = (array) $type::DaftObjectJsonPropertyNames();
+        $jsonProps = TypeParanoia::EnsureArgumentIsArray($type::DaftObjectJsonPropertyNames());
         $array = JsonTypeUtilities::FilterThrowIfJsonDefNotValid($type, $jsonProps, $array);
-        $jsonDef = (array) $type::DaftObjectJsonProperties();
+        $jsonDef = TypeParanoia::EnsureArgumentIsArray($type::DaftObjectJsonProperties());
 
         $keys = array_keys($array);
 
@@ -128,18 +69,77 @@ class JsonTypeUtilities
         return $object;
     }
 
+    private static function ThrowIfNotJsonType(string $jsonType) : void
+    {
+        if ( ! TypeParanoia::IsThingStrings($jsonType, DaftJson::class)) {
+            throw new ClassDoesNotImplementClassException($jsonType, DaftJson::class);
+        }
+    }
+
+    private static function MakeMapperThrowIfJsonDefNotValid(
+        string $class,
+        array $jsonDef,
+        array $array
+    ) : Closure {
+        $mapper =
+            /**
+            * @return mixed
+            */
+            function (string $prop) use ($jsonDef, $array, $class) {
+                if (isset($jsonDef[$prop]) && false === is_array($array[$prop])) {
+                    static::ThrowBecauseArrayJsonTypeNotValid(
+                        $class,
+                        TypeParanoia::EnsureArgumentIsString($jsonDef[$prop]),
+                        $prop
+                    );
+                }
+
+                return $array[$prop];
+            };
+
+        return $mapper;
+    }
+
+    private static function FilterThrowIfJsonDefNotValid(
+        string $class,
+        array $jsonProps,
+        array $array
+    ) : array {
+        $filter = function (string $prop) use ($jsonProps, $array, $class) : bool {
+            if ( ! TypeParanoia::MaybeInArray($prop, $jsonProps)) {
+                throw new PropertyNotJsonDecodableException($class, $prop);
+            }
+
+            return false === is_null($array[$prop]);
+        };
+
+        return array_filter($array, $filter, ARRAY_FILTER_USE_KEY);
+    }
+
+    private static function ArrayToJsonType(string $type, array $value, bool $writeAll) : DaftJson
+    {
+        self::ThrowIfNotJsonType($type);
+
+        /**
+        * @var DaftJson
+        */
+        $type = $type;
+
+        return $type::DaftObjectFromJsonArray($value, $writeAll);
+    }
+
     /**
     * @param mixed[] $propVal
     *
     * @return array<int, DaftJson>
     */
-    protected static function DaftObjectFromJsonTypeArray(
+    private static function DaftObjectFromJsonTypeArray(
         string $jsonType,
         string $prop,
         array $propVal,
         bool $writeAll
     ) : array {
-        JsonTypeUtilities::ThrowIfNotJsonType($jsonType);
+        self::ThrowIfNotJsonType($jsonType);
 
         return array_map(
             /**

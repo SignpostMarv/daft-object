@@ -29,45 +29,37 @@ trait DaftObjectIdValuesHashLazyInt
 
         foreach ($properties as $prop) {
             /**
-            * @var scalar|null|array|object|resource
+            * @var scalar|array|object|resource|null
             */
             $val = $object->$prop;
 
-            $id[] = $val;
+            $id[] = TypeParanoia::VarExportNonScalars($val);
         }
 
         return static::DaftObjectIdValuesHash($id);
     }
 
     /**
+    * @param string[] $id
+    *
     * @see DefinesOwnIdPropertiesInterface::DaftObjectIdValuesHash()
     */
     public static function DaftObjectIdValuesHash(array $id) : string
     {
         $className = static::class;
 
-        $objectIds = '';
-
-        /**
-        * @var array<int, string>
-        */
-        $id = array_values($id);
-
-        foreach ($id as $i => $idVal) {
-            if ($i >= 1) {
-                $objectIds .= '::';
-            }
-            $objectIds .= (string) $idVal;
-        }
+        $objectIds = implode('::', array_map(TypeParanoia::class . '::VarExportNonScalars', $id));
 
         if ( ! isset(self::$ids[$className])) {
             self::$ids[$className] = [];
         }
 
         if ( ! isset(self::$ids[$className][$objectIds])) {
-            self::$ids[$className][$objectIds] = (string) count(self::$ids[$className]);
+            self::$ids[$className][$objectIds] = TypeParanoia::VarExportNonScalars(count(
+                self::$ids[$className]
+            ));
         }
 
-        return (string) self::$ids[$className][$objectIds];
+        return self::$ids[$className][$objectIds];
     }
 }

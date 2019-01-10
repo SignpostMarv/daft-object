@@ -6,6 +6,7 @@ declare(strict_types=1);
 
 namespace SignpostMarv\DaftObject\Tests;
 
+use SignpostMarv\DaftObject\AbstractArrayBackedDaftObject;
 use SignpostMarv\DaftObject\ClassDoesNotImplementClassException;
 use SignpostMarv\DaftObject\DaftJson;
 use SignpostMarv\DaftObject\PropertyNotJsonDecodableException;
@@ -112,6 +113,17 @@ class DaftJsonExceptionTest extends TestCase
         array $args,
         bool $writeAll
     ) : void {
+        if ( ! is_subclass_of($implementation, AbstractArrayBackedDaftObject::class, true)) {
+            static::markTestSkipped(
+                'Argument 1 passed to ' .
+                __METHOD__ .
+                ' must be an implementation of ' .
+                AbstractArrayBackedDaftObject::class
+            );
+
+            return;
+        }
+
         $this->expectException(ClassDoesNotImplementClassException::class);
         $this->expectExceptionMessage(sprintf(
             '%s does not implement %s',
@@ -134,6 +146,17 @@ class DaftJsonExceptionTest extends TestCase
         array $args,
         bool $writeAll
     ) : void {
+        if ( ! is_subclass_of($implementation, DaftJson::class, true)) {
+            static::markTestSkipped(
+                'Argument 1 passed to ' .
+                __METHOD__ .
+                ' must be an implementation of ' .
+                DaftJson::class
+            );
+
+            return;
+        }
+
         $this->expectException($expectingException);
         $this->expectExceptionMessage(sprintf(
             'Property not %s: %s::$%s',
@@ -141,7 +164,6 @@ class DaftJsonExceptionTest extends TestCase
             $expectingFailureWithClass,
             $expectingFailureWithProperty
         ));
-        static::assertTrue(is_a($implementation, DaftJson::class, true));
 
         /**
         * @var DaftJson

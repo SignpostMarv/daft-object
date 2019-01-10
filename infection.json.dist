@@ -1,0 +1,90 @@
+{
+    "timeout": 10,
+    "source": {
+        "directories": [
+            "PHPStan",
+            "src"
+        ]
+    },
+    "logs": {
+        "text": "infection.log"
+    },
+    "mutators": {
+        "@default": true,
+        "Identical": {
+            "ignore": [
+                "SignpostMarv\\DaftObject\\PHPStan\\PropertyReflectionExtension::__construct",
+                "SignpostMarv\\DaftObject\\PHPStan\\PropertyReflectionExtension::isPrivate",
+                "SignpostMarv\\DaftObject\\PHPStan\\PropertyReflectionExtension::PropertyIsPublic"
+            ]
+        },
+        "LogicalAnd": {
+            "ignore": [
+                "SignpostMarv\\DaftObject\\AbstractArrayBackedDaftObject::NudgePropertyValue",
+                "SignpostMarv\\DaftObject\\TypeUtilities::HasMethod",
+                "SignpostMarv\\DaftObject\\PHPStan\\ClassReflectionExtension::hasProperty",
+                "SignpostMarv\\DaftObject\\PHPStan\\PropertyReflectionExtension::PropertyIsPublic"
+            ]
+        },
+        "LogicalNot": {
+            "ignore": [
+                "SignpostMarv\\DaftObject\\PHPStan\\ClassReflectionExtension::getProperty",
+                "SignpostMarv\\DaftObject\\PHPStan\\PropertyReflectionExtension::__construct",
+                "SignpostMarv\\DaftObject\\PHPStan\\PropertyReflectionExtension::getDeclaringClass",
+                "SignpostMarv\\DaftObject\\PHPStan\\PropertyReflectionExtension::isPrivate",
+                "SignpostMarv\\DaftObject\\PHPStan\\PropertyReflectionExtension::PropertyIsPublic"
+            ]
+        },
+        "LogicalOr": {
+            "ignore": [
+                "SignpostMarv\\DaftObject\\PHPStan\\ClassReflectionExtension::hasProperty",
+                "SignpostMarv\\DaftObject\\PHPStan\\PropertyReflectionExtension::PropertyIsPublic"
+            ]
+        },
+        "MethodCallRemoval": {
+            "ignore": [
+                "SignpostMarv\\DaftObject\\AbstractArrayBackedDaftObject::jsonSerialize",
+                "SignpostMarv\\DaftObject\\AbstractArrayBackedDaftObject::DaftObjectFromJsonString",
+                "SignpostMarv\\DaftObject\\DaftObjectMemoryRepository::RememberDaftObject",
+                "SignpostMarv\\DaftObject\\JsonTypeUtilities::ArrayToJsonType",
+                "SignpostMarv\\DaftObject\\JsonTypeUtilities::DaftJsonFromJsonType",
+                "SignpostMarv\\DaftObject\\JsonTypeUtilities::DaftObjectFromJsonTypeArray",
+                "SignpostMarv\\DaftObject\\JsonTypeUtilities::ThrowIfJsonDefNotValid",
+                "SignpostMarv\\DaftObject\\TypeUtilities::DaftObjectFromJsonTypeArray",
+                "SignpostMarv\\DaftObject\\TypeUtilities::DaftObjectPublicOrProtectedGetters",
+                "SignpostMarv\\DaftObject\\PHPStan\\PropertyReflectionExtension::__construct"
+            ]
+        },
+        "NotIdentical": {
+            "ignore": [
+                "SignpostMarv\\DaftObject\\AbstractArrayBackedDaftObject::NudgePropertyValue",
+                "SignpostMarv\\DaftObject\\PHPStan\\PropertyReflectionExtension::DetermineDeclaringClass"
+            ]
+        },
+        "ProtectedVisibility": {
+            "ignore": [
+                "SignpostMarv\\DaftObject\\PHPStan\\PropertyReflectionExtension::DetermineDeclaringClass"
+            ]
+        },
+        "Throw_": {
+            "ignore": [
+                "SignpostMarv\\DaftObject\\AbstractArrayBackedDaftObject::MaybeThrowForPropertyOnNudge",
+                "SignpostMarv\\DaftObject\\AbstractDaftObject::CompareToDaftSortableObject",
+                "SignpostMarv\\DaftObject\\TypeParanoia::EnsureArgumentIsString",
+                "SignpostMarv\\DaftObject\\TypeParanoia::EnsureArgumentIsArray",
+                "SignpostMarv\\DaftObject\\TypeParanoia::MaybeInMaybeArray",
+                "SignpostMarv\\DaftObject\\PHPStan\\ClassReflectionExtension::getProperty",
+                "SignpostMarv\\DaftObject\\PHPStan\\PropertyReflectionExtension::__construct",
+                "SignpostMarv\\DaftObject\\PHPStan\\PropertyReflectionExtension::getDeclaringClass",
+                "SignpostMarv\\DaftObject\\PHPStan\\PropertyReflectionExtension::SetGetterProps",
+                "SignpostMarv\\DaftObject\\PHPStan\\PropertyReflectionExtension::SetSetterProps"
+            ]
+        },
+        "TrueValue": {
+            "ignore": [
+                "SignpostMarv\\DaftObject\\TypeParanoia::MaybeInArray",
+                "SignpostMarv\\DaftObject\\TypeParanoia::IsSubThingStrings"
+            ]
+        }
+    }
+}

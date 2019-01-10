@@ -16,6 +16,12 @@ use InvalidArgumentException;
 */
 abstract class AbstractArrayBackedDaftObject extends AbstractDaftObject implements DaftObjectCreatedByArray
 {
+    const BOOL_DEFAULT_WRITEALL = false;
+
+    const BOOL_DEFAULT_AUTOTRIMSTRINGS = false;
+
+    const BOOL_DEFAULT_THROWIFNOTUNIQUE = false;
+
     /**
     * data for this instance.
     *
@@ -38,7 +44,7 @@ abstract class AbstractArrayBackedDaftObject extends AbstractDaftObject implemen
     private $wormProperties = [];
 
     /**
-    * @param array<int|string, scalar|null|array|object> $data
+    * @param array<int|string, scalar|array|object|null> $data
     */
     public function __construct(array $data = [], bool $writeAll = false)
     {
@@ -69,7 +75,7 @@ abstract class AbstractArrayBackedDaftObject extends AbstractDaftObject implemen
         $properties = static::PROPERTIES;
 
         return
-            in_array($property, (array) $properties, true) &&
+            TypeParanoia::MaybeInMaybeArray($property, $properties) &&
             isset($this->data, $this->data[$property]);
     }
 
@@ -94,30 +100,38 @@ abstract class AbstractArrayBackedDaftObject extends AbstractDaftObject implemen
     {
         JsonTypeUtilities::ThrowIfNotDaftJson(static::class);
 
-        $out = [];
-
         /**
         * @var array<int, string>
         */
         $properties = static::DaftObjectJsonPropertyNames();
 
-        foreach ($properties as $property) {
+        /**
+        * @var array<string, string>
+        */
+        $properties = array_combine($properties, $properties);
+
+        return array_filter(
+            array_map(
+                /**
+                * @return mixed
+                */
+                function (string $property) {
+                    return $this->DoGetSet($property, false);
+                },
+                $properties
+            ),
             /**
-            * @var scalar|null|array|object
+            * @param mixed $maybe
             */
-            $val = $this->DoGetSet($property, false);
-
-            if (false === is_null($val)) {
-                $out[$property] = $val;
+            function ($maybe) : bool {
+                return ! is_null($maybe);
             }
-        }
-
-        return $out;
+        );
     }
 
     final public static function DaftObjectFromJsonArray(
         array $array,
-        bool $writeAll = false
+        bool $writeAll = self::BOOL_DEFAULT_WRITEALL
     ) : DaftJson {
         $array = JsonTypeUtilities::ThrowIfJsonDefNotValid(static::class, $array);
 
@@ -128,7 +142,7 @@ abstract class AbstractArrayBackedDaftObject extends AbstractDaftObject implemen
         $mapper = static::DaftJsonClosure($array, $writeAll);
 
         /**
-        * @var array<int, scalar|null|object|array>
+        * @var array<int, scalar|object|array|null>
         */
         $vals = array_map($mapper, $props);
 
@@ -141,7 +155,10 @@ abstract class AbstractArrayBackedDaftObject extends AbstractDaftObject implemen
     {
         JsonTypeUtilities::ThrowIfNotDaftJson(static::class);
 
-        return static::DaftObjectFromJsonArray((array) json_decode($string, true));
+        return static::DaftObjectFromJsonArray(TypeParanoia::ForceArgumentAsArray(json_decode(
+            $string,
+            true
+        )));
     }
 
     public function DaftObjectWormPropertyWritten(string $property) : bool
@@ -156,7 +173,68 @@ abstract class AbstractArrayBackedDaftObject extends AbstractDaftObject implemen
             );
     }
 
-    final protected static function DaftJsonClosure(array $array, bool $writeAll) : Closure
+    /**
+    * Retrieve a property from data.
+    *
+    * @param string $property the property being retrieved
+    *
+    * @throws PropertyNotNullableException if value is not set and $property is not listed as nullabe
+    *
+    * @return mixed the property value
+    */
+    protected function RetrievePropertyValueFromData(string $property)
+    {
+        $isNullable = TypeParanoia::MaybeInMaybeArray($property, static::NULLABLE_PROPERTIES);
+
+        if (
+            ! array_key_exists($property, $this->data) &&
+            ! $isNullable
+        ) {
+            throw new PropertyNotNullableException(static::class, $property);
+        } elseif ($isNullable) {
+            return $this->data[$property] ?? null;
+        }
+
+        return $this->data[$property];
+    }
+
+    /**
+    * @param scalar|array|object|null $value
+    */
+    protected function NudgePropertyValue(
+        string $property,
+        $value,
+        bool $autoTrimStrings = self::BOOL_DEFAULT_AUTOTRIMSTRINGS,
+        bool $throwIfNotUnique = self::BOOL_DEFAULT_THROWIFNOTUNIQUE
+    ) : void {
+        /**
+        * @var array<int, string>
+        */
+        $nullables = static::NULLABLE_PROPERTIES;
+
+        $this->MaybeThrowForPropertyOnNudge($property);
+        $this->MaybeThrowOnNudge($property, $value, $nullables);
+
+        $value = $this->MaybeModifyValueBeforeNudge(
+            $property,
+            $value,
+            $autoTrimStrings,
+            $throwIfNotUnique
+        );
+
+        $isChanged = (
+            ! array_key_exists($property, $this->data) ||
+            $this->data[$property] !== $value
+        );
+
+        $this->data[$property] = $value;
+
+        if ($isChanged && true !== isset($this->changedProperties[$property])) {
+            $this->changedProperties[$property] = $this->wormProperties[$property] = true;
+        }
+    }
+
+    private static function DaftJsonClosure(array $array, bool $writeAll) : Closure
     {
         $jsonDef = static::DaftObjectJsonProperties();
 
@@ -177,76 +255,67 @@ abstract class AbstractArrayBackedDaftObject extends AbstractDaftObject implemen
                 return JsonTypeUtilities::DaftJsonFromJsonType(
                     $jsonType,
                     $prop,
-                    (array) $array[$prop],
+                    TypeParanoia::ForceArgumentAsArray($array[$prop]),
                     $writeAll
                 );
             };
     }
 
     /**
-    * Retrieve a property from data.
+    * @param scalar|array|object|null $value
     *
-    * @param string $property the property being retrieved
-    *
-    * @throws PropertyNotNullableException if value is not set and $property is not listed as nullabe
-    *
-    * @return mixed the property value
+    * @return scalar|array|object|null
     */
-    protected function RetrievePropertyValueFromData(string $property)
-    {
+    private function MaybeModifyValueBeforeNudge(
+        string $property,
+        $value,
+        bool $autoTrimStrings = self::BOOL_DEFAULT_AUTOTRIMSTRINGS,
+        bool $throwIfNotUnique = self::BOOL_DEFAULT_THROWIFNOTUNIQUE
+    ) {
         /**
-        * @var array<int, string>
+        * @var array<int, string>|null
         */
-        $properties = static::NULLABLE_PROPERTIES;
+        $spec = null;
 
         if (
-            ! array_key_exists($property, $this->data) &&
-            ! in_array($property, $properties, true)
+            is_a(
+                static::class,
+                DaftObjectHasPropertiesWithMultiTypedArraysOfUniqueValues::class,
+                true
+            )
         ) {
-            throw new PropertyNotNullableException(static::class, $property);
-        } elseif (in_array($property, $properties, true)) {
-            return $this->data[$property] ?? null;
+            $spec = (
+                static::DaftObjectPropertiesWithMultiTypedArraysOfUniqueValues()[$property] ?? null
+            );
         }
 
-        return $this->data[$property];
-    }
-
-    /**
-    * @param scalar|null|array|object $value
-    */
-    protected function NudgePropertyValue(string $property, $value) : void
-    {
-        /**
-        * @var array<int, string>
-        */
-        $nullables = static::NULLABLE_PROPERTIES;
-
-        $this->MaybeThrowForPropertyOnNudge($property);
-        $this->MaybeThrowOnNudge($property, $value, $nullables);
-
-        $isChanged = (
-            ! array_key_exists($property, $this->data) ||
-            $this->data[$property] !== $value
-        );
-
-        $this->data[$property] = $value;
-
-        if ($isChanged && true !== isset($this->changedProperties[$property])) {
-            $this->changedProperties[$property] = $this->wormProperties[$property] = true;
+        if (is_array($spec)) {
+            $value = TypeParanoia::MaybeThrowIfValueDoesNotMatchMultiTypedArray(
+                $autoTrimStrings,
+                $throwIfNotUnique,
+                $value,
+                ...$spec
+            );
         }
+
+        if (is_string($value) && $autoTrimStrings) {
+            $value = trim($value);
+        }
+
+        return $value;
     }
 
     /**
     * @see AbstractArrayBackedDaftObject::NudgePropertyValue()
     */
-    protected function MaybeThrowForPropertyOnNudge(string $property) : void
+    private function MaybeThrowForPropertyOnNudge(string $property) : void
     {
         /**
         * @var array<int, string>
         */
         $properties = static::PROPERTIES;
 
-        if (true !== in_array($property, $properties, true)) {
+        if ( ! TypeParanoia::MaybeInArray($property, $properties)) {
             throw new UndefinedPropertyException(static::class, $property);
         } elseif ($this->DaftObjectWormPropertyWritten($property)) {
             throw new PropertyNotRewriteableException(static::class, $property);
@@ -258,9 +327,9 @@ abstract class AbstractArrayBackedDaftObject extends AbstractDaftObject implemen
     *
     * @see AbstractArrayBackedDaftObject::NudgePropertyValue()
     */
-    protected function MaybeThrowOnNudge(string $property, $value, array $properties) : void
+    private function MaybeThrowOnNudge(string $property, $value, array $properties) : void
     {
-        if (true === is_null($value) && true !== in_array($property, $properties, true)) {
+        if (true === is_null($value) && ! TypeParanoia::MaybeInArray($property, $properties)) {
             throw new PropertyNotNullableException(static::class, $property);
         }
     }

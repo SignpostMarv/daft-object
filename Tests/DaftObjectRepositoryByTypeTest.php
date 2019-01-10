@@ -10,6 +10,7 @@ use SignpostMarv\DaftObject\DaftObjectCreatedByArray;
 use SignpostMarv\DaftObject\DaftObjectMemoryRepository;
 use SignpostMarv\DaftObject\DaftObjectNullStub;
 use SignpostMarv\DaftObject\DaftObjectNullStubCreatedByArray;
+use SignpostMarv\DaftObject\DaftObjectRepository;
 use SignpostMarv\DaftObject\DaftObjectRepositoryTypeException;
 use SignpostMarv\DaftObject\DefinesOwnIdPropertiesInterface;
 
@@ -47,6 +48,17 @@ class DaftObjectRepositoryByTypeTest extends TestCase
         string $typeExpected,
         ...$additionalArgs
     ) : void {
+        if ( ! is_subclass_of($repoImplementation, DaftObjectRepository::class, true)) {
+            static::markTestSkipped(
+                'Argument 1 passed to ' .
+                __METHOD__ .
+                ' must be an implementation of ' .
+                DaftObjectRepository::class
+            );
+
+            return;
+        }
+
         $this->expectException(DaftObjectRepositoryTypeException::class);
         $this->expectExceptionMessage(
             'Argument 1 passed to ' .

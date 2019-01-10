@@ -7,8 +7,8 @@ declare(strict_types=1);
 namespace SignpostMarv\DaftObject\Tests;
 
 use Generator;
-use InvalidArgumentException;
 use RuntimeException;
+use SignpostMarv\DaftObject\DaftObject;
 use SignpostMarv\DaftObject\DaftObjectMemoryRepository;
 use SignpostMarv\DaftObject\DaftObjectRepository;
 use SignpostMarv\DaftObject\DaftObjectRepositoryTypeException;
@@ -75,14 +75,15 @@ class DaftObjectRepositoryTest extends TestCase
         bool $writeable,
         array ...$paramsArray
     ) : void {
-        $interfaceCheck = $objImplementation;
-
-        if (false === is_a($interfaceCheck, DefinesOwnIdPropertiesInterface::class, true)) {
-            throw new InvalidArgumentException(sprintf(
-                'Argument 1 passed to %s must be an implementation of %s',
-                __METHOD__,
+        if ( ! is_subclass_of($objImplementation, DefinesOwnIdPropertiesInterface::class, true)) {
+            static::markTestSkipped(
+                'Argument 1 passed to ' .
+                __METHOD__ .
+                ' must be an implementation of ' .
                 DefinesOwnIdPropertiesInterface::class
-            ));
+            );
+
+            return;
         }
 
         $repo = static::DaftObjectRepositoryByType($objImplementation);
@@ -116,7 +117,7 @@ class DaftObjectRepositoryTest extends TestCase
 
             foreach ($props as $prop) {
                 /**
-                * @var scalar|array|null|\SignpostMarv\DaftObject\DaftObject
+                * @var scalar|array|\SignpostMarv\DaftObject\DaftObject|null
                 */
                 $val = $obj->$prop;
 
@@ -163,6 +164,26 @@ class DaftObjectRepositoryTest extends TestCase
         array $dataTypeA,
         array $dataTypeB
     ) : void {
+        if ( ! is_subclass_of($objectTypeA, DefinesOwnIdPropertiesInterface::class, true)) {
+            static::markTestSkipped(
+                'Argument 1 passed to ' .
+                __METHOD__ .
+                ' must be an implementation of ' .
+                DefinesOwnIdPropertiesInterface::class
+            );
+
+            return;
+        } elseif ( ! is_subclass_of($objectTypeB, DefinesOwnIdPropertiesInterface::class, true)) {
+            static::markTestSkipped(
+                'Argument 2 passed to ' .
+                __METHOD__ .
+                ' must be an implementation of ' .
+                DefinesOwnIdPropertiesInterface::class
+            );
+
+            return;
+        }
+
         /**
         * @var DefinesOwnIdPropertiesInterface
         */
@@ -198,6 +219,26 @@ class DaftObjectRepositoryTest extends TestCase
         array $dataTypeA,
         array $dataTypeB
     ) : void {
+        if ( ! is_subclass_of($objectTypeA, DefinesOwnIdPropertiesInterface::class, true)) {
+            static::markTestSkipped(
+                'Argument 1 passed to ' .
+                __METHOD__ .
+                ' must be an implementation of ' .
+                DefinesOwnIdPropertiesInterface::class
+            );
+
+            return;
+        } elseif ( ! is_subclass_of($objectTypeB, DefinesOwnIdPropertiesInterface::class, true)) {
+            static::markTestSkipped(
+                'Argument 2 passed to ' .
+                __METHOD__ .
+                ' must be an implementation of ' .
+                DefinesOwnIdPropertiesInterface::class
+            );
+
+            return;
+        }
+
         /**
         * @var DefinesOwnIdPropertiesInterface
         */
@@ -233,6 +274,26 @@ class DaftObjectRepositoryTest extends TestCase
         array $dataTypeA,
         array $dataTypeB
     ) : void {
+        if ( ! is_subclass_of($objectTypeA, DefinesOwnIdPropertiesInterface::class, true)) {
+            static::markTestSkipped(
+                'Argument 1 passed to ' .
+                __METHOD__ .
+                ' must be an implementation of ' .
+                DefinesOwnIdPropertiesInterface::class
+            );
+
+            return;
+        } elseif ( ! is_subclass_of($objectTypeB, DefinesOwnIdPropertiesInterface::class, true)) {
+            static::markTestSkipped(
+                'Argument 2 passed to ' .
+                __METHOD__ .
+                ' must be an implementation of ' .
+                DefinesOwnIdPropertiesInterface::class
+            );
+
+            return;
+        }
+
         /**
         * @var DefinesOwnIdPropertiesInterface
         */
@@ -268,6 +329,17 @@ class DaftObjectRepositoryTest extends TestCase
         array $idProps,
         bool $writeable
     ) : void {
+        if ( ! is_subclass_of($objImplementation, DefinesOwnIdPropertiesInterface::class, true)) {
+            static::markTestSkipped(
+                'Argument 1 passed to ' .
+                __METHOD__ .
+                ' must be an implementation of ' .
+                DefinesOwnIdPropertiesInterface::class
+            );
+
+            return;
+        }
+
         static::assertSame(get_class($obj), get_class($retrieved));
         static::assertNotSame($obj, $retrieved);
 
@@ -311,7 +383,7 @@ class DaftObjectRepositoryTest extends TestCase
                 true === is_numeric($obj->$prop)
             ) {
                 /**
-                * @var int|float|string|scalar|array|null|DaftObject\DaftObject
+                * @var int|float|string|scalar|array|DaftObject\DaftObject|null
                 */
                 $propVal = $retrieved->$prop;
 
@@ -357,14 +429,16 @@ class DaftObjectRepositoryTest extends TestCase
         array $idProps,
         bool $writeable
     ) : void {
-        static::assertTrue(
-            is_a($retrieved, $objImplementation, true),
-            (
-                get_class($repo) .
-                '::RecallDaftObject() must return an implementation of ' .
-                $objImplementation
-            )
-        );
+        if ( ! is_subclass_of($objImplementation, DaftObject::class, true)) {
+            static::markTestSkipped(
+                'Argument 1 passed to ' .
+                __METHOD__ .
+                ' must be an implementation of ' .
+                DaftObject::class
+            );
+
+            return;
+        }
 
         /**
         * @var array<int, string>

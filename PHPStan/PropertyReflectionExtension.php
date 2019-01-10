@@ -19,10 +19,29 @@ use PHPStan\Type\TypehintHelper;
 use ReflectionMethod;
 use SignpostMarv\DaftObject\DaftObject;
 use SignpostMarv\DaftObject\DefinesOwnIdPropertiesInterface;
+use SignpostMarv\DaftObject\TypeParanoia;
 use SignpostMarv\DaftObject\TypeUtilities;
 
 class PropertyReflectionExtension implements PropertyReflection
 {
+    const REF_PARAM_INDEX = 0;
+
+    const BOOL_IS_WRITEABLE = true;
+
+    const BOOL_IS_READABLE = true;
+
+    const BOOL_SETNOTGET_SETTER = true;
+
+    const BOOL_SETNOTGET_GETTER = false;
+
+    const BOOL_CLASS_NOT_DAFTOBJECT = false;
+
+    const BOOL_REFLECTION_NO_FILE = false;
+
+    const BOOL_NOT_VARIADIC = false;
+
+    const BOOL_IS_STATIC = false;
+
     /**
     * @var Type
     */
@@ -60,7 +79,7 @@ class PropertyReflectionExtension implements PropertyReflection
 
     public function __construct(ClassReflection $classReflection, Broker $broker, string $property)
     {
-        if (false === is_a($classReflection->getName(), DaftObject::class, true)) {
+        if ( ! TypeParanoia::IsThingStrings($classReflection->getName(), DaftObject::class)) {
             throw new InvalidArgumentException(sprintf('%s is not an implementation of %s',
                 $classReflection->getName(),
                 DaftObject::class
@@ -98,12 +117,12 @@ class PropertyReflectionExtension implements PropertyReflection
 
     public function isPrivate() : bool
     {
-        return false === $this->isPublic();
+        return ! $this->isPublic();
     }
 
     public function isStatic() : bool
     {
-        return false;
+        return self::BOOL_IS_STATIC;
     }
 
     public function getDeclaringClass() : ClassReflection
@@ -122,11 +141,51 @@ class PropertyReflectionExtension implements PropertyReflection
         return $reflection;
     }
 
-    protected function SetupReflections(ClassReflection $classReflection, string $property) : void
+    protected static function DetermineDeclaringClass(
+        Broker $broker,
+        ReflectionMethod $refMethod
+    ) : ClassReflection {
+        $reflectionClass = $refMethod->getDeclaringClass();
+
+        $filename = null;
+        if (self::BOOL_REFLECTION_NO_FILE !== $reflectionClass->getFileName()) {
+            $filename = $reflectionClass->getFileName();
+        }
+
+        return $broker->getClassFromReflection(
+            $reflectionClass,
+            $reflectionClass->getName(),
+            $reflectionClass->isAnonymous() ? $filename : null
+        );
+    }
+
+    /**
+    * @psalm-suppress InvalidStringClass
+    * @psalm-suppress MixedMethodCall
+    */
+    protected static function PropertyIsPublic(string $className, string $property) : bool
+    {
+        if ( ! TypeParanoia::IsSubThingStrings($className, DaftObject::class)) {
+            return self::BOOL_CLASS_NOT_DAFTOBJECT;
+        }
+
+        return
+            (
+                TypeParanoia::IsThingStrings(
+                    $className,
+                    DefinesOwnIdPropertiesInterface::class
+                ) &&
+                'id' === $property
+            ) ||
+            TypeParanoia::MaybeInMaybeArray($property, $className::DaftObjectPublicGetters()) ||
+            TypeParanoia::MaybeInMaybeArray($property, $className::DaftObjectPublicSetters());
+    }
+
+    private function SetupReflections(ClassReflection $classReflection, string $property) : void
     {
         $class = $classReflection->getName();
-        $get = static::MethodNameFromProperty($property);
-        $set = static::MethodNameFromProperty($property, true);
+        $get = TypeUtilities::MethodNameFromProperty($property, self::BOOL_SETNOTGET_GETTER);
+        $set = TypeUtilities::MethodNameFromProperty($property, self::BOOL_SETNOTGET_SETTER);
 
         $this->writeableReflection = $this->readableReflection = $classReflection;
 
@@ -139,9 +198,9 @@ class PropertyReflectionExtension implements PropertyReflection
         }
     }
 
-    protected function SetGetterProps(ReflectionMethod $refMethod) : ClassReflection
+    private function SetGetterProps(ReflectionMethod $refMethod) : ClassReflection
     {
-        $this->readable = true;
+        $this->readable = self::BOOL_IS_READABLE;
 
         if ($refMethod->isStatic()) {
             throw new InvalidArgumentException(
@@ -158,55 +217,22 @@ class PropertyReflectionExtension implements PropertyReflection
         return static::DetermineDeclaringClass($this->broker, $refMethod);
     }
 
-    protected function SetSetterProps(string $class, string $set) : ClassReflection
+    private function SetSetterProps(string $class, string $set) : ClassReflection
     {
         $refMethod = new ReflectionMethod($class, $set);
-        $this->writeable = true;
+        $this->writeable = self::BOOL_IS_WRITEABLE;
 
-        $refParam = $refMethod->getParameters()[0];
+        $refParam = $refMethod->getParameters()[self::REF_PARAM_INDEX];
 
         if ($refParam->hasType()) {
             $this->type = TypehintHelper::decideTypeFromReflection(
                 $refParam->getType(),
                 null,
                 $class,
-                false
+                self::BOOL_NOT_VARIADIC
             );
         }
 
         return static::DetermineDeclaringClass($this->broker, $refMethod);
-    }
-
-    protected static function MethodNameFromProperty(
-        string $prop,
-        bool $SetNotGet = false
-    ) : string {
-        return TypeUtilities::MethodNameFromProperty($prop, $SetNotGet);
-    }
-
-    protected static function DetermineDeclaringClass(
-        Broker $broker,
-        ReflectionMethod $refMethod
-    ) : ClassReflection {
-        $reflectionClass = $refMethod->getDeclaringClass();
-
-        $filename = null;
-        if (false !== $reflectionClass->getFileName()) {
-            $filename = $reflectionClass->getFileName();
-        }
-
-        return $broker->getClassFromReflection(
-            $reflectionClass,
-            $reflectionClass->getName(),
-            $reflectionClass->isAnonymous() ? $filename : null
-        );
-    }
-
-    protected static function PropertyIsPublic(string $className, string $property) : bool
-    {
-        return
-            (is_a($className, DefinesOwnIdPropertiesInterface::class, true) && 'id' === $property) ||
-            in_array($property, (array) $className::DaftObjectPublicGetters(), true) ||
-            in_array($property, (array) $className::DaftObjectPublicSetters(), true);
     }
 }

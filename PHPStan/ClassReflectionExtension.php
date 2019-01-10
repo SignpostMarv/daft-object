@@ -15,10 +15,15 @@ use PHPStan\Reflection\ClassReflection;
 use PHPStan\Reflection\PropertiesClassReflectionExtension;
 use PHPStan\Reflection\PropertyReflection;
 use SignpostMarv\DaftObject\DaftObject;
+use SignpostMarv\DaftObject\TypeParanoia;
 use SignpostMarv\DaftObject\TypeUtilities;
 
 class ClassReflectionExtension implements BrokerAwareExtension, PropertiesClassReflectionExtension
 {
+    const BOOL_SETNOTGET_SETTER = true;
+
+    const BOOL_SETNOTGET_GETTER = false;
+
     /**
     * @var Broker|null
     */
@@ -34,11 +39,11 @@ class ClassReflectionExtension implements BrokerAwareExtension, PropertiesClassR
         $className = $classReflection->getName();
 
         $property = ucfirst($propertyName);
-        $getter = static::MethodNameFromProperty($property);
-        $setter = static::MethodNameFromProperty($property, true);
+        $getter = TypeUtilities::MethodNameFromProperty($property, self::BOOL_SETNOTGET_GETTER);
+        $setter = TypeUtilities::MethodNameFromProperty($property, self::BOOL_SETNOTGET_SETTER);
 
         return
-            is_a($className, DaftObject::class, true) &&
+            TypeParanoia::IsThingStrings($className, DaftObject::class) &&
             (
                 $classReflection->getNativeReflection()->hasMethod($getter) ||
                 $classReflection->getNativeReflection()->hasMethod($setter)
@@ -55,12 +60,5 @@ class ClassReflectionExtension implements BrokerAwareExtension, PropertiesClassR
         }
 
         return new PropertyReflectionExtension($ref, $this->broker, $propertyName);
-    }
-
-    protected static function MethodNameFromProperty(
-        string $prop,
-        bool $SetNotGet = false
-    ) : string {
-        return TypeUtilities::MethodNameFromProperty($prop, $SetNotGet);
     }
 }

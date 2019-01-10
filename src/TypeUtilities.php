@@ -11,6 +11,18 @@ use ReflectionMethod;
 
 class TypeUtilities
 {
+    const BOOL_EXPECTING_NON_PUBLIC_METHOD = false;
+
+    const BOOL_EXPECTING_GETTER = false;
+
+    const BOOL_DEFAULT_THROWIFNOTIMPLEMENTATION = false;
+
+    const BOOL_DEFAULT_EXPECTING_NON_PUBLIC_METHOD = true;
+
+    const BOOL_METHOD_IS_PUBLIC = true;
+
+    const BOOL_METHOD_IS_NON_PUBLIC = false;
+
     const SUPPORTED_INVALID_LEADING_CHARACTERS = [
         '@',
     ];
@@ -46,26 +58,9 @@ class TypeUtilities
         return self::$publicSetters[$class];
     }
 
-    public static function HasMethod(
-        string $class,
-        string $property,
-        bool $SetNotGet,
-        bool $pub = true
-    ) : bool {
-        $method = static::MethodNameFromProperty($property, $SetNotGet);
-
-        try {
-            $ref = new ReflectionMethod($class, $method);
-
-            return ($pub ? $ref->isPublic() : $ref->isProtected()) && false === $ref->isStatic();
-        } catch (ReflectionException $e) {
-            return false;
-        }
-    }
-
     public static function MethodNameFromProperty(string $prop, bool $SetNotGet = false) : string
     {
-        if (in_array(mb_substr($prop, 0, 1), self::SUPPORTED_INVALID_LEADING_CHARACTERS, true)) {
+        if (TypeParanoia::MaybeInArray(mb_substr($prop, 0, 1), self::SUPPORTED_INVALID_LEADING_CHARACTERS)) {
             return ($SetNotGet ? 'Alter' : 'Obtain') . ucfirst(mb_substr($prop, 1));
         }
 
@@ -82,9 +77,9 @@ class TypeUtilities
     */
     public static function CheckTypeDefinesOwnIdProperties(
         string $class,
-        bool $throwIfNotImplementation = false
+        bool $throwIfNotImplementation = self::BOOL_DEFAULT_THROWIFNOTIMPLEMENTATION
     ) : void {
-        if (is_a($class, DefinesOwnIdPropertiesInterface::class, true)) {
+        if (TypeParanoia::IsThingStrings($class, DefinesOwnIdPropertiesInterface::class)) {
             self::CheckTypeDefinesOwnIdPropertiesIsImplementation($class);
         } elseif ($throwIfNotImplementation) {
             throw new ClassDoesNotImplementClassException(
@@ -94,13 +89,53 @@ class TypeUtilities
         }
     }
 
-    final protected static function CachePublicGettersAndSetters(string $class) : void
+    private static function HasMethod(
+        string $class,
+        string $property,
+        bool $SetNotGet,
+        bool $pub = self::BOOL_DEFAULT_EXPECTING_NON_PUBLIC_METHOD
+    ) : bool {
+        $method = static::MethodNameFromProperty($property, $SetNotGet);
+
+        try {
+            $ref = new ReflectionMethod($class, $method);
+
+            return ($pub ? $ref->isPublic() : $ref->isProtected()) && false === $ref->isStatic();
+        } catch (ReflectionException $e) {
+            return false;
+        }
+    }
+
+    /**
+    * @param mixed $maybe
+    */
+    private static function FilterMaybeArray($maybe, callable $filter) : array
+    {
+        return array_filter(
+            TypeParanoia::EnsureArgumentIsArray($maybe, TypeParanoia::INDEX_FIRST_ARG, __METHOD__),
+            $filter
+        );
+    }
+
+    /**
+    * @param mixed $maybe
+    */
+    private static function CountMaybeArray($maybe) : int
+    {
+        return count(TypeParanoia::EnsureArgumentIsArray(
+            $maybe,
+            TypeParanoia::INDEX_FIRST_ARG,
+            __METHOD__
+        ));
+    }
+
+    private static function CachePublicGettersAndSetters(string $class) : void
     {
         if (false === isset(self::$Getters[$class])) {
             self::$Getters[$class] = [];
             self::$publicSetters[$class] = [];
 
-            if (is_a($class, DefinesOwnIdPropertiesInterface::class, true)) {
+            if (TypeParanoia::IsThingStrings($class, DefinesOwnIdPropertiesInterface::class)) {
                 self::$Getters[$class]['id'] = true;
             }
 
@@ -108,7 +143,7 @@ class TypeUtilities
         }
     }
 
-    final protected static function CachePublicGettersAndSettersProperties(string $class) : void
+    private static function CachePublicGettersAndSettersProperties(string $class) : void
     {
         /**
         * @var string[]
@@ -116,10 +151,15 @@ class TypeUtilities
         $props = $class::DaftObjectProperties();
 
         foreach ($props as $prop) {
-            if (static::HasMethod($class, $prop, false)) {
-                self::$Getters[$class][$prop] = true;
-            } elseif (static::HasMethod($class, $prop, false, false)) {
-                self::$Getters[$class][$prop] = false;
+            if (static::HasMethod($class, $prop, self::BOOL_EXPECTING_GETTER)) {
+                self::$Getters[$class][$prop] = self::BOOL_METHOD_IS_PUBLIC;
+            } elseif (static::HasMethod(
+                $class,
+                $prop,
+                self::BOOL_EXPECTING_GETTER,
+                self::BOOL_EXPECTING_NON_PUBLIC_METHOD
+            )) {
+                self::$Getters[$class][$prop] = self::BOOL_METHOD_IS_NON_PUBLIC;
             }
 
             if (static::HasMethod($class, $prop, true)) {
@@ -128,17 +168,23 @@ class TypeUtilities
         }
     }
 
-    final protected static function CheckTypeDefinesOwnIdPropertiesIsImplementation(
+    private static function CheckTypeDefinesOwnIdPropertiesIsImplementation(
         string $class
     ) : void {
-        $properties = (array) $class::DaftObjectIdProperties();
+        /**
+        * @var scalar|array|object|null
+        */
+        $properties = $class::DaftObjectIdProperties();
 
-        if (count($properties) < 1) {
+        if (self::CountMaybeArray($properties) < 1) {
             throw new ClassMethodReturnHasZeroArrayCountException(
                 $class,
                 'DaftObjectIdProperties'
             );
-        } elseif (count($properties) !== count(array_filter($properties, 'is_string'))) {
+        } elseif (
+            self::CountMaybeArray($properties) !==
+            count(self::FilterMaybeArray($properties, 'is_string'))
+        ) {
             throw new ClassMethodReturnIsNotArrayOfStringsException(
                 $class,
                 'DaftObjectIdProperties'

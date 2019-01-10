@@ -54,6 +54,11 @@ abstract class AbstractDaftObject implements DaftObject
     const CHANGE_OTHER_PROPERTIES = [];
 
     /**
+    * @var array<string, array<int, string>>
+    */
+    const PROPERTIES_WITH_MULTI_TYPED_ARRAYS = [];
+
+    /**
     * Does some sanity checking.
     *
     * @see DefinesOwnIdPropertiesInterface
@@ -102,7 +107,7 @@ abstract class AbstractDaftObject implements DaftObject
         * @var array<int, string>
         */
         $properties = array_filter($exportables, function (string $prop) use ($getters) : bool {
-            return $this->__isset($prop) && in_array($prop, $getters, true);
+            return $this->__isset($prop) && TypeParanoia::MaybeInArray($prop, $getters);
         });
 
         /**
@@ -132,9 +137,6 @@ abstract class AbstractDaftObject implements DaftObject
             );
         }
 
-        /**
-        * @var string
-        */
         foreach (static::DaftSortableObjectProperties() as $property) {
             $method = TypeUtilities::MethodNameFromProperty($property);
             $sort = $this->$method() <=> $otherObject->$method();
@@ -152,7 +154,7 @@ abstract class AbstractDaftObject implements DaftObject
     *
     * @return array<int, string>
     */
-    final public static function DaftObjectProperties() : array
+    public static function DaftObjectProperties() : array
     {
         /**
         * @var array<int, string>
@@ -162,7 +164,7 @@ abstract class AbstractDaftObject implements DaftObject
         return $out;
     }
 
-    final public static function DaftObjectNullableProperties() : array
+    public static function DaftObjectNullableProperties() : array
     {
         /**
         * @var array<int, string>
@@ -172,7 +174,7 @@ abstract class AbstractDaftObject implements DaftObject
         return $out;
     }
 
-    final public static function DaftObjectExportableProperties() : array
+    public static function DaftObjectExportableProperties() : array
     {
         /**
         * @var array<int, string>
@@ -197,7 +199,7 @@ abstract class AbstractDaftObject implements DaftObject
         return TypeUtilities::DaftObjectPublicSetters(static::class);
     }
 
-    final public static function DaftObjectJsonProperties() : array
+    public static function DaftObjectJsonProperties() : array
     {
         JsonTypeUtilities::ThrowIfNotDaftJson(static::class);
 
@@ -229,6 +231,9 @@ abstract class AbstractDaftObject implements DaftObject
         return $out;
     }
 
+    /**
+    * @return array<int, string>
+    */
     public static function DaftSortableObjectProperties() : array
     {
         if ( ! is_a(static::class, DaftSortableObject::class, true)) {
@@ -260,10 +265,36 @@ abstract class AbstractDaftObject implements DaftObject
     }
 
     /**
+    * @return array<string, array<int, string>>
+    */
+    public static function DaftObjectPropertiesWithMultiTypedArraysOfUniqueValues() : array
+    {
+        if (
+            ! is_a(
+                static::class,
+                DaftObjectHasPropertiesWithMultiTypedArraysOfUniqueValues::class,
+                true
+            )
+        ) {
+            throw new ClassDoesNotImplementClassException(
+                static::class,
+                DaftObjectHasPropertiesWithMultiTypedArraysOfUniqueValues::class
+            );
+        }
+
+        /**
+        * @var array<string, array<int, string>>
+        */
+        $out = static::PROPERTIES_WITH_MULTI_TYPED_ARRAYS;
+
+        return $out;
+    }
+
+    /**
     * Nudge the state of a given property, marking it as dirty.
     *
     * @param string $property property being nudged
-    * @param scalar|null|array|object $value value to nudge property with
+    * @param scalar|array|object|null $value value to nudge property with
     *
     * @throws UndefinedPropertyException if $property is not in static::DaftObjectProperties()
     * @throws PropertyNotNullableException if $property is not in static::DaftObjectNullableProperties()
@@ -273,8 +304,8 @@ abstract class AbstractDaftObject implements DaftObject
 
     protected function MaybeThrowOnDoGetSet(string $property, bool $setter, array $props) : void
     {
-        if (false === in_array($property, $props, true)) {
-            if (false === in_array($property, static::DaftObjectProperties(), true)) {
+        if ( ! TypeParanoia::MaybeInArray($property, $props)) {
+            if ( ! TypeParanoia::MaybeInArray($property, static::DaftObjectProperties())) {
                 throw new UndefinedPropertyException(static::class, $property);
             } elseif ($setter) {
                 throw new NotPublicSetterPropertyException(static::class, $property);

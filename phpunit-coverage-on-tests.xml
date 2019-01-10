@@ -8,7 +8,6 @@
     <log
       type="coverage-html"
       target="phpunit"
-      logIncompleteSkipped="true"
     />
     <log
       type="coverage-text"
@@ -20,6 +19,7 @@
   <filter>
     <whitelist processUncoveredFilesFromWhitelist="true">
       <directory suffix=".php">./src/</directory>
+      <directory suffix=".php">./PHPStan/</directory>
       <directory suffix=".php">./tests-src/</directory>
       <directory suffix=".php">./Tests/</directory>
     </whitelist>
