@@ -11,7 +11,7 @@ class NudgesIncorrectly extends AbstractTestObject implements DefinesOwnIdProper
     use DaftObjectIdValuesHashLazyInt;
     use ReadTrait, WriteTrait, DefineIdPropertiesCorrectlyTrait;
 
-    public function SetFoo(string $value) : void
+    public function SetFoo(string $value)
     {
         $this->NudgePropertyValue('nope', $value);
     }

@@ -78,7 +78,7 @@ class TypeUtilities
     public static function CheckTypeDefinesOwnIdProperties(
         string $class,
         bool $throwIfNotImplementation = self::BOOL_DEFAULT_THROWIFNOTIMPLEMENTATION
-    ) : void {
+    ) {
         if (TypeParanoia::IsThingStrings($class, DefinesOwnIdPropertiesInterface::class)) {
             self::CheckTypeDefinesOwnIdPropertiesIsImplementation($class);
         } elseif ($throwIfNotImplementation) {
@@ -129,7 +129,7 @@ class TypeUtilities
         ));
     }
 
-    private static function CachePublicGettersAndSetters(string $class) : void
+    private static function CachePublicGettersAndSetters(string $class)
     {
         if (false === isset(self::$Getters[$class])) {
             self::$Getters[$class] = [];
@@ -143,7 +143,7 @@ class TypeUtilities
         }
     }
 
-    private static function CachePublicGettersAndSettersProperties(string $class) : void
+    private static function CachePublicGettersAndSettersProperties(string $class)
     {
         /**
         * @var string[]
@@ -170,7 +170,7 @@ class TypeUtilities
 
     private static function CheckTypeDefinesOwnIdPropertiesIsImplementation(
         string $class
-    ) : void {
+    ) {
         /**
         * @var scalar|array|object|null
         */

@@ -33,7 +33,10 @@ trait ReadTrait
         return is_string($out) ? ((int) $out) : $out;
     }
 
-    public function GetBat() : ? bool
+    /**
+    * @return bool|null
+    */
+    public function GetBat()
     {
         /**
         * @var bool|null|string $out

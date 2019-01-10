@@ -15,7 +15,7 @@ use TypeError;
 
 class EnsureProtectedMethodsNeedToBeProtectedTest extends TestCase
 {
-    public function testEnsureRecallDaftObjectFromData() : void
+    public function testEnsureRecallDaftObjectFromData()
     {
         /**
         * @var EnsureProtectedMethodsNeedToBeProtectedOnRepository
@@ -26,7 +26,7 @@ class EnsureProtectedMethodsNeedToBeProtectedTest extends TestCase
         static::assertNull($repo->EnsureRecallDaftObjectFromData(1));
     }
 
-    public function testEnsureConstructorNeedsToBeProtected() : void
+    public function testEnsureConstructorNeedsToBeProtected()
     {
         /**
         * @var EnsureProtectedMethodsNeedToBeProtectedOnRepository
@@ -37,7 +37,7 @@ class EnsureProtectedMethodsNeedToBeProtectedTest extends TestCase
         static::assertNull($repo->EnsureRecallDaftObjectFromData(1));
     }
 
-    public function testEnsureMaybeThrowOnDoGetSet() : void
+    public function testEnsureMaybeThrowOnDoGetSet()
     {
         $obj = new EnsureProtectedMethodsNeedToBeProtectedOnAbstractDaftObject();
 
@@ -46,7 +46,7 @@ class EnsureProtectedMethodsNeedToBeProtectedTest extends TestCase
         $obj->EnsureMaybeThrowOnDoGetSet('foo', true, []);
     }
 
-    public function testPropertyIsPublic() : void
+    public function testPropertyIsPublic()
     {
         static::assertTrue(EnsurePropertyReflectionExtensionMethodsNeedToBeProtected::EnsurePropertyIsPublic(
             ReadOnly::class,

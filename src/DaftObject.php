@@ -48,7 +48,7 @@ interface DaftObject
     *
     * @param string $property the property being unset
     */
-    public function __unset(string $property) : void;
+    public function __unset(string $property);
 
     /**
     * required to support var_dump(<DaftObject>);.
@@ -67,7 +67,7 @@ interface DaftObject
     *
     * @param string ...$properties the property being set as unchanged
     */
-    public function MakePropertiesUnchanged(string ...$properties) : void;
+    public function MakePropertiesUnchanged(string ...$properties);
 
     /**
     * Check if a property exists on an object.

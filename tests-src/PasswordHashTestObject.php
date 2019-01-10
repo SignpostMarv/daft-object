@@ -19,16 +19,16 @@ final class PasswordHashTestObject extends AbstractArrayBackedDaftObject
         ],
     ];
 
-    protected function GetPassword() : void
+    protected function GetPassword()
     {
     }
 
-    protected function SetPasswordHash(string $hash) : void
+    protected function SetPasswordHash(string $hash)
     {
         $this->NudgePropertyValue('passwordHash', $hash);
     }
 
-    public function SetPassword(string $password) : void
+    public function SetPassword(string $password)
     {
         $this->SetPasswordHash(password_hash($password, PASSWORD_DEFAULT));
     }

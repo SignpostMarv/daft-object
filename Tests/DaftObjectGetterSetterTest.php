@@ -135,7 +135,7 @@ class DaftObjectGetterSetterTest extends TestCase
         }
     }
 
-    public function dataProviderGetterBad() : iterable
+    public function dataProviderGetterBad() : Generator
     {
         $sources = $this->dataProviderGetterSetterGood();
 
@@ -150,7 +150,7 @@ class DaftObjectGetterSetterTest extends TestCase
         return $generator();
     }
 
-    public function dataProviderSetterBad() : iterable
+    public function dataProviderSetterBad() : Generator
     {
         $sources = $this->dataProviderGetterSetterGood();
 
@@ -175,7 +175,7 @@ class DaftObjectGetterSetterTest extends TestCase
         string $property,
         $value,
         string $changedProperty = null
-    ) : void {
+    ) {
         if ( ! is_subclass_of($implementation, DaftObject::class, true)) {
             static::markTestSkipped(
                 'Argument 1 passed to ' .
@@ -206,7 +206,7 @@ class DaftObjectGetterSetterTest extends TestCase
         string $property,
         $value,
         string $changedProperty
-    ) : void {
+    ) {
         if ( ! is_subclass_of($implementation, DaftObject::class, true)) {
             static::markTestSkipped(
                 'Argument 1 passed to ' .
@@ -240,7 +240,7 @@ class DaftObjectGetterSetterTest extends TestCase
         string $property,
         $value,
         string $changedProperty
-    ) : void {
+    ) {
         if ( ! is_subclass_of($implementation, DaftObject::class, true)) {
             static::markTestSkipped(
                 'Argument 1 passed to ' .
@@ -270,7 +270,7 @@ class DaftObjectGetterSetterTest extends TestCase
     *
     * @depends testGetterSetterGood
     */
-    public function testGetterBad(string $implementation, string $property, $value) : void
+    public function testGetterBad(string $implementation, string $property, $value)
     {
         if ( ! is_subclass_of($implementation, DaftObject::class, true)) {
             static::markTestSkipped(
@@ -307,7 +307,7 @@ class DaftObjectGetterSetterTest extends TestCase
     *
     * @depends testGetterSetterGood
     */
-    public function testSetterBad(string $implementation, string $property, $value) : void
+    public function testSetterBad(string $implementation, string $property, $value)
     {
         if ( ! is_subclass_of($implementation, DaftObject::class, true)) {
             static::markTestSkipped(

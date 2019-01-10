@@ -40,7 +40,7 @@ abstract class AbstractDaftObjectRepository implements DaftObjectRepository
         unset($this->args);
     }
 
-    public function ForgetDaftObject(DefinesOwnIdPropertiesInterface $object) : void
+    public function ForgetDaftObject(DefinesOwnIdPropertiesInterface $object)
     {
         static::ThrowIfNotType($object, $this->type, 1, __FUNCTION__);
 
@@ -63,7 +63,7 @@ abstract class AbstractDaftObjectRepository implements DaftObjectRepository
         $this->ForgetDaftObjectById($id);
     }
 
-    public function RemoveDaftObject(DefinesOwnIdPropertiesInterface $object) : void
+    public function RemoveDaftObject(DefinesOwnIdPropertiesInterface $object)
     {
         static::ThrowIfNotType($object, $this->type, 1, __FUNCTION__);
 
@@ -123,7 +123,7 @@ abstract class AbstractDaftObjectRepository implements DaftObjectRepository
         string $type,
         int $argument,
         string $function
-    ) : void {
+    ) {
         if (false === is_a($object, $type, is_string($object))) {
             throw new DaftObjectRepositoryTypeByClassMethodAndTypeException(
                 $argument,

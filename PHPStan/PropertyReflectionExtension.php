@@ -155,7 +155,7 @@ class PropertyReflectionExtension implements PropertyReflection
         return $broker->getClassFromReflection(
             $reflectionClass,
             $reflectionClass->getName(),
-            $reflectionClass->isAnonymous() ? $filename : null
+            $reflectionClass->isAnonymous()
         );
     }
 
@@ -181,7 +181,7 @@ class PropertyReflectionExtension implements PropertyReflection
             TypeParanoia::MaybeInMaybeArray($property, $className::DaftObjectPublicSetters());
     }
 
-    private function SetupReflections(ClassReflection $classReflection, string $property) : void
+    private function SetupReflections(ClassReflection $classReflection, string $property)
     {
         $class = $classReflection->getName();
         $get = TypeUtilities::MethodNameFromProperty($property, self::BOOL_SETNOTGET_GETTER);

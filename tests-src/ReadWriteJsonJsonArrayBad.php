@@ -33,7 +33,7 @@ class ReadWriteJsonJsonArrayBad extends AbstractArrayBackedDaftObject implements
         return $out;
     }
 
-    public function SetJson(array $json) : void
+    public function SetJson(array $json)
     {
         $this->NudgePropertyValue('json', $json);
     }

@@ -10,8 +10,10 @@ class EnsureProtectedMethodsNeedToBeProtectedOnRepository extends DaftObjectMemo
 {
     /**
     * @param mixed $id
+    *
+    * @return DaftObject|null
     */
-    public function EnsureRecallDaftObjectFromData($id) : ? DaftObject
+    public function EnsureRecallDaftObjectFromData($id)
     {
         return $this->RecallDaftObjectFromData($id);
     }

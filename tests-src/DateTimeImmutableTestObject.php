@@ -37,7 +37,7 @@ class DateTimeImmutableTestObject extends AbstractArrayBackedDaftObject
         return new DateTimeImmutable($in);
     }
 
-    public function SetDatetime(DateTimeImmutable $value) : void
+    public function SetDatetime(DateTimeImmutable $value)
     {
         $this->NudgePropertyValue('datetime', $value);
     }

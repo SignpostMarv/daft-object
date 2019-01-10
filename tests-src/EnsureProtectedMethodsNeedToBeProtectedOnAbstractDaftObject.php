@@ -8,7 +8,7 @@ namespace SignpostMarv\DaftObject;
 
 class EnsureProtectedMethodsNeedToBeProtectedOnAbstractDaftObject extends AbstractArrayBackedDaftObject
 {
-    public function EnsureMaybeThrowOnDoGetSet(string $property, bool $setter, array $props) : void
+    public function EnsureMaybeThrowOnDoGetSet(string $property, bool $setter, array $props)
     {
         $this->MaybeThrowOnDoGetSet($property, $setter, $props);
     }

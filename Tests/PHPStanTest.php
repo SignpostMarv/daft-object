@@ -15,7 +15,7 @@ use Symfony\Component\Console\Tester\CommandTester;
 
 class PHPStanTest extends TestCase
 {
-    public function testPHPStan() : void
+    public function testPHPStan()
     {
         $version = 'Version unknown';
         try {
@@ -25,7 +25,6 @@ class PHPStanTest extends TestCase
 
         $application = new Application('PHPStan Checking', $version);
         $application->add(new AnalyseCommand());
-        $application->add(new DumpDependenciesCommand());
 
         $command = $application->find('analyse');
 
@@ -50,7 +49,7 @@ class PHPStanTest extends TestCase
         $firstLine = trim(current(explode("\n", $commandTester->getDisplay())));
 
         static::assertSame(
-            'Note: Using configuration file ' . realpath(__DIR__ . '/../phpstan.neon') . '.',
+            '0/52 [>---------------------------]   0%',
             $firstLine
         );
     }

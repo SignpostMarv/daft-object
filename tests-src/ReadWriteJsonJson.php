@@ -30,7 +30,7 @@ class ReadWriteJsonJson extends AbstractArrayBackedDaftObject implements DaftJso
         return $out;
     }
 
-    public function SetJson(ReadWriteJson $json) : void
+    public function SetJson(ReadWriteJson $json)
     {
         $this->NudgePropertyValue('json', $json);
     }

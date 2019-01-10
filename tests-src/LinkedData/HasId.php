@@ -21,7 +21,7 @@ class HasId extends AbstractArrayBackedDaftObject implements DaftJsonLinkedData
 
     const JSON_PROPERTIES = self::EXPORTABLE_PROPERTIES;
 
-    public function AlterId(string $id) : void
+    public function AlterId(string $id)
     {
         $this->NudgePropertyValue('@id', trim($id));
     }

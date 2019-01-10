@@ -74,7 +74,7 @@ class DaftObjectRepositoryTest extends TestCase
         bool $readable,
         bool $writeable,
         array ...$paramsArray
-    ) : void {
+    ) {
         if ( ! is_subclass_of($objImplementation, DefinesOwnIdPropertiesInterface::class, true)) {
             static::markTestSkipped(
                 'Argument 1 passed to ' .
@@ -163,7 +163,7 @@ class DaftObjectRepositoryTest extends TestCase
         string $objectTypeB,
         array $dataTypeA,
         array $dataTypeB
-    ) : void {
+    ) {
         if ( ! is_subclass_of($objectTypeA, DefinesOwnIdPropertiesInterface::class, true)) {
             static::markTestSkipped(
                 'Argument 1 passed to ' .
@@ -218,7 +218,7 @@ class DaftObjectRepositoryTest extends TestCase
         string $objectTypeB,
         array $dataTypeA,
         array $dataTypeB
-    ) : void {
+    ) {
         if ( ! is_subclass_of($objectTypeA, DefinesOwnIdPropertiesInterface::class, true)) {
             static::markTestSkipped(
                 'Argument 1 passed to ' .
@@ -273,7 +273,7 @@ class DaftObjectRepositoryTest extends TestCase
         string $objectTypeB,
         array $dataTypeA,
         array $dataTypeB
-    ) : void {
+    ) {
         if ( ! is_subclass_of($objectTypeA, DefinesOwnIdPropertiesInterface::class, true)) {
             static::markTestSkipped(
                 'Argument 1 passed to ' .
@@ -328,7 +328,7 @@ class DaftObjectRepositoryTest extends TestCase
         array $ids,
         array $idProps,
         bool $writeable
-    ) : void {
+    ) {
         if ( ! is_subclass_of($objImplementation, DefinesOwnIdPropertiesInterface::class, true)) {
             static::markTestSkipped(
                 'Argument 1 passed to ' .
@@ -428,7 +428,7 @@ class DaftObjectRepositoryTest extends TestCase
         array $ids,
         array $idProps,
         bool $writeable
-    ) : void {
+    ) {
         if ( ! is_subclass_of($objImplementation, DaftObject::class, true)) {
             static::markTestSkipped(
                 'Argument 1 passed to ' .

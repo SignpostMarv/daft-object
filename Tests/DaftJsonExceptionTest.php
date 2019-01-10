@@ -112,7 +112,7 @@ class DaftJsonExceptionTest extends TestCase
         string $expectingFailureWith,
         array $args,
         bool $writeAll
-    ) : void {
+    ) {
         if ( ! is_subclass_of($implementation, AbstractArrayBackedDaftObject::class, true)) {
             static::markTestSkipped(
                 'Argument 1 passed to ' .
@@ -145,7 +145,7 @@ class DaftJsonExceptionTest extends TestCase
         string $expectingThing,
         array $args,
         bool $writeAll
-    ) : void {
+    ) {
         if ( ! is_subclass_of($implementation, DaftJson::class, true)) {
             static::markTestSkipped(
                 'Argument 1 passed to ' .

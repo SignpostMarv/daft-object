@@ -56,7 +56,7 @@ class UndefinedPropertyExceptionTest extends TestCase
         bool $getNotSet,
         bool $writeAll,
         string $property
-    ) : void {
+    ) {
         if ( ! is_subclass_of($implementation, DaftObject::class, true)) {
             static::markTestSkipped(
                 'Argument 1 passed to ' .

@@ -29,7 +29,7 @@ class ClassReflectionExtension implements BrokerAwareExtension, PropertiesClassR
     */
     private $broker;
 
-    public function setBroker(Broker $broker) : void
+    public function setBroker(Broker $broker)
     {
         $this->broker = $broker;
     }

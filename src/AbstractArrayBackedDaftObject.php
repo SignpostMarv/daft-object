@@ -84,7 +84,7 @@ abstract class AbstractArrayBackedDaftObject extends AbstractDaftObject implemen
         return array_keys($this->changedProperties);
     }
 
-    public function MakePropertiesUnchanged(string ...$properties) : void
+    public function MakePropertiesUnchanged(string ...$properties)
     {
         foreach ($properties as $property) {
             unset($this->changedProperties[$property]);
@@ -206,7 +206,7 @@ abstract class AbstractArrayBackedDaftObject extends AbstractDaftObject implemen
         $value,
         bool $autoTrimStrings = self::BOOL_DEFAULT_AUTOTRIMSTRINGS,
         bool $throwIfNotUnique = self::BOOL_DEFAULT_THROWIFNOTUNIQUE
-    ) : void {
+    ) {
         /**
         * @var array<int, string>
         */
@@ -308,7 +308,7 @@ abstract class AbstractArrayBackedDaftObject extends AbstractDaftObject implemen
     /**
     * @see AbstractArrayBackedDaftObject::NudgePropertyValue()
     */
-    private function MaybeThrowForPropertyOnNudge(string $property) : void
+    private function MaybeThrowForPropertyOnNudge(string $property)
     {
         /**
         * @var array<int, string>
@@ -327,7 +327,7 @@ abstract class AbstractArrayBackedDaftObject extends AbstractDaftObject implemen
     *
     * @see AbstractArrayBackedDaftObject::NudgePropertyValue()
     */
-    private function MaybeThrowOnNudge(string $property, $value, array $properties) : void
+    private function MaybeThrowOnNudge(string $property, $value, array $properties)
     {
         if (true === is_null($value) && ! TypeParanoia::MaybeInArray($property, $properties)) {
             throw new PropertyNotNullableException(static::class, $property);

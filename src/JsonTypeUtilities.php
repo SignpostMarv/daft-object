@@ -10,7 +10,7 @@ use Closure;
 
 class JsonTypeUtilities
 {
-    public static function ThrowIfNotDaftJson(string $class) : void
+    public static function ThrowIfNotDaftJson(string $class)
     {
         if ( ! TypeParanoia::IsThingStrings($class, DaftJson::class)) {
             throw new DaftObjectNotDaftJsonBadMethodCallException($class);
@@ -69,7 +69,7 @@ class JsonTypeUtilities
         return $object;
     }
 
-    private static function ThrowIfNotJsonType(string $jsonType) : void
+    private static function ThrowIfNotJsonType(string $jsonType)
     {
         if ( ! TypeParanoia::IsThingStrings($jsonType, DaftJson::class)) {
             throw new ClassDoesNotImplementClassException($jsonType, DaftJson::class);
@@ -160,7 +160,7 @@ class JsonTypeUtilities
         string $class,
         string $type,
         string $prop
-    ) : void {
+    ) {
         if ('[]' === mb_substr($type, -2)) {
             throw new PropertyNotJsonDecodableShouldBeArrayException($class, $prop);
         }

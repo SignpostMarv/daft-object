@@ -22,7 +22,7 @@ class DaftObjectMemoryRepository extends AbstractDaftObjectRepository
     */
     protected $data = [];
 
-    public function RememberDaftObject(DefinesOwnIdPropertiesInterface $object) : void
+    public function RememberDaftObject(DefinesOwnIdPropertiesInterface $object)
     {
         static::ThrowIfNotType($object, $this->type, 1, __FUNCTION__);
 
@@ -36,7 +36,7 @@ class DaftObjectMemoryRepository extends AbstractDaftObjectRepository
     /**
     * @param mixed $id
     */
-    public function ForgetDaftObjectById($id) : void
+    public function ForgetDaftObjectById($id)
     {
         $this->ForgetDaftObjectByHashId($this->ObjectHashId($id));
     }
@@ -44,15 +44,17 @@ class DaftObjectMemoryRepository extends AbstractDaftObjectRepository
     /**
     * @param mixed $id
     */
-    public function RemoveDaftObjectById($id) : void
+    public function RemoveDaftObjectById($id)
     {
         $this->RemoveDaftObjectByHashId($this->ObjectHashId($id));
     }
 
     /**
     * @param mixed $id
+    *
+    * @return DaftObject|null
     */
-    public function RecallDaftObject($id) : ? DaftObject
+    public function RecallDaftObject($id)
     {
         $hashId = $this->ObjectHashId($id);
 
@@ -66,7 +68,7 @@ class DaftObjectMemoryRepository extends AbstractDaftObjectRepository
     public function RememberDaftObjectData(
         DefinesOwnIdPropertiesInterface $object,
         bool $assumeDoesNotExist = self::BOOL_DEFAULT_ASSUMEDOESNOTEXIST
-    ) : void {
+    ) {
         $hashId = $object::DaftObjectIdHash($object);
 
         $this->data[$hashId] = [];
@@ -87,8 +89,10 @@ class DaftObjectMemoryRepository extends AbstractDaftObjectRepository
     * Recalls the corresponding daft object instance from cached data.
     *
     * @param mixed $id
+    *
+    * @return DaftObject|null
     */
-    protected function RecallDaftObjectFromData($id) : ? DaftObject
+    protected function RecallDaftObjectFromData($id)
     {
         $hashId = $this->ObjectHashId($id);
 
@@ -120,14 +124,14 @@ class DaftObjectMemoryRepository extends AbstractDaftObjectRepository
         );
     }
 
-    private function ForgetDaftObjectByHashId(string $hashId) : void
+    private function ForgetDaftObjectByHashId(string $hashId)
     {
         if (true === isset($this->memory[$hashId])) {
             unset($this->memory[$hashId]);
         }
     }
 
-    private function RemoveDaftObjectByHashId(string $hashId) : void
+    private function RemoveDaftObjectByHashId(string $hashId)
     {
         $this->ForgetDaftObjectByHashId($hashId);
 

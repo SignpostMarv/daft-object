@@ -319,7 +319,7 @@ class DaftTestObjectTest extends TestCase
         array $params,
         bool $readable = false,
         bool $writeable = false
-    ) : void {
+    ) {
         if ( ! is_subclass_of($implementation, DaftObject::class, true)) {
             static::markTestSkipped(
                 'Argument 1 passed to ' .
@@ -514,7 +514,7 @@ class DaftTestObjectTest extends TestCase
         array $params,
         bool $readable,
         bool $writeable
-    ) : void {
+    ) {
         if ( ! is_subclass_of($implementation, DaftObject::class, true)) {
             static::markTestSkipped(
                 'Argument 1 passed to ' .
@@ -554,7 +554,7 @@ class DaftTestObjectTest extends TestCase
     *
     * @psalm-suppress NoInterfaceProperties
     */
-    public function testDefinesOwnUntypedIdInterface(string $implementation, array $params) : void
+    public function testDefinesOwnUntypedIdInterface(string $implementation, array $params)
     {
         if ( ! is_subclass_of($implementation, DefinesOwnIdPropertiesInterface::class, true)) {
             static::markTestSkipped(
@@ -583,7 +583,7 @@ class DaftTestObjectTest extends TestCase
             $key = $keys[0];
             static::assertSame($val, $obj->$key);
         } else {
-            static::assertIsArray($val);
+            static::assertInternalType('array', $val);
 
             /**
             * @var array<int, scalar|array|object|null>
@@ -602,14 +602,14 @@ class DaftTestObjectTest extends TestCase
             */
             $val = $val;
 
-            static::assertIsString($val);
+            static::assertInternalType('string', $val);
         } elseif ($obj instanceof DefinesOwnIntegerIdInterface) {
             /**
             * @var scalar|null
             */
             $val = $val;
 
-            static::assertIsInt($val);
+            static::assertInternalType('int', $val);
         }
     }
 
@@ -627,7 +627,7 @@ class DaftTestObjectTest extends TestCase
     */
     public function testRetrievePropertyValueFromDataNotNullableException(
         string $implementation
-    ) : void {
+    ) {
         if ( ! is_subclass_of($implementation, DaftObject::class, true)) {
             static::markTestSkipped(
                 'Argument 1 passed to ' .

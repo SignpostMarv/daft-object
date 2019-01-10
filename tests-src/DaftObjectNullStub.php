@@ -27,7 +27,7 @@ class DaftObjectNullStub extends AbstractDaftObject
     /**
     * {@inheritdoc}
     */
-    final public function MakePropertiesUnchanged(string ...$properties) : void
+    final public function MakePropertiesUnchanged(string ...$properties)
     {
     }
 
@@ -42,7 +42,7 @@ class DaftObjectNullStub extends AbstractDaftObject
     /**
     * {@inheritdoc}
     */
-    final protected function NudgePropertyValue(string $property, $value) : void
+    final protected function NudgePropertyValue(string $property, $value)
     {
     }
 }

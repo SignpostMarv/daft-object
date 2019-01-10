@@ -47,7 +47,7 @@ class DaftObjectRepositoryByTypeTest extends TestCase
         string $typeImplementation,
         string $typeExpected,
         ...$additionalArgs
-    ) : void {
+    ) {
         if ( ! is_subclass_of($repoImplementation, DaftObjectRepository::class, true)) {
             static::markTestSkipped(
                 'Argument 1 passed to ' .

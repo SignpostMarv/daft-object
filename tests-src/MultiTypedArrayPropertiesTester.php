@@ -50,7 +50,7 @@ class MultiTypedArrayPropertiesTester
     /**
     * @param scalar|array|object|null $value
     */
-    public function SetDates($value) : void
+    public function SetDates($value)
     {
         $this->NudgePropertyValue('dates', $value, false, true);
     }
@@ -71,7 +71,7 @@ class MultiTypedArrayPropertiesTester
     /**
     * @param scalar|array|object|null $value
     */
-    public function SetDatesOrStrings($value) : void
+    public function SetDatesOrStrings($value)
     {
         $this->NudgePropertyValue('datesOrStrings', $value, false, true);
     }
@@ -92,7 +92,7 @@ class MultiTypedArrayPropertiesTester
     /**
     * @param scalar|array|object|null $value
     */
-    public function SetTrimmedStrings($value) : void
+    public function SetTrimmedStrings($value)
     {
         $this->NudgePropertyValue('trimmedStrings', $value, true);
     }
@@ -105,7 +105,7 @@ class MultiTypedArrayPropertiesTester
     /**
     * @param scalar|array|object|null $value
     */
-    public function SetTrimmedString($value) : void
+    public function SetTrimmedString($value)
     {
         $this->NudgePropertyValue('trimmedString', $value, true);
     }

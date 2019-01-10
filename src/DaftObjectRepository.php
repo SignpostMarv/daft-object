@@ -10,7 +10,7 @@ namespace SignpostMarv\DaftObject;
 
 interface DaftObjectRepository
 {
-    public function RememberDaftObject(DefinesOwnIdPropertiesInterface $object) : void;
+    public function RememberDaftObject(DefinesOwnIdPropertiesInterface $object);
 
     /**
     * Allow data to be persisted without assuming the object exists, i.e. if it has no id yet.
@@ -18,26 +18,28 @@ interface DaftObjectRepository
     public function RememberDaftObjectData(
         DefinesOwnIdPropertiesInterface $object,
         bool $assumeDoesNotExist = false
-    ) : void;
+    );
 
-    public function ForgetDaftObject(DefinesOwnIdPropertiesInterface $object) : void;
-
-    /**
-    * @param mixed $id
-    */
-    public function ForgetDaftObjectById($id) : void;
-
-    public function RemoveDaftObject(DefinesOwnIdPropertiesInterface $object) : void;
+    public function ForgetDaftObject(DefinesOwnIdPropertiesInterface $object);
 
     /**
     * @param mixed $id
     */
-    public function RemoveDaftObjectById($id) : void;
+    public function ForgetDaftObjectById($id);
+
+    public function RemoveDaftObject(DefinesOwnIdPropertiesInterface $object);
 
     /**
     * @param mixed $id
     */
-    public function RecallDaftObject($id) : ? DaftObject;
+    public function RemoveDaftObjectById($id);
+
+    /**
+    * @param mixed $id
+    *
+    * @return DaftObject|null
+    */
+    public function RecallDaftObject($id);
 
     /**
     * @param mixed ...$args

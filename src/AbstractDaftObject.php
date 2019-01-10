@@ -82,8 +82,10 @@ abstract class AbstractDaftObject implements DaftObject
 
     /**
     * @param mixed $v
+    *
+    * @return null
     */
-    public function __set(string $property, $v) : void
+    public function __set(string $property, $v)
     {
         $this->DoGetSet($property, true, $v);
     }
@@ -91,7 +93,7 @@ abstract class AbstractDaftObject implements DaftObject
     /**
     * @see static::NudgePropertyValue()
     */
-    public function __unset(string $property) : void
+    public function __unset(string $property)
     {
         $this->NudgePropertyValue($property, null);
     }
@@ -300,9 +302,9 @@ abstract class AbstractDaftObject implements DaftObject
     * @throws PropertyNotNullableException if $property is not in static::DaftObjectNullableProperties()
     * @throws PropertyNotRewriteableException if class is write-once read-many and $property was already changed
     */
-    abstract protected function NudgePropertyValue(string $property, $value) : void;
+    abstract protected function NudgePropertyValue(string $property, $value);
 
-    protected function MaybeThrowOnDoGetSet(string $property, bool $setter, array $props) : void
+    protected function MaybeThrowOnDoGetSet(string $property, bool $setter, array $props)
     {
         if ( ! TypeParanoia::MaybeInArray($property, $props)) {
             if ( ! TypeParanoia::MaybeInArray($property, static::DaftObjectProperties())) {

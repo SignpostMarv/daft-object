@@ -63,7 +63,7 @@ class MultiTypedArrayPropertyImplementationTest extends TestCase
         $sources = $this->DataProviderObjectPropertyValueNotUnique();
 
         foreach ($sources as $args) {
-            static::assertIsArray($args[2] ?? null);
+            static::assertInternalType('array', $args[2] ?? null);
             $args[2] = array_merge(array_values((array) $args[2]), array_values((array) $args[2]));
 
             yield $args;
@@ -99,7 +99,7 @@ class MultiTypedArrayPropertyImplementationTest extends TestCase
         $value,
         string $expectedException,
         string $expectedExceptionMessage
-    ) : void {
+    ) {
         static::expectException($expectedException);
         static::expectExceptionMessage($expectedExceptionMessage);
 
@@ -113,7 +113,7 @@ class MultiTypedArrayPropertyImplementationTest extends TestCase
         DaftObject\DaftObject $obj,
         string $property,
         array $value
-    ) : void {
+    ) {
         static::expectException(InvalidArgumentException::class);
         static::expectExceptionMessage(
             'Argument 3 passed to ' .
@@ -135,7 +135,7 @@ class MultiTypedArrayPropertyImplementationTest extends TestCase
         string $property,
         $value,
         $expected
-    ) : void {
+    ) {
         $obj->$property = $value;
 
         static::assertSame($expected, $obj->$property);

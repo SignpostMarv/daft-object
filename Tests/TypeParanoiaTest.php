@@ -13,7 +13,7 @@ use SignpostMarv\DaftObject\TypeParanoia;
 
 class TypeParanoiaTest extends TestCase
 {
-    public function testIsSubThingStrings() : void
+    public function testIsSubThingStrings()
     {
         static::assertTrue(TypeParanoia::IsSubThingStrings(
             DateTimeImmutable::class,
@@ -43,11 +43,14 @@ class TypeParanoiaTest extends TestCase
     */
     public function testEnsureArgumentIsArrayFails(
         $maybe,
-        ? int $argument,
-        string $method
-    ) : void {
+        int $argument = null,
+        string $method = __METHOD__
+    ) {
         if (is_array($maybe)) {
-            static::assertIsArray(TypeParanoia::EnsureArgumentIsArray($maybe, $argument, $method));
+            static::assertInternalType(
+                'array',
+                TypeParanoia::EnsureArgumentIsArray($maybe, $argument, $method)
+            );
         } else {
             static::expectException(InvalidArgumentException::class);
             static::expectExceptionMessage(
@@ -83,7 +86,7 @@ class TypeParanoiaTest extends TestCase
     *
     * @param mixed $maybe
     */
-    public function testEnsureArgumentIsString($maybe) : void
+    public function testEnsureArgumentIsString($maybe)
     {
         if (is_string($maybe)) {
             static::assertSame($maybe, TypeParanoia::EnsureArgumentIsString($maybe));

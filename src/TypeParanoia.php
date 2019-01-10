@@ -75,7 +75,7 @@ class TypeParanoia
         return
             is_scalar($maybe)
                 ? (string) $maybe
-                : var_export($maybe, self::BOOL_VAR_EXPORT_RETURN);
+                : (string) var_export($maybe, self::BOOL_VAR_EXPORT_RETURN);
     }
 
     /**
@@ -146,11 +146,22 @@ class TypeParanoia
     ) : array {
         $value = static::MaybeThrowIfNotArrayIntKeys($value);
         $value = static::MaybeThrowIfValueArrayDoesNotMatchTypes($value, ...$types);
+
+        /**
+        * @var array<int, scalar|array|object|resource|null>
+        */
         $value = static::MaybeRemapStringsToTrimmedStrings($value, $autoTrimStrings, ...$types);
 
         $initialCount = count($value);
 
-        $value = array_unique($value, SORT_REGULAR);
+        $out = [];
+
+        foreach ($value as $val) {
+            if ( ! in_array($val, $out, true)) {
+                $out[] = $val;
+            }
+        }
+        $value = $out;
 
         if ($throwIfNotUnique && count($value) !== $initialCount) {
             throw new InvalidArgumentException(
