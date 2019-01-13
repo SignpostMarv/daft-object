@@ -2795,7 +2795,7 @@ class DaftObjectImplementationTest extends TestCase
 
     protected static function SupportsVoidReturn() : bool
     {
-        $voidTest = new ReflectionFunction(function () : void {
+        $voidTest = new ReflectionFunction(function () {
         });
 
         return 'void' === $voidTest->getReturnType();

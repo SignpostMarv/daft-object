@@ -114,7 +114,7 @@ class TypeParanoia extends TypeCertainty
         string $class,
         string $function,
         string ...$types
-    ) : void {
+    ) {
         static::ThrowIfNotType(
             $object,
             $argument,
@@ -134,7 +134,7 @@ class TypeParanoia extends TypeCertainty
         string $class,
         string $function,
         string ...$types
-    ) : void {
+    ) {
         static::ThrowIfNotDaftObjectType(
             $object,
             $argument,

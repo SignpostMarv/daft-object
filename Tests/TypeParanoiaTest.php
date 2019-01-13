@@ -157,7 +157,7 @@ class TypeParanoiaTest extends TestCase
         array $types,
         string $expectedException,
         string $expectedExceptionMessage
-    ) : void {
+    ) {
         static::expectException($expectedException);
         static::expectExceptionMessage($expectedExceptionMessage);
 
@@ -207,7 +207,7 @@ class TypeParanoiaTest extends TestCase
         array $types,
         string $expectedException,
         string $expectedExceptionMessage
-    ) : void {
+    ) {
         static::expectException($expectedException);
         static::expectExceptionMessage($expectedExceptionMessage);
 
