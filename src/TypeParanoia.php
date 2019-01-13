@@ -8,13 +8,11 @@ namespace SignpostMarv\DaftObject;
 
 use InvalidArgumentException;
 
-class TypeParanoia
+class TypeParanoia extends TypeCertainty
 {
-    const INDEX_FIRST_ARG = 1;
-
     const INDEX_SECOND_ARG = 2;
 
-    const BOOL_VAR_EXPORT_RETURN = true;
+    const INT_ARG_OFFSET = 5;
 
     /**
     * @param mixed $needle
@@ -33,67 +31,6 @@ class TypeParanoia
     public static function MaybeInArray($needle, array $haystack) : bool
     {
         return in_array($needle, $haystack, true);
-    }
-
-    /**
-    * @param mixed $maybe
-    */
-    public static function EnsureArgumentIsArray($maybe, int $argument = null, string $method = __METHOD__) : array
-    {
-        if ( ! is_array($maybe)) {
-            throw new InvalidArgumentException(
-                'Argument ' .
-                (is_int($argument) ? $argument : self::INDEX_FIRST_ARG) .
-                ' passed to ' .
-                $method .
-                ' must be an array, ' .
-                (is_object($maybe) ? get_class($maybe) : gettype($maybe)) .
-                ' given!'
-            );
-        }
-
-        return $maybe;
-    }
-
-    /**
-    * @param mixed $maybe
-    */
-    public static function ForceArgumentAsArray($maybe) : array
-    {
-        return is_array($maybe) ? $maybe : [$maybe];
-    }
-
-    /**
-    * @param mixed $maybe
-    */
-    public static function VarExportNonScalars($maybe) : string
-    {
-        if (is_string($maybe)) {
-            return $maybe;
-        }
-
-        return
-            is_scalar($maybe)
-                ? (string) $maybe
-                : (string) var_export($maybe, self::BOOL_VAR_EXPORT_RETURN);
-    }
-
-    /**
-    * @param mixed $maybe
-    */
-    public static function EnsureArgumentIsString($maybe) : string
-    {
-        if ( ! is_string($maybe)) {
-            throw new InvalidArgumentException(
-                'Argument 1 passed to ' .
-                __METHOD__ .
-                ' must be a string, ' .
-                (is_object($maybe) ? get_class($maybe) : gettype($maybe)) .
-                ' given!'
-            );
-        }
-
-        return $maybe;
     }
 
     public static function IsThingStrings(string $maybe, string $thing) : bool
@@ -136,24 +73,76 @@ class TypeParanoia
     }
 
     /**
-    * @param DaftObject|string $object
+    * @param mixed $object
     */
     public static function ThrowIfNotType(
         $object,
-        string $type,
         int $argument,
         string $class,
-        string $function
+        string $function,
+        string ...$types
     ) {
-        if (false === is_a($object, $type, is_string($object))) {
-            throw new DaftObjectRepositoryTypeByClassMethodAndTypeException(
-                $argument,
-                $class,
-                $function,
-                $type,
-                is_string($object) ? $object : get_class($object)
-            );
+        $object = static::EnsureArgumentIsObjectOrString($object, 1, __METHOD__);
+
+        foreach ($types as $i => $type) {
+            if ( ! interface_exists($type) && ! class_exists($type)) {
+                throw new InvalidArgumentException(
+                    'Argument ' .
+                    (self::INT_ARG_OFFSET + $i) .
+                    ' passed to ' .
+                    __METHOD__ .
+                    ' must be a class or interface!'
+                );
+            } elseif ( ! is_a($object, $type, is_string($object))) {
+                throw new DaftObjectRepositoryTypeByClassMethodAndTypeException(
+                    $argument,
+                    $class,
+                    $function,
+                    $type,
+                    is_string($object) ? $object : get_class($object)
+                );
+            }
         }
+    }
+
+    /**
+    * @param mixed $object
+    */
+    public static function ThrowIfNotDaftObjectType(
+        $object,
+        int $argument,
+        string $class,
+        string $function,
+        string ...$types
+    ) : void {
+        static::ThrowIfNotType(
+            $object,
+            $argument,
+            $class,
+            $function,
+            DaftObject::class,
+            ...$types
+        );
+    }
+
+    /**
+    * @param mixed $object
+    */
+    public static function ThrowIfNotDaftObjectIdPropertiesType(
+        $object,
+        int $argument,
+        string $class,
+        string $function,
+        string ...$types
+    ) : void {
+        static::ThrowIfNotDaftObjectType(
+            $object,
+            $argument,
+            $class,
+            $function,
+            DefinesOwnIdPropertiesInterface::class,
+            ...$types
+        );
     }
 
     /**
