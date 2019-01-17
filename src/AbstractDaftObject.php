@@ -8,8 +8,6 @@ declare(strict_types=1);
 
 namespace SignpostMarv\DaftObject;
 
-use Closure;
-
 /**
 * Base daft object.
 */
@@ -322,17 +320,6 @@ abstract class AbstractDaftObject implements DaftObject
 
         $this->MaybeThrowOnDoGetSet($property, $setter, $props);
 
-        /**
-        * @var callable
-        */
-        $callable = [$this, TypeUtilities::MethodNameFromProperty($property, $setter)];
-        $closure = Closure::fromCallable($callable);
-
-        /**
-        * @var scalar|array|object|null
-        */
-        $out = $closure->__invoke($v);
-
-        return $out;
+        return $this->{TypeUtilities::MethodNameFromProperty($property, $setter)}($v);
     }
 }
