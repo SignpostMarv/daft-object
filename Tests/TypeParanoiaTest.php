@@ -50,8 +50,8 @@ class TypeParanoiaTest extends TestCase
         string $method = __METHOD__
     ) {
         if (is_array($maybe)) {
-            static::assertInternalType(
-                'array',
+            static::assertSame(
+                $maybe,
                 TypeParanoia::EnsureArgumentIsArray($maybe, $argument, $method)
             );
         } else {

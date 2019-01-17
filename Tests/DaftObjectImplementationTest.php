@@ -1420,14 +1420,7 @@ class DaftObjectImplementationTest extends TestCase
             }
         }
 
-        /**
-        * @var scalar|array|object|null
-        */
         $propertiesChangeProperties = $className::DaftObjectPropertiesChangeOtherProperties();
-
-        static::assertInternalType('array', $propertiesChangeProperties);
-
-        $propertiesChangeProperties = (array) $propertiesChangeProperties;
 
         $propertiesChangePropertiesCount = count($propertiesChangeProperties);
 
@@ -1628,7 +1621,7 @@ class DaftObjectImplementationTest extends TestCase
             }
 
             if (isset($args[$setterProperty])) {
-                $obj->$setterProperty = $args[$setterProperty];
+                $obj->__set($setterProperty, $args[$setterProperty]);
 
                 foreach ($propertiesExpectedToBeChanged as $property) {
                     static::assertTrue(
@@ -1676,7 +1669,7 @@ class DaftObjectImplementationTest extends TestCase
                 continue;
             }
 
-            $obj->$property = $args[$property];
+            $obj->__set($property, $args[$property]);
 
             if (isset($otherProperties[$property])) {
                 $propertiesExpectedToBeChanged = array_merge(
@@ -1693,10 +1686,7 @@ class DaftObjectImplementationTest extends TestCase
                 */
                 $expecting = $args[$property];
 
-                /**
-                * @var scalar|array|object|null
-                */
-                $compareTo = $obj->$property;
+                $compareTo = $obj->__get($property);
 
                 if (
                     ($expecting !== $compareTo) &&
@@ -1742,7 +1732,7 @@ class DaftObjectImplementationTest extends TestCase
             if ($obj->HasPropertyChanged($property)) {
                 if ($checkGetterIsNull) {
                     static::assertTrue(
-                        isset($obj->$property),
+                        $obj->__isset($property),
                         (
                             $className .
                             '::__isset(' .
@@ -1756,12 +1746,12 @@ class DaftObjectImplementationTest extends TestCase
                     );
                 }
 
-                unset($obj->$property);
+                $obj->__unset($property);
             }
 
             if ($checkGetterIsNull) {
                 static::assertNull(
-                    $obj->$property,
+                    $obj->__get($property),
                     ($className . '::$' . $property . ' must be null after being unset')
                 );
             }
@@ -1822,7 +1812,7 @@ class DaftObjectImplementationTest extends TestCase
             /**
             * @var array|bool
             */
-            $decoded = json_decode((string) $json, true);
+            $decoded = json_decode($json, true);
 
             static::assertInternalType(
                 'array',
@@ -2202,7 +2192,7 @@ class DaftObjectImplementationTest extends TestCase
             $property
         );
 
-        $obj->$property = $args[$property];
+        $obj->__set($property, $args[$property]);
     }
 
     /**
@@ -2231,7 +2221,7 @@ class DaftObjectImplementationTest extends TestCase
 
         $obj = new $className([], true);
 
-        $obj->$property = $args[$property];
+        $obj->__set($property, $args[$property]);
 
         $this->expectException(DaftObject\PropertyNotRewriteableException::class);
         $this->expectExceptionMessage(
@@ -2241,7 +2231,7 @@ class DaftObjectImplementationTest extends TestCase
             $property
         );
 
-        $obj->$property = $args[$property];
+        $obj->__set($property, $args[$property]);
     }
 
     /**
@@ -2541,12 +2531,7 @@ class DaftObjectImplementationTest extends TestCase
                 method_exists($obj, $expectedMethod) &&
                 (new ReflectionMethod($obj, $expectedMethod))->isPublic()
             ) {
-                /**
-                * @var scalar|array|DaftObject\DaftObject|null
-                */
-                $res = $obj->$expectedMethod();
-
-                $props[$prop] = $res;
+                $props[$prop] = $obj->__get($prop);
             }
         }
 
