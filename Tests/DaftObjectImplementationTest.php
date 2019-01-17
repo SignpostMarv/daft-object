@@ -1420,6 +1420,9 @@ class DaftObjectImplementationTest extends TestCase
             }
         }
 
+        /**
+        * @var array<string, array<int, string>>
+        */
         $propertiesChangeProperties = $className::DaftObjectPropertiesChangeOtherProperties();
 
         $propertiesChangePropertiesCount = count($propertiesChangeProperties);
@@ -2182,6 +2185,9 @@ class DaftObjectImplementationTest extends TestCase
             return;
         }
 
+        /**
+        * @var DaftObject\DaftObject
+        */
         $obj = new $className($args, true);
 
         $this->expectException(DaftObject\PropertyNotRewriteableException::class);
@@ -2219,6 +2225,9 @@ class DaftObjectImplementationTest extends TestCase
             return;
         }
 
+        /**
+        * @var DaftObject\DaftObject
+        */
         $obj = new $className([], true);
 
         $obj->__set($property, $args[$property]);
@@ -2531,9 +2540,19 @@ class DaftObjectImplementationTest extends TestCase
                 method_exists($obj, $expectedMethod) &&
                 (new ReflectionMethod($obj, $expectedMethod))->isPublic()
             ) {
-                $props[$prop] = $obj->__get($prop);
+                /**
+                * @var scalar|array|object|null
+                */
+                $propVal = $obj->__get($prop);
+
+                $props[$prop] = $propVal;
             }
         }
+
+        /**
+        * @var array<string, scalar|array|DaftObject\DaftObject|null>
+        */
+        $props = $props;
 
         return static::RegexForArray(get_class($obj), $props);
     }

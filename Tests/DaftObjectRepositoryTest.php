@@ -377,6 +377,9 @@ class DaftObjectRepositoryTest extends TestCase
                 true === method_exists($retrieved, $getter) &&
                 true === is_numeric($obj->__get($prop))
             ) {
+                /**
+                * @var scalar|array|object|null
+                */
                 $propVal = $retrieved->__get($prop);
 
                 if ( ! is_null($propVal) && is_numeric($propVal)) {

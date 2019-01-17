@@ -424,7 +424,12 @@ class DaftTestObjectTest extends TestCase
                     new ReflectionMethod($obj, $expectedMethod)
                 )->isPublic()
             ) {
-                $props[$prop] = $obj->__get($prop);
+                /**
+                * @var scalar|array|object|null
+                */
+                $propVal = $obj->__get($prop);
+
+                $props[$prop] = $propVal;
             }
         }
 
@@ -518,6 +523,10 @@ class DaftTestObjectTest extends TestCase
         if ($readable) {
             $this->expectException($expectedExceptionType);
             $this->expectExceptionMessage($expectedExceptionMessage);
+
+            /**
+            * @var DaftObject
+            */
             $obj = new $implementation($params, $writeable);
 
             /**
@@ -531,6 +540,10 @@ class DaftTestObjectTest extends TestCase
         } elseif ($writeable) {
             $this->expectException($expectedExceptionType);
             $this->expectExceptionMessage($expectedExceptionMessage);
+
+            /**
+            * @var DaftObject
+            */
             $obj = new $implementation($params, $writeable);
         }
     }
@@ -553,6 +566,9 @@ class DaftTestObjectTest extends TestCase
             return;
         }
 
+        /**
+        * @var DefinesOwnIdPropertiesInterface
+        */
         $obj = new $implementation($params, false);
 
         /**
@@ -625,6 +641,9 @@ class DaftTestObjectTest extends TestCase
             return;
         }
 
+        /**
+        * @var DaftObject
+        */
         $obj = new $implementation();
 
         /**

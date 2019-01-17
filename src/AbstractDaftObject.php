@@ -320,6 +320,11 @@ abstract class AbstractDaftObject implements DaftObject
 
         $this->MaybeThrowOnDoGetSet($property, $setter, $props);
 
-        return $this->{TypeUtilities::MethodNameFromProperty($property, $setter)}($v);
+        /**
+        * @var scalar|array|object|null
+        */
+        $out = $this->{TypeUtilities::MethodNameFromProperty($property, $setter)}($v);
+
+        return $out;
     }
 }

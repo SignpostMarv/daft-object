@@ -191,6 +191,9 @@ class DaftObjectGetterSetterTest extends TestCase
 
         $arr[$property] = $value;
 
+        /**
+        * @var DaftObject
+        */
         $obj = new $implementation($arr);
 
         static::assertSame($value, $obj->__get($property));
@@ -283,6 +286,9 @@ class DaftObjectGetterSetterTest extends TestCase
             return;
         }
 
+        /**
+        * @var DaftObject
+        */
         $obj = new $implementation([
             $property => $value,
         ]);
@@ -320,6 +326,9 @@ class DaftObjectGetterSetterTest extends TestCase
             return;
         }
 
+        /**
+        * @var DaftObject
+        */
         $obj = new $implementation();
 
         $this->expectException(NotPublicSetterPropertyException::class);

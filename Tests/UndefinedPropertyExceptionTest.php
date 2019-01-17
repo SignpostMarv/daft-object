@@ -75,6 +75,9 @@ class UndefinedPropertyExceptionTest extends TestCase
             $property
         ));
 
+        /**
+        * @var DaftObject
+        */
         $obj = new $implementation($args, $writeAll);
 
         if ($getNotSet) {
