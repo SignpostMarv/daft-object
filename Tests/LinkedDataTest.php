@@ -10,7 +10,7 @@ use SignpostMarv\DaftObject\LinkedData\HasId;
 
 class LinkedDataTest extends TestCase
 {
-    public function testJsonEncode() : void
+    public function testJsonEncode()
     {
         $foo = new HasId(['@id' => 'foo']);
 

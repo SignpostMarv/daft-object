@@ -32,7 +32,7 @@ interface DaftObject
     *
     * @throws NotPublicSetterPropertyException if a property is not publicly settable
     */
-    public function __set(string $property, $v) : void;
+    public function __set(string $property, $v);
 
     /**
     * required to support isset($foo->bar);.
