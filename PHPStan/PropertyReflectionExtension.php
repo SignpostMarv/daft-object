@@ -167,6 +167,25 @@ class PropertyReflectionExtension implements PropertyReflection
     {
         if ( ! TypeParanoia::IsSubThingStrings($className, DaftObject::class)) {
             return self::BOOL_CLASS_NOT_DAFTOBJECT;
+        } elseif (interface_exists($className)) {
+            $getter = TypeUtilities::MethodNameFromProperty(
+                $property,
+                self::BOOL_SETNOTGET_GETTER
+            );
+            $setter = TypeUtilities::MethodNameFromProperty(
+                $property,
+                self::BOOL_SETNOTGET_SETTER
+            );
+
+            return
+                (
+                    method_exists($className, $getter) &&
+                    (new ReflectionMethod($className, $getter))->isPublic()
+                ) ||
+                (
+                    method_exists($className, $setter) &&
+                    (new ReflectionMethod($className, $setter))->isPublic()
+                );
         }
 
         return
