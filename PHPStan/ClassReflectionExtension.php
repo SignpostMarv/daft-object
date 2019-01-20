@@ -42,13 +42,10 @@ class ClassReflectionExtension implements BrokerAwareExtension, PropertiesClassR
     {
         $className = $classReflection->getName();
 
-        if ( ! TypeParanoia::IsThingStrings($className, DaftObject::class)) {
-            return self::BOOL_DOES_NOT_HAVE_PROPERTY;
-        } elseif (
-            DefinitionAssistant::IsTypeUnregistered($className) &&
-            TypeParanoia::IsThingStrings($className, AbstractDaftObject::class)
-        ) {
-            DefinitionAssistant::RegisterAbstractDaftObjectType($className);
+        $maybeExitEarly = $this->MaybeRegisterTypesOrExitEarly($classReflection, $propertyName);
+
+        if (is_bool($maybeExitEarly)) {
+            return $maybeExitEarly;
         }
 
         $property = ucfirst($propertyName);
@@ -74,5 +71,26 @@ class ClassReflectionExtension implements BrokerAwareExtension, PropertiesClassR
         }
 
         return new PropertyReflectionExtension($ref, $this->broker, $propertyName);
+    }
+
+    /**
+    * @return bool|null
+    */
+    protected function MaybeRegisterTypesOrExitEarly(
+        ClassReflection $classReflection,
+        string $propertyName
+    ) {
+        $className = $classReflection->getName();
+
+        if ( ! TypeParanoia::IsThingStrings($className, DaftObject::class)) {
+            return self::BOOL_DOES_NOT_HAVE_PROPERTY;
+        } elseif (
+            DefinitionAssistant::IsTypeUnregistered($className) &&
+            TypeParanoia::IsThingStrings($className, AbstractDaftObject::class)
+        ) {
+            DefinitionAssistant::RegisterAbstractDaftObjectType($className);
+        }
+
+        return null;
     }
 }
