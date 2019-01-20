@@ -1,7 +1,19 @@
-<phpunit bootstrap="./vendor/autoload.php">
+<phpunit bootstrap="./phpunit-bootstrap.php">
   <testsuites>
     <testsuite name="DaftObject">
-      <directory>./Tests/</directory>
+      <directory>./Tests/DaftObject/</directory>
+    </testsuite>
+    <testsuite name="DaftJson">
+      <directory>./Tests/DaftJson/</directory>
+    </testsuite>
+    <testsuite name="DaftObjectRepository">
+      <directory>./Tests/DaftObjectRepository/</directory>
+    </testsuite>
+    <testsuite name="PHPStan">
+      <directory>./Tests/PHPStan/</directory>
+    </testsuite>
+    <testsuite name="DefinitionAssistant">
+      <directory>./Tests/DefinitionAssistant/</directory>
     </testsuite>
   </testsuites>
   <logging>

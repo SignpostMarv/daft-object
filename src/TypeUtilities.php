@@ -23,6 +23,8 @@ class TypeUtilities
 
     const BOOL_METHOD_IS_NON_PUBLIC = false;
 
+    const BOOL_DEFAULT_SET_NOT_GET = false;
+
     const SUPPORTED_INVALID_LEADING_CHARACTERS = [
         '@',
     ];
@@ -58,8 +60,10 @@ class TypeUtilities
         return self::$publicSetters[$class];
     }
 
-    public static function MethodNameFromProperty(string $prop, bool $SetNotGet = false) : string
-    {
+    public static function MethodNameFromProperty(
+        string $prop,
+        bool $SetNotGet = self::BOOL_DEFAULT_SET_NOT_GET
+    ) : string {
         if (TypeParanoia::MaybeInArray(mb_substr($prop, 0, 1), self::SUPPORTED_INVALID_LEADING_CHARACTERS)) {
             return ($SetNotGet ? 'Alter' : 'Obtain') . ucfirst(mb_substr($prop, 1));
         }
@@ -136,7 +140,7 @@ class TypeUtilities
             self::$publicSetters[$class] = [];
 
             if (TypeParanoia::IsThingStrings($class, DefinesOwnIdPropertiesInterface::class)) {
-                self::$Getters[$class]['id'] = true;
+                self::$Getters[$class]['id'] = self::BOOL_METHOD_IS_PUBLIC;
             }
 
             self::CachePublicGettersAndSettersProperties($class);
@@ -145,12 +149,9 @@ class TypeUtilities
 
     private static function CachePublicGettersAndSettersProperties(string $class)
     {
-        /**
-        * @var string[]
-        */
-        $props = $class::DaftObjectProperties();
-
-        foreach ($props as $prop) {
+        foreach (
+            DefinitionAssistant::ObtainExpectedOrDefaultPropertiesWithAutoRegister($class) as $prop
+        ) {
             if (static::HasMethod($class, $prop, self::BOOL_EXPECTING_GETTER)) {
                 self::$Getters[$class][$prop] = self::BOOL_METHOD_IS_PUBLIC;
             } elseif (static::HasMethod(

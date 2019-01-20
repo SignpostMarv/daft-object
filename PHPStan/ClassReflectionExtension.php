@@ -14,12 +14,16 @@ use PHPStan\Reflection\BrokerAwareExtension;
 use PHPStan\Reflection\ClassReflection;
 use PHPStan\Reflection\PropertiesClassReflectionExtension;
 use PHPStan\Reflection\PropertyReflection;
+use SignpostMarv\DaftObject\AbstractDaftObject;
 use SignpostMarv\DaftObject\DaftObject;
+use SignpostMarv\DaftObject\DefinitionAssistant;
 use SignpostMarv\DaftObject\TypeParanoia;
 use SignpostMarv\DaftObject\TypeUtilities;
 
 class ClassReflectionExtension implements BrokerAwareExtension, PropertiesClassReflectionExtension
 {
+    const BOOL_DOES_NOT_HAVE_PROPERTY = false;
+
     const BOOL_SETNOTGET_SETTER = true;
 
     const BOOL_SETNOTGET_GETTER = false;
@@ -38,16 +42,26 @@ class ClassReflectionExtension implements BrokerAwareExtension, PropertiesClassR
     {
         $className = $classReflection->getName();
 
+        if ( ! TypeParanoia::IsThingStrings($className, DaftObject::class)) {
+            return self::BOOL_DOES_NOT_HAVE_PROPERTY;
+        } elseif (
+            DefinitionAssistant::IsTypeUnregistered($className) &&
+            TypeParanoia::IsThingStrings($className, AbstractDaftObject::class)
+        ) {
+            DefinitionAssistant::RegisterAbstractDaftObjectType($className);
+        }
+
         $property = ucfirst($propertyName);
         $getter = TypeUtilities::MethodNameFromProperty($property, self::BOOL_SETNOTGET_GETTER);
         $setter = TypeUtilities::MethodNameFromProperty($property, self::BOOL_SETNOTGET_SETTER);
 
         return
-            TypeParanoia::IsThingStrings($className, DaftObject::class) &&
-            (
-                $classReflection->getNativeReflection()->hasMethod($getter) ||
-                $classReflection->getNativeReflection()->hasMethod($setter)
-            );
+            TypeParanoia::MaybeInArray(
+                $property,
+                DefinitionAssistant::ObtainExpectedProperties($className)
+            ) ||
+            $classReflection->getNativeReflection()->hasMethod($getter) ||
+            $classReflection->getNativeReflection()->hasMethod($setter);
     }
 
     public function getProperty(ClassReflection $ref, string $propertyName) : PropertyReflection

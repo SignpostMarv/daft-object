@@ -4,7 +4,7 @@
 */
 declare(strict_types=1);
 
-namespace SignpostMarv\DaftObject\Tests;
+namespace SignpostMarv\DaftObject\Tests\DaftObject;
 
 use DateTimeImmutable;
 use Generator;
@@ -13,7 +13,34 @@ use ReflectionClass;
 use ReflectionFunction;
 use ReflectionMethod;
 use ReflectionType;
-use SignpostMarv\DaftObject;
+use SignpostMarv\DaftObject\AbstractArrayBackedDaftObject;
+use SignpostMarv\DaftObject\AbstractDaftObject;
+use SignpostMarv\DaftObject\AbstractTestObject;
+use SignpostMarv\DaftObject\ClassDoesNotImplementClassException;
+use SignpostMarv\DaftObject\DaftJson;
+use SignpostMarv\DaftObject\DaftObject;
+use SignpostMarv\DaftObject\DaftObjectCreatedByArray;
+use SignpostMarv\DaftObject\DaftObjectHasPropertiesWithMultiTypedArraysOfUniqueValues;
+use SignpostMarv\DaftObject\DaftObjectNotDaftJsonBadMethodCallException;
+use SignpostMarv\DaftObject\DaftObjectWorm;
+use SignpostMarv\DaftObject\DaftSortableObject;
+use SignpostMarv\DaftObject\DateTimeImmutableTestObject;
+use SignpostMarv\DaftObject\DefinesOwnIdPropertiesInterface;
+use SignpostMarv\DaftObject\IntegerIdBasedDaftObject;
+use SignpostMarv\DaftObject\JsonTypeUtilities;
+use SignpostMarv\DaftObject\NudgesIncorrectly;
+use SignpostMarv\DaftObject\PasswordHashTestObject;
+use SignpostMarv\DaftObject\PropertyNotNullableException;
+use SignpostMarv\DaftObject\PropertyNotRewriteableException;
+use SignpostMarv\DaftObject\ReadOnlyBad;
+use SignpostMarv\DaftObject\ReadOnlyBadDefinesOwnId;
+use SignpostMarv\DaftObject\ReadOnlyInsuficientIdProperties;
+use SignpostMarv\DaftObject\ReadWrite;
+use SignpostMarv\DaftObject\ReadWriteJson;
+use SignpostMarv\DaftObject\ReadWriteJsonJson;
+use SignpostMarv\DaftObject\ReadWriteJsonJsonArray;
+use SignpostMarv\DaftObject\SortableReadWrite;
+use SignpostMarv\DaftObject\Tests\TestCase;
 use SignpostMarv\DaftObject\TypeUtilities;
 
 class DaftObjectImplementationTest extends TestCase
@@ -29,12 +56,12 @@ class DaftObjectImplementationTest extends TestCase
                 '/tests-src/LinkedData/*.php' => 'SignpostMarv\\DaftObject\\LinkedData\\',
             ] as $glob => $ns
         ) {
-            $files = glob(dirname(__DIR__) . $glob);
+            $files = glob(__DIR__ . '/../..' . $glob);
             foreach ($files as $file) {
                 if (
                     is_file($file) &&
                     class_exists($className = ($ns . pathinfo($file, PATHINFO_FILENAME))) &&
-                    is_a($className, DaftObject\DaftObject::class, true)
+                    is_a($className, DaftObject::class, true)
                 ) {
                     yield [$className];
                 }
@@ -49,7 +76,7 @@ class DaftObjectImplementationTest extends TestCase
         $implementations = array_filter($this->InvalidImplementations(), 'is_string');
 
         foreach ($implementations as $arg) {
-            if (class_exists($arg) && is_a($arg, DaftObject\DaftObject::class, true)) {
+            if (class_exists($arg) && is_a($arg, DaftObject::class, true)) {
                 $out[] = $arg;
             }
         }
@@ -68,7 +95,7 @@ class DaftObjectImplementationTest extends TestCase
             list($className) = $args;
             if (
                 is_string($className) &&
-                is_a($className, DaftObject\DaftObject::class, true) &&
+                is_a($className, DaftObject::class, true) &&
                 false === (($reflector = new ReflectionClass($className))->isAbstract())
             ) {
                 yield [$className, $reflector];
@@ -97,12 +124,12 @@ class DaftObjectImplementationTest extends TestCase
                     );
 
                     return;
-                } elseif ( ! is_subclass_of($implementation, DaftObject\DaftObject::class, true)) {
+                } elseif ( ! is_subclass_of($implementation, DaftObject::class, true)) {
                     static::markTestSkipped(
                         'Index 0 retrieved from ' .
                         get_class($this) .
                         '::dataProviderNonAbstractImplementations must be an implementation of ' .
-                        DaftObject\DaftObject::class
+                        DaftObject::class
                     );
 
                     return;
@@ -146,7 +173,7 @@ class DaftObjectImplementationTest extends TestCase
             if (false === in_array($args[0] ?? null, $invalid, true)) {
                 list($implementation) = $args;
 
-                if (is_subclass_of($implementation, DaftObject\DaftObject::class, true)) {
+                if (is_subclass_of($implementation, DaftObject::class, true)) {
                     /**
                     * @var array
                     */
@@ -191,12 +218,12 @@ class DaftObjectImplementationTest extends TestCase
                 );
 
                 return;
-            } elseif ( ! is_subclass_of($className, DaftObject\DaftObject::class, true)) {
+            } elseif ( ! is_subclass_of($className, DaftObject::class, true)) {
                 static::markTestSkipped(
                     'Index 0 retrieved from ' .
                     get_class($this) .
                     '::dataProviderNonAbstractGoodImplementations must be an implementation of ' .
-                    DaftObject\DaftObject::class
+                    DaftObject::class
                 );
 
                 return;
@@ -226,7 +253,7 @@ class DaftObjectImplementationTest extends TestCase
             */
             $className = $args[0];
 
-            if (is_a($className, DaftObject\DefinesOwnIdPropertiesInterface::class, true)) {
+            if (is_a($className, DefinesOwnIdPropertiesInterface::class, true)) {
                 yield $args;
             }
         }
@@ -250,12 +277,12 @@ class DaftObjectImplementationTest extends TestCase
             */
             $className = $args[0];
 
-            if ( ! is_subclass_of($className, DaftObject\DaftObject::class, true)) {
+            if ( ! is_subclass_of($className, DaftObject::class, true)) {
                 static::markTestSkipped(
                     'Index 0 retrieved from ' .
                     get_class($this) .
                     '::dataProviderNonAbstractGoodImplementations must be an implementation of ' .
-                    DaftObject\DaftObject::class
+                    DaftObject::class
                 );
 
                 return;
@@ -292,12 +319,12 @@ class DaftObjectImplementationTest extends TestCase
             */
             $className = $args[0];
 
-            if ( ! is_subclass_of($className, DaftObject\DaftObject::class, true)) {
+            if ( ! is_subclass_of($className, DaftObject::class, true)) {
                 static::markTestSkipped(
                     'Index 0 retrieved from ' .
                     get_class($this) .
                     '::dataProviderNonAbstractGoodImplementations must be an implementation of ' .
-                    DaftObject\DaftObject::class
+                    DaftObject::class
                 );
 
                 return;
@@ -342,12 +369,12 @@ class DaftObjectImplementationTest extends TestCase
             */
             $className = $args[0];
 
-            if ( ! is_subclass_of($className, DaftObject\DaftObject::class, true)) {
+            if ( ! is_subclass_of($className, DaftObject::class, true)) {
                 static::markTestSkipped(
                     'Index 0 retrieved from ' .
                     get_class($this) .
                     '::dataProviderNonAbstractGoodImplementations must be an implementation of ' .
-                    DaftObject\DaftObject::class
+                    DaftObject::class
                 );
 
                 return;
@@ -405,7 +432,7 @@ class DaftObjectImplementationTest extends TestCase
             */
             $className = $args[0];
 
-            if ( ! is_subclass_of($className, DaftObject\DaftObject::class, true)) {
+            if ( ! is_subclass_of($className, DaftObject::class, true)) {
                 continue;
             }
 
@@ -440,12 +467,12 @@ class DaftObjectImplementationTest extends TestCase
             */
             $className = $args[0];
 
-            if ( ! is_subclass_of($className, DaftObject\DaftObject::class, true)) {
+            if ( ! is_subclass_of($className, DaftObject::class, true)) {
                 static::markTestSkipped(
                     'Index 0 retrieved from ' .
                     get_class($this) .
                     '::dataProviderGoodNonAbstractGetterSetters must be an implementation of ' .
-                    DaftObject\DaftObject::class
+                    DaftObject::class
                 );
 
                 return;
@@ -470,7 +497,7 @@ class DaftObjectImplementationTest extends TestCase
 
             $definesOwnId = is_a(
                 $className,
-                DaftObject\DefinesOwnIdPropertiesInterface::class,
+                DefinesOwnIdPropertiesInterface::class,
                 true
             );
 
@@ -491,7 +518,7 @@ class DaftObjectImplementationTest extends TestCase
             if (
                 isset($args[0]) &&
                 is_string($args[0]) &&
-                is_a($args[0], DaftObject\DaftSortableObject::class, true)
+                is_a($args[0], DaftSortableObject::class, true)
             ) {
                 yield $args;
             }
@@ -509,8 +536,8 @@ class DaftObjectImplementationTest extends TestCase
             if (
                 isset($args[0]) &&
                 is_string($args[0]) &&
-                is_a($args[0], DaftObject\AbstractDaftObject::class, true) &&
-                ! is_a($args[0], DaftObject\DaftSortableObject::class, true)
+                is_a($args[0], AbstractDaftObject::class, true) &&
+                ! is_a($args[0], DaftSortableObject::class, true)
             ) {
                 yield $args;
             }
@@ -531,7 +558,7 @@ class DaftObjectImplementationTest extends TestCase
                 isset($args[0], $args[1]) &&
                 is_string($args[0]) &&
                 is_array($args[1]) &&
-                is_a($args[0], DaftObject\DaftObject::class, true)
+                is_a($args[0], DaftObject::class, true)
             ) {
                 $validKeys = true;
 
@@ -589,7 +616,7 @@ class DaftObjectImplementationTest extends TestCase
 
                 if (is_a($className, $implementation, true)) {
                     /**
-                    * @var DaftObject\DaftObject
+                    * @var DaftObject
                     */
                     $className = $className;
 
@@ -673,7 +700,7 @@ class DaftObjectImplementationTest extends TestCase
             */
             $interfaceCheck = $args[0];
 
-            if ( ! is_a($interfaceCheck, DaftObject\DaftObjectWorm::class, true)) {
+            if ( ! is_a($interfaceCheck, DaftObjectWorm::class, true)) {
                 yield $args;
             }
         }
@@ -693,8 +720,8 @@ class DaftObjectImplementationTest extends TestCase
             $className = $args[0];
 
             if (
-                false === is_a($className, DaftObject\DaftJson::class, true) &&
-                is_a($className, DaftObject\AbstractArrayBackedDaftObject::class, true)
+                false === is_a($className, DaftJson::class, true) &&
+                is_a($className, AbstractArrayBackedDaftObject::class, true)
             ) {
                 yield $args;
             }
@@ -739,7 +766,7 @@ class DaftObjectImplementationTest extends TestCase
             */
             $className = $args[0];
 
-            if (is_a($className, DaftObject\DaftObjectWorm::class, true)) {
+            if (is_a($className, DaftObjectWorm::class, true)) {
                 yield $args;
             }
         }
@@ -765,13 +792,13 @@ class DaftObjectImplementationTest extends TestCase
             */
             $className = $args[0];
 
-            if ( ! is_subclass_of($className, DaftObject\DaftObject::class, true)) {
+            if ( ! is_subclass_of($className, DaftObject::class, true)) {
                 static::markTestSkipped(
                     'Index 0 retrieved from ' .
                     get_class($this) .
                     '::dataProviderNonAbstractGoodFuzzingHasSettersPerProperty' .
                     ' must be an implementation of ' .
-                    DaftObject\DaftObject::class
+                    DaftObject::class
                 );
 
                 return;
@@ -806,12 +833,12 @@ class DaftObjectImplementationTest extends TestCase
         string $className,
         ReflectionClass $reflector
     ) {
-        if ( ! is_subclass_of($className, DaftObject\DaftObject::class, true)) {
+        if ( ! is_subclass_of($className, DaftObject::class, true)) {
             static::markTestSkipped(
                 'Argument 1 passed to ' .
                 __METHOD__ .
                 ' must be an implementation of ' .
-                DaftObject\DaftObject::class
+                DaftObject::class
             );
 
             return;
@@ -843,12 +870,12 @@ class DaftObjectImplementationTest extends TestCase
         ReflectionClass $reflector,
         bool $hasMixedCase
     ) {
-        if ( ! is_subclass_of($className, DaftObject\DaftObject::class, true)) {
+        if ( ! is_subclass_of($className, DaftObject::class, true)) {
             static::markTestSkipped(
                 'Argument 1 passed to ' .
                 __METHOD__ .
                 ' must be an implementation of ' .
-                DaftObject\DaftObject::class
+                DaftObject::class
             );
 
             return;
@@ -876,12 +903,12 @@ class DaftObjectImplementationTest extends TestCase
         string $className,
         ReflectionClass $reflector
     ) {
-        if ( ! is_subclass_of($className, DaftObject\DefinesOwnIdPropertiesInterface::class, true)) {
+        if ( ! is_subclass_of($className, DefinesOwnIdPropertiesInterface::class, true)) {
             static::markTestSkipped(
                 'Argument 1 passed to ' .
                 __METHOD__ .
                 ' must be an implementation of ' .
-                DaftObject\DefinesOwnIdPropertiesInterface::class
+                DefinesOwnIdPropertiesInterface::class
             );
 
             return;
@@ -956,12 +983,12 @@ class DaftObjectImplementationTest extends TestCase
         string $className,
         ReflectionClass $reflector
     ) {
-        if ( ! is_subclass_of($className, DaftObject\DaftObject::class, true)) {
+        if ( ! is_subclass_of($className, DaftObject::class, true)) {
             static::markTestSkipped(
                 'Argument 1 passed to ' .
                 __METHOD__ .
                 ' must be an implementation of ' .
-                DaftObject\DaftObject::class
+                DaftObject::class
             );
 
             return;
@@ -1096,12 +1123,12 @@ class DaftObjectImplementationTest extends TestCase
         string $className,
         ReflectionClass $reflector
     ) {
-        if ( ! is_subclass_of($className, DaftObject\DaftObject::class, true)) {
+        if ( ! is_subclass_of($className, DaftObject::class, true)) {
             static::markTestSkipped(
                 'Argument 1 passed to ' .
                 __METHOD__ .
                 ' must be an implementation of ' .
-                DaftObject\DaftObject::class
+                DaftObject::class
             );
 
             return;
@@ -1152,10 +1179,10 @@ class DaftObjectImplementationTest extends TestCase
 
         if (0 === count($exportables) && count($properties) > 0) {
             static::assertFalse(
-                is_a($className, DaftObject\DaftJson::class, true),
+                is_a($className, DaftJson::class, true),
                 (
                     'Implementations with no exportables should not implement ' .
-                    DaftObject\DaftJson::class
+                    DaftJson::class
                 )
             );
         }
@@ -1178,12 +1205,12 @@ class DaftObjectImplementationTest extends TestCase
         string $className,
         ReflectionClass $reflector
     ) {
-        if ( ! is_subclass_of($className, DaftObject\DaftObject::class, true)) {
+        if ( ! is_subclass_of($className, DaftObject::class, true)) {
             static::markTestSkipped(
                 'Argument 1 passed to ' .
                 __METHOD__ .
                 ' must be an implementation of ' .
-                DaftObject\DaftObject::class
+                DaftObject::class
             );
 
             return;
@@ -1478,12 +1505,12 @@ class DaftObjectImplementationTest extends TestCase
         string $className,
         ReflectionMethod $reflector
     ) {
-        if ( ! is_subclass_of($className, DaftObject\DaftObject::class, true)) {
+        if ( ! is_subclass_of($className, DaftObject::class, true)) {
             static::markTestSkipped(
                 'Argument 1 passed to ' .
                 __METHOD__ .
                 ' must be an implementation of ' .
-                DaftObject\DaftObject::class
+                DaftObject::class
             );
 
             return;
@@ -1530,19 +1557,19 @@ class DaftObjectImplementationTest extends TestCase
         array $getters,
         array $setters
     ) {
-        if ( ! is_subclass_of($className, DaftObject\DaftObject::class, true)) {
+        if ( ! is_subclass_of($className, DaftObject::class, true)) {
             static::markTestSkipped(
                 'Argument 1 passed to ' .
                 __METHOD__ .
                 ' must be an implementation of ' .
-                DaftObject\DaftObject::class
+                DaftObject::class
             );
 
             return;
         }
 
         /**
-        * @var DaftObject\DaftObject
+        * @var DaftObject
         */
         $obj = new $className($args);
 
@@ -1553,7 +1580,7 @@ class DaftObjectImplementationTest extends TestCase
         );
 
         /**
-        * @var DaftObject\DaftObject
+        * @var DaftObject
         */
         $obj = new $className([]);
 
@@ -1661,7 +1688,7 @@ class DaftObjectImplementationTest extends TestCase
         }
 
         /**
-        * @var DaftObject\DaftObject
+        * @var DaftObject
         */
         $obj = new $className([]);
 
@@ -1773,12 +1800,12 @@ class DaftObjectImplementationTest extends TestCase
         array $getters,
         array $setters
     ) {
-        if ( ! is_subclass_of($className, DaftObject\DaftObject::class, true)) {
+        if ( ! is_subclass_of($className, DaftObject::class, true)) {
             static::markTestSkipped(
                 'Argument 1 passed to ' .
                 __METHOD__ .
                 ' must be an implementation of ' .
-                DaftObject\DaftObject::class
+                DaftObject::class
             );
 
             return;
@@ -1786,17 +1813,22 @@ class DaftObjectImplementationTest extends TestCase
 
         $obj = new $className($args);
 
-        if ($obj instanceof DaftObject\DaftJson) {
-            if ( ! is_subclass_of($className, DaftObject\DaftJson::class, true)) {
+        if ($obj instanceof DaftJson) {
+            if ( ! is_subclass_of($className, DaftJson::class, true)) {
                 static::markTestSkipped(
                     'Argument 1 passed to ' .
                     __METHOD__ .
                     ' must be an implementation of ' .
-                    DaftObject\DaftJson::class
+                    DaftJson::class
                 );
 
                 return;
             }
+
+            /**
+            * @var DaftJson
+            */
+            $className = $className;
 
             $obj->jsonSerialize();
 
@@ -1822,7 +1854,7 @@ class DaftObjectImplementationTest extends TestCase
                 $decoded,
                 (
                     'JSON-encoded implementations of ' .
-                    DaftObject\DaftJson::class .
+                    DaftJson::class .
                     ' (' .
                     get_class($obj) .
                     ')' .
@@ -1831,7 +1863,12 @@ class DaftObjectImplementationTest extends TestCase
             );
 
             /**
-            * @var DaftObject\DaftJson
+            * @var array
+            */
+            $decoded = $decoded;
+
+            /**
+            * @var DaftJson
             */
             $objFromJson = $className::DaftObjectFromJsonArray($decoded);
 
@@ -1840,13 +1877,13 @@ class DaftObjectImplementationTest extends TestCase
                 json_encode($objFromJson),
                 (
                     'JSON-encoded implementations of ' .
-                    DaftObject\DaftJson::class .
+                    DaftJson::class .
                     ' must encode($obj) the same as encode(decode($str))'
                 )
             );
 
             /**
-            * @var DaftObject\DaftJson
+            * @var DaftJson
             */
             $objFromJson = $className::DaftObjectFromJsonString($json);
 
@@ -1855,17 +1892,17 @@ class DaftObjectImplementationTest extends TestCase
                 json_encode($objFromJson),
                 (
                     'JSON-encoded implementations of ' .
-                    DaftObject\DaftJson::class .
+                    DaftJson::class .
                     ' must encode($obj) the same as encode(decode($str))'
                 )
             );
         } else {
             if (method_exists($obj, 'jsonSerialize')) {
-                $this->expectException(DaftObject\DaftObjectNotDaftJsonBadMethodCallException::class);
+                $this->expectException(DaftObjectNotDaftJsonBadMethodCallException::class);
                 $this->expectExceptionMessage(sprintf(
                     '%s does not implement %s',
                     $className,
-                    DaftObject\DaftJson::class
+                    DaftJson::class
                 ));
 
                 $obj->jsonSerialize();
@@ -1875,7 +1912,7 @@ class DaftObjectImplementationTest extends TestCase
             static::markTestSkipped(sprintf(
                 '%s does not implement %s or %s::jsonSerialize()',
                 $className,
-                DaftObject\DaftJson::class,
+                DaftJson::class,
                 $className
             ));
 
@@ -1895,22 +1932,22 @@ class DaftObjectImplementationTest extends TestCase
         array $getters,
         array $setters
     ) {
-        if ( ! is_a($className, DaftObject\AbstractArrayBackedDaftObject::class, true)) {
+        if ( ! is_a($className, AbstractArrayBackedDaftObject::class, true)) {
             static::markTestSkipped(
                 'Argument 1 passed to ' .
                 __METHOD__ .
                 ' must be an implementation of ' .
-                DaftObject\AbstractArrayBackedDaftObject::class
+                AbstractArrayBackedDaftObject::class
             );
 
             return;
         }
 
-        $this->expectException(DaftObject\DaftObjectNotDaftJsonBadMethodCallException::class);
+        $this->expectException(DaftObjectNotDaftJsonBadMethodCallException::class);
         $this->expectExceptionMessage(sprintf(
             '%s does not implement %s',
             $className,
-            DaftObject\DaftJson::class
+            DaftJson::class
         ));
 
         $className::DaftObjectFromJsonArray([]);
@@ -1928,30 +1965,30 @@ class DaftObjectImplementationTest extends TestCase
         array $getters,
         array $setters
     ) {
-        if ( ! is_subclass_of($className, DaftObject\DaftObject::class, true)) {
+        if ( ! is_subclass_of($className, DaftObject::class, true)) {
             static::markTestSkipped(
                 'Argument 1 passed to ' .
                 __METHOD__ .
                 ' must be an implementation of ' .
-                DaftObject\DaftObject::class
+                DaftObject::class
             );
 
             return;
         }
 
         /**
-        * @var DaftObject\DaftObject
+        * @var DaftObject
         */
         $obj = new $className($args);
 
-        static::expectException(DaftObject\ClassDoesNotImplementClassException::class);
+        static::expectException(ClassDoesNotImplementClassException::class);
         static::expectExceptionMessage(sprintf(
             '%s does not implement %s',
             $className,
-            DaftObject\DaftJson::class
+            DaftJson::class
         ));
 
-        DaftObject\JsonTypeUtilities::ThrowIfDaftObjectObjectNotDaftJson($obj);
+        JsonTypeUtilities::ThrowIfDaftObjectObjectNotDaftJson($obj);
     }
 
     /**
@@ -1966,22 +2003,22 @@ class DaftObjectImplementationTest extends TestCase
         array $getters,
         array $setters
     ) {
-        if ( ! is_subclass_of($className, DaftObject\AbstractArrayBackedDaftObject::class, true)) {
+        if ( ! is_subclass_of($className, AbstractArrayBackedDaftObject::class, true)) {
             static::markTestSkipped(
                 'Argument 1 passed to ' .
                 __METHOD__ .
                 ' must be an implementation of ' .
-                DaftObject\AbstractArrayBackedDaftObject::class
+                AbstractArrayBackedDaftObject::class
             );
 
             return;
         }
 
-        $this->expectException(DaftObject\DaftObjectNotDaftJsonBadMethodCallException::class);
+        $this->expectException(DaftObjectNotDaftJsonBadMethodCallException::class);
         $this->expectExceptionMessage(sprintf(
             '%s does not implement %s',
             $className,
-            DaftObject\DaftJson::class
+            DaftJson::class
         ));
 
         $className::DaftObjectFromJsonString('{}');
@@ -2000,7 +2037,7 @@ class DaftObjectImplementationTest extends TestCase
         array $getters,
         array $setters
     ) {
-        if (is_a($className, DaftObject\DaftJson::class, true)) {
+        if (is_a($className, DaftJson::class, true)) {
             /**
             * @var array<int, string>
             */
@@ -2063,7 +2100,7 @@ class DaftObjectImplementationTest extends TestCase
                     );
 
                     static::assertTrue(
-                        is_a($v, DaftObject\DaftJson::class, true),
+                        is_a($v, DaftJson::class, true),
                         sprintf(
                             (
                                 'When %s::DaftObjectJsonProperties()' .
@@ -2073,7 +2110,7 @@ class DaftObjectImplementationTest extends TestCase
                                 'the value must be an implementation of %s'
                             ),
                             $className,
-                            DaftObject\DaftJson::class
+                            DaftJson::class
                         )
                     );
 
@@ -2144,16 +2181,16 @@ class DaftObjectImplementationTest extends TestCase
                     SORT_REGULAR
                 )
             );
-        } elseif (is_a($className, DaftObject\AbstractArrayBackedDaftObject::class, true)) {
-            $this->expectException(DaftObject\DaftObjectNotDaftJsonBadMethodCallException::class);
+        } elseif (is_a($className, AbstractArrayBackedDaftObject::class, true)) {
+            $this->expectException(DaftObjectNotDaftJsonBadMethodCallException::class);
             $this->expectExceptionMessage(sprintf(
                 '%s does not implement %s',
                 $className,
-                DaftObject\DaftJson::class
+                DaftJson::class
             ));
 
             /**
-            * @var DaftObject\DaftJson
+            * @var DaftJson
             */
             $className = $className;
 
@@ -2174,23 +2211,23 @@ class DaftObjectImplementationTest extends TestCase
         array $setters,
         string $property
     ) {
-        if ( ! is_subclass_of($className, DaftObject\DaftObject::class, true)) {
+        if ( ! is_subclass_of($className, DaftObject::class, true)) {
             static::markTestSkipped(
                 'Argument 1 passed to ' .
                 __METHOD__ .
                 ' must be an implementation of ' .
-                DaftObject\DaftObject::class
+                DaftObject::class
             );
 
             return;
         }
 
         /**
-        * @var DaftObject\DaftObject
+        * @var DaftObject
         */
         $obj = new $className($args, true);
 
-        $this->expectException(DaftObject\PropertyNotRewriteableException::class);
+        $this->expectException(PropertyNotRewriteableException::class);
         $this->expectExceptionMessage(
             'Property not rewriteable: ' .
             $className .
@@ -2214,25 +2251,25 @@ class DaftObjectImplementationTest extends TestCase
         array $setters,
         string $property
     ) {
-        if ( ! is_subclass_of($className, DaftObject\DaftObject::class, true)) {
+        if ( ! is_subclass_of($className, DaftObject::class, true)) {
             static::markTestSkipped(
                 'Argument 1 passed to ' .
                 __METHOD__ .
                 ' must be an implementation of ' .
-                DaftObject\DaftObject::class
+                DaftObject::class
             );
 
             return;
         }
 
         /**
-        * @var DaftObject\DaftObject
+        * @var DaftObject
         */
         $obj = new $className([], true);
 
         $obj->__set($property, $args[$property]);
 
-        $this->expectException(DaftObject\PropertyNotRewriteableException::class);
+        $this->expectException(PropertyNotRewriteableException::class);
         $this->expectExceptionMessage(
             'Property not rewriteable: ' .
             $className .
@@ -2254,12 +2291,12 @@ class DaftObjectImplementationTest extends TestCase
         array $setters,
         string $property
     ) {
-        if ( ! is_subclass_of($className, DaftObject\AbstractDaftObject::class, true)) {
+        if ( ! is_subclass_of($className, AbstractDaftObject::class, true)) {
             static::markTestSkipped(
                 'Argument 1 passed to ' .
                 __METHOD__ .
                 ' must be an implementation of ' .
-                DaftObject\AbstractDaftObject::class
+                AbstractDaftObject::class
             );
 
             return;
@@ -2274,7 +2311,7 @@ class DaftObjectImplementationTest extends TestCase
 
             $method->setAccessible(true);
 
-            $this->expectException(DaftObject\PropertyNotNullableException::class);
+            $this->expectException(PropertyNotNullableException::class);
             $this->expectExceptionMessage(sprintf(
                 'Property not nullable: %s::$%s',
                 $className,
@@ -2297,7 +2334,7 @@ class DaftObjectImplementationTest extends TestCase
                 is_array($args) &&
                 count($args) >= 1 &&
                 is_string($args[0]) &&
-                is_a($args[0], DaftObject\DaftObjectCreatedByArray::class, true)
+                is_a($args[0], DaftObjectCreatedByArray::class, true)
             ) {
                 yield [$args[0], true];
                 yield [$args[0], false];
@@ -2314,10 +2351,10 @@ class DaftObjectImplementationTest extends TestCase
 
         foreach ($sources as $args) {
             if (
-                is_a($args[0], DaftObject\AbstractDaftObject::class, true) &&
+                is_a($args[0], AbstractDaftObject::class, true) &&
                 ! is_a(
                     $args[0],
-                    DaftObject\DaftObjectHasPropertiesWithMultiTypedArraysOfUniqueValues::class,
+                    DaftObjectHasPropertiesWithMultiTypedArraysOfUniqueValues::class,
                     true
                 )
             ) {
@@ -2331,12 +2368,12 @@ class DaftObjectImplementationTest extends TestCase
     */
     final public function testConstructorArrayKeys(string $className, bool $writeAll)
     {
-        if ( ! is_a($className, DaftObject\DaftObject::class, true)) {
+        if ( ! is_a($className, DaftObject::class, true)) {
             static::markTestSkipped(
                 'Argument 1 passed to ' .
                 __METHOD__ .
                 ' must be an implementation of ' .
-                DaftObject\DaftObject::class
+                DaftObject::class
             );
 
             return;
@@ -2353,12 +2390,12 @@ class DaftObjectImplementationTest extends TestCase
     */
     public function testSortableImplementation(string $className)
     {
-        if ( ! is_a($className, DaftObject\DaftSortableObject::class, true)) {
+        if ( ! is_a($className, DaftSortableObject::class, true)) {
             static::markTestSkipped(
                 'Argument 1 passed to ' .
                 __METHOD__ .
                 ' must be an implementation of ' .
-                DaftObject\DaftSortableObject::class
+                DaftSortableObject::class
             );
 
             return;
@@ -2410,12 +2447,12 @@ class DaftObjectImplementationTest extends TestCase
     */
     public function testNotSortableImplementation(string $className)
     {
-        if ( ! is_a($className, DaftObject\AbstractDaftObject::class, true)) {
+        if ( ! is_a($className, AbstractDaftObject::class, true)) {
             static::markTestSkipped(
                 'Argument 1 passed to ' .
                 __METHOD__ .
                 ' must be an implementation of ' .
-                DaftObject\AbstractDaftObject::class
+                AbstractDaftObject::class
             );
 
             return;
@@ -2423,15 +2460,15 @@ class DaftObjectImplementationTest extends TestCase
 
         static::assertFalse(is_subclass_of(
             $className,
-            DaftObject\DaftSortableObject::class,
+            DaftSortableObject::class,
             true
         ));
 
-        static::expectException(DaftObject\ClassDoesNotImplementClassException::class);
+        static::expectException(ClassDoesNotImplementClassException::class);
         static::expectExceptionMessage(sprintf(
             '%s does not implement %s',
             $className,
-            DaftObject\DaftSortableObject::class
+            DaftSortableObject::class
         ));
 
         $className::DaftSortableObjectProperties();
@@ -2439,13 +2476,13 @@ class DaftObjectImplementationTest extends TestCase
 
     public function testSortableObject()
     {
-        $a = new DaftObject\SortableReadWrite([
+        $a = new SortableReadWrite([
             'Foo' => 'a',
             'Bar' => 1.0,
             'Baz' => 1,
             'Bat' => false,
         ]);
-        $b = new DaftObject\SortableReadWrite([
+        $b = new SortableReadWrite([
             'Foo' => 'b',
             'Bar' => 2.0,
             'Baz' => 2,
@@ -2460,24 +2497,24 @@ class DaftObjectImplementationTest extends TestCase
 
     public function testNotSortableObject()
     {
-        $a = new DaftObject\ReadWrite([
+        $a = new ReadWrite([
             'Foo' => 'a',
             'Bar' => 1.0,
             'Baz' => 1,
             'Bat' => false,
         ]);
-        $b = new DaftObject\SortableReadWrite([
+        $b = new SortableReadWrite([
             'Foo' => 'b',
             'Bar' => 2.0,
             'Baz' => 2,
             'Bat' => true,
         ]);
 
-        static::expectException(DaftObject\ClassDoesNotImplementClassException::class);
+        static::expectException(ClassDoesNotImplementClassException::class);
         static::expectExceptionMessage(sprintf(
             '%s does not implement %s',
-            DaftObject\ReadWrite::class,
-            DaftObject\DaftSortableObject::class
+            ReadWrite::class,
+            DaftSortableObject::class
         ));
 
         $a->CompareToDaftSortableObject($b);
@@ -2489,22 +2526,22 @@ class DaftObjectImplementationTest extends TestCase
     public function testNotDaftObjectHasPropertiesWithMultiTypedArraysOfUniqueValues(
         string $implementation
     ) {
-        if ( ! is_a($implementation, DaftObject\AbstractDaftObject::class, true)) {
+        if ( ! is_a($implementation, AbstractDaftObject::class, true)) {
             static::markTestSkipped(
                 'Argument 1 passed to ' .
                 __METHOD__ .
                 ' must be an implementation of ' .
-                DaftObject\AbstractDaftObject::class
+                AbstractDaftObject::class
             );
 
             return;
         }
 
-        static::expectException(DaftObject\ClassDoesNotImplementClassException::class);
+        static::expectException(ClassDoesNotImplementClassException::class);
         static::expectExceptionMessage(
             $implementation .
             ' does not implement ' .
-            DaftObject\DaftObjectHasPropertiesWithMultiTypedArraysOfUniqueValues::class
+            DaftObjectHasPropertiesWithMultiTypedArraysOfUniqueValues::class
         );
 
         $implementation::DaftObjectPropertiesWithMultiTypedArraysOfUniqueValues();
@@ -2513,7 +2550,7 @@ class DaftObjectImplementationTest extends TestCase
     /**
     * @psalm-suppress ForbiddenCode
     */
-    final protected function VarDumpDaftObject(DaftObject\DaftObject $obj) : string
+    final protected function VarDumpDaftObject(DaftObject $obj) : string
     {
         ob_start();
         var_dump($obj);
@@ -2521,10 +2558,10 @@ class DaftObjectImplementationTest extends TestCase
         return (string) ob_get_clean();
     }
 
-    protected static function RegexForObject(DaftObject\DaftObject $obj) : string
+    protected static function RegexForObject(DaftObject $obj) : string
     {
         /**
-        * @var array<string, scalar|array|DaftObject\DaftObject|null>
+        * @var array<string, scalar|array|DaftObject|null>
         */
         $props = [];
 
@@ -2550,7 +2587,7 @@ class DaftObjectImplementationTest extends TestCase
         }
 
         /**
-        * @var array<string, scalar|array|DaftObject\DaftObject|null>
+        * @var array<string, scalar|array|DaftObject|null>
         */
         $props = $props;
 
@@ -2635,7 +2672,7 @@ class DaftObjectImplementationTest extends TestCase
                     )
             ) .
             (
-                ($val instanceof DaftObject\DaftObject)
+                ($val instanceof DaftObject)
                     ? ('(?:' . static::RegexForObject($val) . ')')
                     : preg_quote(
                         (
@@ -2659,10 +2696,10 @@ class DaftObjectImplementationTest extends TestCase
     protected function InvalidImplementations() : array
     {
         return [
-            DaftObject\NudgesIncorrectly::class,
-            DaftObject\ReadOnlyBad::class,
-            DaftObject\ReadOnlyBadDefinesOwnId::class,
-            DaftObject\ReadOnlyInsuficientIdProperties::class,
+            NudgesIncorrectly::class,
+            ReadOnlyBad::class,
+            ReadOnlyBadDefinesOwnId::class,
+            ReadOnlyInsuficientIdProperties::class,
         ];
     }
 
@@ -2670,7 +2707,7 @@ class DaftObjectImplementationTest extends TestCase
     {
         return [
             [
-                DaftObject\AbstractTestObject::class,
+                AbstractTestObject::class,
                 [
                     'Foo' => 'Foo',
                     'Bar' => 1.0,
@@ -2679,7 +2716,7 @@ class DaftObjectImplementationTest extends TestCase
                 ],
             ],
             [
-                DaftObject\AbstractTestObject::class,
+                AbstractTestObject::class,
                 [
                     'Foo' => 'Foo',
                     'Bar' => 2.0,
@@ -2688,7 +2725,7 @@ class DaftObjectImplementationTest extends TestCase
                 ],
             ],
             [
-                DaftObject\AbstractTestObject::class,
+                AbstractTestObject::class,
                 [
                     'Foo' => 'Foo',
                     'Bar' => 3.0,
@@ -2697,15 +2734,15 @@ class DaftObjectImplementationTest extends TestCase
                 ],
             ],
             [
-                DaftObject\PasswordHashTestObject::class,
+                PasswordHashTestObject::class,
                 [
                     'password' => 'foo',
                 ],
             ],
             [
-                DaftObject\ReadWriteJsonJson::class,
+                ReadWriteJsonJson::class,
                 [
-                    'json' => new DaftObject\ReadWriteJson([
+                    'json' => new ReadWriteJson([
                         'Foo' => 'Foo',
                         'Bar' => 1.0,
                         'Baz' => 2,
@@ -2714,9 +2751,9 @@ class DaftObjectImplementationTest extends TestCase
                 ],
             ],
             [
-                DaftObject\ReadWriteJsonJson::class,
+                ReadWriteJsonJson::class,
                 [
-                    'json' => new DaftObject\ReadWriteJson([
+                    'json' => new ReadWriteJson([
                         'Foo' => 'Foo',
                         'Bar' => 2.0,
                         'Baz' => 3,
@@ -2725,28 +2762,28 @@ class DaftObjectImplementationTest extends TestCase
                 ],
             ],
             [
-                DaftObject\ReadWriteJsonJsonArray::class,
+                ReadWriteJsonJsonArray::class,
                 [
                     'json' => [
-                        new DaftObject\ReadWriteJson([
+                        new ReadWriteJson([
                             'Foo' => 'Foo',
                             'Bar' => 3.0,
                             'Baz' => 4,
                             'Bat' => null,
                         ]),
-                        new DaftObject\ReadWriteJson([
+                        new ReadWriteJson([
                             'Foo' => 'Foo',
                             'Bar' => 1.0,
                             'Baz' => 2,
                             'Bat' => true,
                         ]),
-                        new DaftObject\ReadWriteJson([
+                        new ReadWriteJson([
                             'Foo' => 'Foo',
                             'Bar' => 2.0,
                             'Baz' => 3,
                             'Bat' => false,
                         ]),
-                        new DaftObject\ReadWriteJson([
+                        new ReadWriteJson([
                             'Foo' => 'Foo',
                             'Bar' => 3.0,
                             'Baz' => 4,
@@ -2756,25 +2793,25 @@ class DaftObjectImplementationTest extends TestCase
                 ],
             ],
             [
-                DaftObject\IntegerIdBasedDaftObject::class,
+                IntegerIdBasedDaftObject::class,
                 [
                     'Foo' => 1,
                 ],
             ],
             [
-                DaftObject\DateTimeImmutableTestObject::class,
+                DateTimeImmutableTestObject::class,
                 [
                     'datetime' => new DateTimeImmutable(date(
-                        DaftObject\DateTimeImmutableTestObject::STR_FORMAT_TEST,
+                        DateTimeImmutableTestObject::STR_FORMAT_TEST,
                         0
                     )),
                 ],
             ],
             [
-                DaftObject\DateTimeImmutableTestObject::class,
+                DateTimeImmutableTestObject::class,
                 [
                     'datetime' => new DateTimeImmutable(date(
-                        DaftObject\DateTimeImmutableTestObject::STR_FORMAT_TEST,
+                        DateTimeImmutableTestObject::STR_FORMAT_TEST,
                         1
                     )),
                 ],
@@ -2797,7 +2834,7 @@ class DaftObjectImplementationTest extends TestCase
         foreach ($implementations as $args) {
             if (
                 is_string($args[0]) &&
-                is_a($args[0], DaftObject\DaftSortableObject::class)
+                is_a($args[0], DaftSortableObject::class)
             ) {
                 yield $args;
             }
