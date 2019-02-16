@@ -14,12 +14,10 @@ use SignpostMarv\DaftObject\DefinesOwnIntegerIdInterface;
 use SignpostMarv\DaftObject\DefinesOwnStringIdInterface;
 use SignpostMarv\DaftObject\PropertyNotNullableException;
 use SignpostMarv\DaftObject\PropertyNotRewriteableException;
-use SignpostMarv\DaftObject\ReadOnly;
 use SignpostMarv\DaftObject\ReadOnlyTwoColumnPrimaryKey;
 use SignpostMarv\DaftObject\ReadWrite;
 use SignpostMarv\DaftObject\ReadWriteTwoColumnPrimaryKey;
 use SignpostMarv\DaftObject\ReadWriteWorm;
-use SignpostMarv\DaftObject\SuitableForRepositoryType;
 use SignpostMarv\DaftObject\Tests\TestCase;
 use SignpostMarv\DaftObject\UndefinedPropertyException;
 use SignpostMarv\DaftObject\WriteOnly;
@@ -31,39 +29,6 @@ class DaftTestObjectTest extends TestCase
     {
         return [
             [
-                ReadOnly::class,
-                [
-                    'Foo' => 'Foo',
-                    'Bar' => 1.0,
-                    'Baz' => 2,
-                    'Bat' => true,
-                ],
-                true,
-                false,
-            ],
-            [
-                ReadOnly::class,
-                [
-                    'Foo' => 'Foo',
-                    'Bar' => 2.0,
-                    'Baz' => 3,
-                    'Bat' => false,
-                ],
-                true,
-                false,
-            ],
-            [
-                ReadOnly::class,
-                [
-                    'Foo' => 'Foo',
-                    'Bar' => 3.0,
-                    'Baz' => 4,
-                    'Bat' => null,
-                ],
-                true,
-                false,
-            ],
-            [
                 ReadOnlyTwoColumnPrimaryKey::class,
                 [
                     'Foo' => 'Foo',
@@ -87,39 +52,6 @@ class DaftTestObjectTest extends TestCase
             ],
             [
                 ReadOnlyTwoColumnPrimaryKey::class,
-                [
-                    'Foo' => 'Foo',
-                    'Bar' => 3.0,
-                    'Baz' => 4,
-                    'Bat' => null,
-                ],
-                true,
-                false,
-            ],
-            [
-                ReadWriteTwoColumnPrimaryKey::class,
-                [
-                    'Foo' => 'Foo',
-                    'Bar' => 1.0,
-                    'Baz' => 2,
-                    'Bat' => true,
-                ],
-                true,
-                false,
-            ],
-            [
-                ReadWriteTwoColumnPrimaryKey::class,
-                [
-                    'Foo' => 'Foo',
-                    'Bar' => 2.0,
-                    'Baz' => 3,
-                    'Bat' => false,
-                ],
-                true,
-                false,
-            ],
-            [
-                ReadWriteTwoColumnPrimaryKey::class,
                 [
                     'Foo' => 'Foo',
                     'Bar' => 3.0,
@@ -160,50 +92,6 @@ class DaftTestObjectTest extends TestCase
                     'Bat' => null,
                 ],
                 false,
-                true,
-            ],
-            [
-                ReadWrite::class,
-                [
-                    'Foo' => 'Foo',
-                    'Bar' => 1.0,
-                    'Baz' => 2,
-                    'Bat' => true,
-                ],
-                true,
-                true,
-            ],
-            [
-                ReadWrite::class,
-                [
-                    'Foo' => 'Foo',
-                    'Bar' => 2.0,
-                    'Baz' => 3,
-                    'Bat' => false,
-                ],
-                true,
-                true,
-            ],
-            [
-                ReadWrite::class,
-                [
-                    'Foo' => 'Foo',
-                    'Bar' => 3.0,
-                    'Baz' => 4,
-                    'Bat' => null,
-                ],
-                true,
-                true,
-            ],
-            [
-                ReadWriteWorm::class,
-                [
-                    'Foo' => 'Foo',
-                    'Bar' => 3.0,
-                    'Baz' => 4,
-                    'Bat' => null,
-                ],
-                true,
                 true,
             ],
             [
@@ -479,117 +367,6 @@ class DaftTestObjectTest extends TestCase
             $this->expectExceptionMessage($expectedExceptionMessage);
             $obj = new $implementation($params, $writeable);
         }
-    }
-
-    /**
-    * @dataProvider DefinesOwnUntypedIdInterfaceProvider
-    *
-    * @psalm-param class-string<SuitableForRepositoryType> $implementation
-    *
-    * @psalm-suppress NoInterfaceProperties
-    */
-    public function testDefinesOwnUntypedIdInterface(string $implementation, array $params) : void
-    {
-        $obj = new $implementation($params, false);
-
-        /**
-        * @var array<int, scalar|array|object|null>|null
-        */
-        $val = $obj->id;
-
-        /**
-        * @var array<int, string>
-        */
-        $keys = $implementation::DaftObjectIdProperties();
-
-        if (count($keys) < self::MIN_EXPECTED_ARRAY_COUNT) {
-            $key = $keys[0];
-            static::assertSame($val, $obj->__get($key));
-        } else {
-            static::assertIsArray($val);
-
-            /**
-            * @var array<int, scalar|array|object|null>
-            */
-            $val = $val;
-
-            $keyVals = [];
-            foreach ($keys as $i => $key) {
-                static::assertSame($val[$i], $obj->__get($key));
-            }
-        }
-
-        if ($obj instanceof DefinesOwnStringIdInterface) {
-            /**
-            * @var scalar|null
-            */
-            $val = $val;
-
-            static::assertIsString($val);
-        } elseif ($obj instanceof DefinesOwnIntegerIdInterface) {
-            /**
-            * @var scalar|null
-            */
-            $val = $val;
-
-            static::assertIsInt($val);
-        }
-    }
-
-    public function RetrievePropertyValueFromDataNotNullableExceptionDataProvider() : array
-    {
-        return [
-            [
-                ReadOnly::class,
-            ],
-        ];
-    }
-
-    /**
-    * @dataProvider RetrievePropertyValueFromDataNotNullableExceptionDataProvider
-    *
-    * @psalm-param class-string<DaftObject> $implementation
-    */
-    public function testRetrievePropertyValueFromDataNotNullableException(
-        string $implementation
-    ) : void {
-        $obj = new $implementation();
-
-        /**
-        * @var array<int, string>
-        */
-        $props = $implementation::DaftObjectProperties();
-
-        /**
-        * @var array<int, string>
-        */
-        $nullables = $implementation::DaftObjectNullableProperties();
-
-        $allNullable = true;
-
-        foreach ($props as $prop) {
-            if (false === in_array($prop, $nullables, true)) {
-                $allNullable = false;
-                break;
-            }
-        }
-
-        if ($allNullable) {
-            static::markTestSkipped(
-                'Cannot test for not nullable exception if all properties are nullable'
-            );
-        }
-
-        $prop = $props[0];
-
-        $this->expectException(PropertyNotNullableException::class);
-        $this->expectExceptionMessage(sprintf(
-            'Property not nullable: %s::$%s',
-            $implementation,
-            $prop
-        ));
-
-        $obj->__get($prop);
     }
 
     /**

@@ -506,65 +506,6 @@ class DaftObjectImplementationTest extends TestCase
     }
 
     /**
-    * @psalm-param class-string<\SignpostMarv\DaftObject\SuitableForRepositoryType> $className
-    *
-    * @dataProvider dataProviderNonAbstractDefinesOwnIdGoodImplementations
-    */
-    final public function testHasDefinedAllIdPropertiesCorrectly(
-        string $className,
-        ReflectionClass $reflector
-    ) : void {
-        $properties = $className::DaftObjectProperties();
-
-        static::assertGreaterThan(0, count($properties));
-
-        $idProperties = (array) $className::DaftObjectIdProperties();
-
-        static::assertGreaterThan(0, count($idProperties));
-
-        foreach ($idProperties as $property) {
-            static::assertIsString(
-                $property,
-                ($className . '::DaftObjectIdProperties()' . ' must return an array of strings')
-            );
-        }
-
-        foreach ($idProperties as $property) {
-            static::assertTrue(
-                in_array($property, $properties, true),
-                (
-                    $className .
-                    '::DaftObjectIdProperties() defines as property (' .
-                    $property .
-                    ') that is not defined on ' .
-                    $className .
-                    '::DaftObjectProperties()'
-                )
-            );
-        }
-
-        $initialCount = count($properties);
-
-        static::assertCount(
-            $initialCount,
-            array_unique(
-                array_map('mb_strtolower', $properties),
-                SORT_REGULAR
-            )
-        );
-
-        $initialCount = count($idProperties);
-
-        static::assertCount(
-            $initialCount,
-            array_unique(
-                array_map('mb_strtolower', $idProperties),
-                SORT_REGULAR
-            )
-        );
-    }
-
-    /**
     * @dataProvider dataProviderNonAbstractGoodNullableImplementations
     *
     * @depends testHasDefinedAllPropertiesCorrectly
@@ -1735,27 +1676,6 @@ class DaftObjectImplementationTest extends TestCase
         ));
     }
 
-    public function testSortableObject() : void
-    {
-        $a = new SortableReadWrite([
-            'Foo' => 'a',
-            'Bar' => 1.0,
-            'Baz' => 1,
-            'Bat' => false,
-        ]);
-        $b = new SortableReadWrite([
-            'Foo' => 'b',
-            'Bar' => 2.0,
-            'Baz' => 2,
-            'Bat' => true,
-        ]);
-
-        static::assertSame(0, $a->CompareToDaftSortableObject($a));
-        static::assertSame(0, $b->CompareToDaftSortableObject($b));
-        static::assertSame(-1, $a->CompareToDaftSortableObject($b));
-        static::assertSame(1, $b->CompareToDaftSortableObject($a));
-    }
-
     /**
     * @dataProvider DataProviderNotDaftObjectHasPropertiesWithMultiTypedArraysOfUniqueValues
     *
@@ -1782,10 +1702,7 @@ class DaftObjectImplementationTest extends TestCase
     final public function dataProviderInvalidImplementations() : array
     {
         return [
-            NudgesIncorrectly::class,
-            ReadOnlyBad::class,
             ReadOnlyBadDefinesOwnId::class,
-            ReadOnlyInsuficientIdProperties::class,
         ];
     }
 
@@ -1962,65 +1879,6 @@ class DaftObjectImplementationTest extends TestCase
                 PasswordHashTestObject::class,
                 [
                     'password' => 'foo',
-                ],
-            ],
-            [
-                ReadWriteJsonJson::class,
-                [
-                    'json' => new ReadWriteJson([
-                        'Foo' => 'Foo',
-                        'Bar' => 1.0,
-                        'Baz' => 2,
-                        'Bat' => true,
-                    ]),
-                ],
-            ],
-            [
-                ReadWriteJsonJson::class,
-                [
-                    'json' => new ReadWriteJson([
-                        'Foo' => 'Foo',
-                        'Bar' => 2.0,
-                        'Baz' => 3,
-                        'Bat' => false,
-                    ]),
-                ],
-            ],
-            [
-                ReadWriteJsonJsonArray::class,
-                [
-                    'json' => [
-                        new ReadWriteJson([
-                            'Foo' => 'Foo',
-                            'Bar' => 3.0,
-                            'Baz' => 4,
-                            'Bat' => null,
-                        ]),
-                        new ReadWriteJson([
-                            'Foo' => 'Foo',
-                            'Bar' => 1.0,
-                            'Baz' => 2,
-                            'Bat' => true,
-                        ]),
-                        new ReadWriteJson([
-                            'Foo' => 'Foo',
-                            'Bar' => 2.0,
-                            'Baz' => 3,
-                            'Bat' => false,
-                        ]),
-                        new ReadWriteJson([
-                            'Foo' => 'Foo',
-                            'Bar' => 3.0,
-                            'Baz' => 4,
-                            'Bat' => null,
-                        ]),
-                    ],
-                ],
-            ],
-            [
-                IntegerIdBasedDaftObject::class,
-                [
-                    'Foo' => 1,
                 ],
             ],
             [

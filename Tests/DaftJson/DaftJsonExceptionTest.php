@@ -55,53 +55,6 @@ class DaftJsonExceptionTest extends TestCase
                 ],
                 true,
             ],
-            [
-                ReadWriteJsonJsonArray::class,
-                ReadWriteJsonJsonArray::class,
-                'notthere',
-                PropertyNotJsonDecodableException::class,
-                'json-decodable',
-                [
-                    'json' => [],
-                    'notthere' => 1,
-                ],
-                true,
-            ],
-            [
-                ReadWriteJsonJsonArray::class,
-                ReadWriteJsonJsonArray::class,
-                'json',
-                PropertyNotJsonDecodableShouldBeArrayException::class,
-                'json-decodable (should be an array)',
-                [
-                    'json' => 1,
-                ],
-                true,
-            ],
-            [
-                ReadWriteJsonJson::class,
-                ReadWriteJson::class,
-                'json',
-                PropertyNotJsonDecodableShouldBeArrayException::class,
-                'json-decodable (should be an array)',
-                [
-                    'json' => 1,
-                ],
-                true,
-            ],
-            [
-                ReadWriteJsonJsonArray::class,
-                ReadWriteJson::class,
-                'json',
-                PropertyNotJsonDecodableShouldBeArrayException::class,
-                'json-decodable (should be an array)',
-                [
-                    'json' => [
-                        1,
-                    ],
-                ],
-                true,
-            ],
         ];
     }
 
@@ -116,6 +69,8 @@ class DaftJsonExceptionTest extends TestCase
         array $args,
         bool $writeAll
     ) : void {
+        static::assertTrue(class_exists($implementation));
+
         $this->expectException(ClassDoesNotImplementClassException::class);
         $this->expectExceptionMessage(sprintf(
             '%s does not implement %s',
@@ -140,6 +95,8 @@ class DaftJsonExceptionTest extends TestCase
         array $args,
         bool $writeAll
     ) : void {
+        static::assertTrue(class_exists($implementation));
+
         $this->expectException($expectingException);
         $this->expectExceptionMessage(sprintf(
             'Property not %s: %s::$%s',

@@ -8,7 +8,6 @@ namespace SignpostMarv\DaftObject\Tests\DaftObject;
 
 use SignpostMarv\DaftObject\DaftObject;
 use SignpostMarv\DaftObject\NudgesIncorrectly;
-use SignpostMarv\DaftObject\ReadOnly;
 use SignpostMarv\DaftObject\Tests\TestCase;
 use SignpostMarv\DaftObject\UndefinedPropertyException;
 use SignpostMarv\DaftObject\WriteOnly;
@@ -19,30 +18,12 @@ class UndefinedPropertyExceptionTest extends TestCase
     {
         return [
             [
-                ReadOnly::class,
-                [
-                    'nope' => 'foo',
-                ],
-                true,
-                false,
-                'nope',
-            ],
-            [
                 WriteOnly::class,
                 [
                     'nope' => 'foo',
                 ],
                 false,
                 false,
-                'nope',
-            ],
-            [
-                NudgesIncorrectly::class,
-                [
-                    'Foo' => 'bar',
-                ],
-                true,
-                true,
                 'nope',
             ],
         ];

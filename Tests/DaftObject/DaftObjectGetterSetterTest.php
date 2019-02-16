@@ -42,14 +42,6 @@ class DaftObjectGetterSetterTest extends TestCase
                 false,
             ],
             [
-                ReadWrite::class,
-                'Foo',
-                'bar',
-                true,
-                true,
-                'Foo',
-            ],
-            [
                 MultiTypedArrayPropertiesTester::class,
                 'dates',
                 [
