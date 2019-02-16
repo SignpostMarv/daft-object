@@ -242,10 +242,21 @@ abstract class AbstractArrayBackedDaftObject extends AbstractDaftObject implemen
                     return $array[$prop];
                 }
 
+                $propVal = (is_array($array[$prop]) ? $array[$prop] : [$array[$prop]]);
+
+                if ('[]' === mb_substr($jsonType, -2)) {
+                    return JsonTypeUtilities::DaftObjectFromJsonTypeArray(
+                        JsonTypeUtilities::ThrowIfNotJsonType(mb_substr($jsonType, 0, -2)),
+                        $prop,
+                        $propVal,
+                        $writeAll
+                    );
+                }
+
                 return JsonTypeUtilities::DaftJsonFromJsonType(
-                    $jsonType,
+                    JsonTypeUtilities::ThrowIfNotJsonType($jsonType),
                     $prop,
-                    (is_array($array[$prop]) ? $array[$prop] : [$array[$prop]]),
+                    $propVal,
                     $writeAll
                 );
             };

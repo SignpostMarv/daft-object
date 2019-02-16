@@ -29,6 +29,8 @@ class JsonTypeUtilities
     /**
     * @template T as DaftJson
     *
+    * @psalm-param class-string<T> $jsonType
+    *
     * @return array<int, DaftJson>|DaftJson
     *
     * @psalm-return array<int, T>|T
@@ -39,25 +41,6 @@ class JsonTypeUtilities
         array $propVal,
         bool $writeAll
     ) {
-        if ('[]' === mb_substr($jsonType, -2)) {
-            /**
-            * @psalm-var class-string<DaftObject>
-            */
-            $jsonType = mb_substr($jsonType, 0, -2);
-
-            /**
-            * @psalm-var class-string<T>
-            */
-            $jsonType = self::ThrowIfNotJsonType($jsonType);
-
-            return self::DaftObjectFromJsonTypeArray($jsonType, $prop, $propVal, $writeAll);
-        }
-
-        /**
-        * @psalm-var class-string<T>
-        */
-        $jsonType = $jsonType;
-
         return JsonTypeUtilities::ArrayToJsonType($jsonType, $propVal, $writeAll);
     }
 
@@ -86,20 +69,15 @@ class JsonTypeUtilities
     }
 
     /**
-    * @psalm-param class-string<DaftObject> $jsonType
+    * @template T as DaftJson
     *
-    * @psalm-return class-string<DaftJson>
+    * @psalm-return class-string<T>
     */
-    private static function ThrowIfNotJsonType(string $jsonType) : string
+    public static function ThrowIfNotJsonType(string $jsonType) : string
     {
         if ( ! is_a($jsonType, DaftJson::class, DefinitionAssistant::IS_A_STRINGS)) {
             throw new ClassDoesNotImplementClassException($jsonType, DaftJson::class);
         }
-
-        /**
-        * @psalm-var class-string<DaftJson>
-        */
-        $jsonType = $jsonType;
 
         return $jsonType;
     }
@@ -173,7 +151,7 @@ class JsonTypeUtilities
     *
     * @psalm-return array<int, T>
     */
-    private static function DaftObjectFromJsonTypeArray(
+    public static function DaftObjectFromJsonTypeArray(
         string $jsonType,
         string $prop,
         array $propVal,
