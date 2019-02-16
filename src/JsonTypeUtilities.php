@@ -39,7 +39,6 @@ class JsonTypeUtilities
     */
     final public static function DaftJsonFromJsonType(
         string $jsonType,
-        string $prop,
         array $propVal,
         bool $writeAll
     ) {

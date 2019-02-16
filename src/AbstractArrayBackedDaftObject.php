@@ -255,7 +255,6 @@ abstract class AbstractArrayBackedDaftObject extends AbstractDaftObject implemen
 
                 return JsonTypeUtilities::DaftJsonFromJsonType(
                     JsonTypeUtilities::ThrowIfNotJsonType($jsonType),
-                    $prop,
                     $propVal,
                     $writeAll
                 );
