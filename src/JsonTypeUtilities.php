@@ -83,6 +83,40 @@ class JsonTypeUtilities
     }
 
     /**
+    * @template T as DaftJson
+    *
+    * @param mixed[] $propVal
+    *
+    * @psalm-param class-string<T> $jsonType
+    *
+    * @return array<int, DaftJson>
+    *
+    * @psalm-return array<int, T>
+    */
+    public static function DaftObjectFromJsonTypeArray(
+        string $jsonType,
+        string $prop,
+        array $propVal,
+        bool $writeAll
+    ) : array {
+        return array_map(
+            /**
+            * @param mixed $val
+            *
+            * @psalm-return T
+            */
+            function ($val) use ($jsonType, $writeAll, $prop) : DaftJson {
+                if (false === is_array($val)) {
+                    throw new PropertyNotJsonDecodableShouldBeArrayException($jsonType, $prop);
+                }
+
+                return JsonTypeUtilities::ArrayToJsonType($jsonType, $val, $writeAll);
+            },
+            array_values($propVal)
+        );
+    }
+
+    /**
     * @param array<string|int, string> $jsonDef
     */
     private static function MakeMapperThrowIfJsonDefNotValid(
@@ -138,40 +172,6 @@ class JsonTypeUtilities
     private static function ArrayToJsonType(string $type, array $value, bool $writeAll) : DaftJson
     {
         return $type::DaftObjectFromJsonArray($value, $writeAll);
-    }
-
-    /**
-    * @template T as DaftJson
-    *
-    * @param mixed[] $propVal
-    *
-    * @psalm-param class-string<T> $jsonType
-    *
-    * @return array<int, DaftJson>
-    *
-    * @psalm-return array<int, T>
-    */
-    public static function DaftObjectFromJsonTypeArray(
-        string $jsonType,
-        string $prop,
-        array $propVal,
-        bool $writeAll
-    ) : array {
-        return array_map(
-            /**
-            * @param mixed $val
-            *
-            * @psalm-return T
-            */
-            function ($val) use ($jsonType, $writeAll, $prop) : DaftJson {
-                if (false === is_array($val)) {
-                    throw new PropertyNotJsonDecodableShouldBeArrayException($jsonType, $prop);
-                }
-
-                return JsonTypeUtilities::ArrayToJsonType($jsonType, $val, $writeAll);
-            },
-            array_values($propVal)
-        );
     }
 
     private static function ThrowBecauseArrayJsonTypeNotValid(

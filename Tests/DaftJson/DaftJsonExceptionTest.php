@@ -9,12 +9,7 @@ namespace SignpostMarv\DaftObject\Tests\DaftJson;
 use SignpostMarv\DaftObject\AbstractArrayBackedDaftObject;
 use SignpostMarv\DaftObject\ClassDoesNotImplementClassException;
 use SignpostMarv\DaftObject\DaftJson;
-use SignpostMarv\DaftObject\PropertyNotJsonDecodableException;
-use SignpostMarv\DaftObject\PropertyNotJsonDecodableShouldBeArrayException;
 use SignpostMarv\DaftObject\PropertyNotNullableException;
-use SignpostMarv\DaftObject\ReadWriteJson;
-use SignpostMarv\DaftObject\ReadWriteJsonJson;
-use SignpostMarv\DaftObject\ReadWriteJsonJsonArray;
 use SignpostMarv\DaftObject\ReadWriteJsonJsonArrayBad;
 use SignpostMarv\DaftObject\Tests\TestCase;
 
