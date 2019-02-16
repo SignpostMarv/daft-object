@@ -16,6 +16,27 @@
                 "SignpostMarv\\DaftObject\\TraitSortableDaftObject::DaftSortableObjectProperties"
             ]
         },
+        "CastString": {
+            "ignore": [
+                "SignpostMarv\\DaftObject\\DaftObjectIdValuesHashLazyInt::VarExportNonScalars"
+            ]
+        },
+        "DecrementInteger": {
+            "ignore": [
+                "SignpostMarv\\DaftObject\\TraitSortableDaftObject::CompareToDaftSortableObject"
+            ]
+        },
+        "Foreach_": {
+            "ignore": [
+                "SignpostMarv\\DaftObject\\DaftObjectIdValuesHashLazyInt::DaftObjectIdHash",
+                "SignpostMarv\\DaftObject\\TraitSortableDaftObject::CompareToDaftSortableObject"
+            ]
+        },
+        "Identical": {
+            "ignore": [
+                "SignpostMarv\\DaftObject\\JsonTypeUtilities::ThrowBecauseArrayJsonTypeNotValid"
+            ]
+        },
         "LogicalAnd": {
             "ignore": [
                 "SignpostMarv\\DaftObject\\AbstractArrayBackedDaftObject::NudgePropertyValue",
@@ -25,26 +46,35 @@
         },
         "LogicalNot": {
             "ignore": [
-                "SignpostMarv\\DaftObject\\PHPStan\\ClassReflectionExtension::MaybeRegisterTypesOrExitEarly"
-            ]
-        },
-        "LogicalOr": {
-            "ignore": [
-                "SignpostMarv\\DaftObject\\DaftObjectMemoryRepository::RecallDaftObjectOrThrow"
+                "SignpostMarv\\DaftObject\\DaftObjectIdValuesHashLazyInt::DaftObjectIdHash",
+                "SignpostMarv\\DaftObject\\DaftObjectIdValuesHashLazyInt::DaftObjectIdValuesHash",
+                "SignpostMarv\\DaftObject\\JsonTypeUtilities::DaftObjectFromJsonTypeArray",
+                "SignpostMarv\\DaftObject\\PHPStan\\ClassReflectionExtension::MaybeRegisterTypesOrExitEarly",
+                "SignpostMarv\\DaftObject\\TraitSortableDaftObject::CompareToDaftSortableObject",
+                "SignpostMarv\\DaftObject\\TraitSortableDaftObject::DaftSortableObjectProperties"
             ]
         },
         "MethodCallRemoval": {
             "ignore": [
-                "SignpostMarv\\DaftObject\\DaftObjectMemoryRepository::RememberDaftObject",
+                "SignpostMarv\\DaftObject\\AbstractDaftObject::__unset",
                 "SignpostMarv\\DaftObject\\DefinitionAssistant::MaybeRegisterAdditionalTypes",
+                "SignpostMarv\\DaftObject\\JsonTypeUtilities::MakeMapperThrowIfJsonDefNotValid",
                 "SignpostMarv\\DaftObject\\PHPStan\\ClassReflectionExtension::MaybeRegisterTypesOrExitEarly",
+                "SignpostMarv\\DaftObject\\PropertyNotJsonDecodableException::__construct",
+                "SignpostMarv\\DaftObject\\PropertyNotJsonDecodableShouldBeArrayException::__construct",
                 "SignpostMarv\\DaftObject\\TypeUtilities::DaftObjectPublicOrProtectedGetters"
             ]
         },
         "NotIdentical": {
             "ignore": [
                 "SignpostMarv\\DaftObject\\AbstractArrayBackedDaftObject::NudgePropertyValue",
-                "SignpostMarv\\DaftObject\\DefinitionAssistant::MaybeRegisterAdditionalTypes"
+                "SignpostMarv\\DaftObject\\DefinitionAssistant::MaybeRegisterAdditionalTypes",
+                "SignpostMarv\\DaftObject\\TraitSortableDaftObject::CompareToDaftSortableObject"
+            ]
+        },
+        "OneZeroInteger": {
+            "ignore": [
+                "SignpostMarv\\DaftObject\\TraitSortableDaftObject::CompareToDaftSortableObject"
             ]
         },
         "ProtectedVisibility": {
@@ -53,10 +83,30 @@
                 "SignpostMarv\\DaftObject\\DefinitionAssistant::RegisterDaftObjectTypeFromTypeAndProps"
             ]
         },
+        "PublicVisibility": {
+            "ignore": [
+                "SignpostMarv\\DaftObject\\DaftObjectIdValuesHashLazyInt::DaftObjectIdHash",
+                "SignpostMarv\\DaftObject\\DaftObjectIdValuesHashLazyInt::DaftObjectIdValuesHash",
+                "SignpostMarv\\DaftObject\\JsonTypeUtilities::DaftJsonFromJsonType",
+                "SignpostMarv\\DaftObject\\JsonTypeUtilities::DaftObjectFromJsonTypeArray",
+                "SignpostMarv\\DaftObject\\TraitSortableDaftObject::CompareToDaftSortableObject",
+                "SignpostMarv\\DaftObject\\TraitSortableDaftObject::DaftSortableObjectProperties",
+                "SignpostMarv\\DaftObject\\TypeUtilities::DaftObjectPublicOrProtectedGetters"
+            ]
+        },
+        "Spaceship": {
+            "ignore": [
+                "SignpostMarv\\DaftObject\\TraitSortableDaftObject::CompareToDaftSortableObject"
+            ]
+        },
         "Throw_": {
             "ignore": [
                 "SignpostMarv\\DaftObject\\AbstractArrayBackedDaftObject::MaybeThrowForPropertyOnNudge",
-                "SignpostMarv\\DaftObject\\TraitSortableDaftObject::CompareToDaftSortableObject"
+                "SignpostMarv\\DaftObject\\JsonTypeUtilities::DaftObjectFromJsonTypeArray",
+                "SignpostMarv\\DaftObject\\JsonTypeUtilities::FilterThrowIfJsonDefNotValid",
+                "SignpostMarv\\DaftObject\\JsonTypeUtilities::ThrowBecauseArrayJsonTypeNotValid",
+                "SignpostMarv\\DaftObject\\TraitSortableDaftObject::CompareToDaftSortableObject",
+                "SignpostMarv\\DaftObject\\TraitSortableDaftObject::DaftSortableObjectProperties"
             ]
         }
     }

@@ -12,6 +12,8 @@ class JsonTypeUtilities
 {
     const IS_A_STRINGS = true;
 
+    const INT_TYPE_EXPECT_IS_ARRAY = -2;
+
     /**
     * @psalm-param class-string<DaftObject> $class
     *
@@ -104,9 +106,11 @@ class JsonTypeUtilities
             * @param mixed $val
             *
             * @psalm-return T
+            *
+            * @throws PropertyNotJsonDecodableShouldBeArrayException if $val is not an array
             */
             function ($val) use ($jsonType, $writeAll, $prop) : DaftJson {
-                if (false === is_array($val)) {
+                if ( ! is_array($val)) {
                     throw new PropertyNotJsonDecodableShouldBeArrayException($jsonType, $prop);
                 }
 
@@ -179,7 +183,7 @@ class JsonTypeUtilities
         string $type,
         string $prop
     ) : void {
-        if ('[]' === mb_substr($type, -2)) {
+        if ('[]' === mb_substr($type, self::INT_TYPE_EXPECT_IS_ARRAY)) {
             throw new PropertyNotJsonDecodableShouldBeArrayException($class, $prop);
         }
         throw new PropertyNotJsonDecodableShouldBeArrayException($type, $prop);
