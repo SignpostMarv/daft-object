@@ -20,6 +20,18 @@ use SignpostMarv\DaftObject\Tests\TestCase as Base;
 */
 class DaftSortableObjectTest extends Base
 {
+    const SORT_ORDER_TEST_VALUE_DEFAULT = 1;
+
+    const SORT_ORDER_TEST_VALUE_LESSTHAN = 2;
+
+    const SORT_ORDER_TEST_VALUE_GREATERTHAN = -10;
+
+    const SORT_ORDER_TEST_COMPARE_EQUAL = 0;
+
+    const SORT_ORDER_TEST_COMPARE_LESSTHAN = -1;
+
+    const SORT_ORDER_TEST_COMPARE_GREATERTHAN = 1;
+
     /**
     * @psalm-return Generator<int, array{0:class-string<AbstractDaftObject>}, mixed, void>
     */
@@ -52,7 +64,7 @@ class DaftSortableObjectTest extends Base
     /**
     * @dataProvider dataProvider_UsesTrait_NotInterface
     *
-    * @psalm-param class-string<AbstractDaftObject> $className
+    * @psalm-param class-string<AbstractDaftObject&DaftSortableObject> $className
     */
     public function test_TraitSortableDaftObject_CompareFails(string $className) : void
     {
@@ -73,10 +85,21 @@ class DaftSortableObjectTest extends Base
     */
     public function test_SortableDaftObject_and_AbstractDaftObject(string $className) : void
     {
-        static::assertIsArray($className::SORTABLE_PROPERTIES);
+        /**
+        * @var scalar|array|object|null
+        */
+        $sortable_properties = $className::SORTABLE_PROPERTIES;
+
+        static::assertIsArray($sortable_properties);
+
+        /**
+        * @var (scalar|array|object|null)[]
+        */
+        $sortable_properties = $sortable_properties;
+
         static::assertGreaterThan(
             0,
-            count($className::SORTABLE_PROPERTIES),
+            count($sortable_properties),
             (
                 $className .
                 ' implements ' .
@@ -87,7 +110,7 @@ class DaftSortableObjectTest extends Base
             )
         );
         static::assertGreaterThanOrEqual(
-            count($className::SORTABLE_PROPERTIES),
+            count($sortable_properties),
             count($className::DaftSortableObjectProperties()),
             (
                 $className .
@@ -103,7 +126,7 @@ class DaftSortableObjectTest extends Base
 
         $prop_counts = [];
 
-        foreach ($className::SORTABLE_PROPERTIES as $k => $v) {
+        foreach ($sortable_properties as $k => $v) {
             static::assertIsInt(
                 $k,
                 (
@@ -120,6 +143,12 @@ class DaftSortableObjectTest extends Base
                     '::SORTABLE_PROPERTIES must be strings!'
                 )
             );
+
+            /**
+            * @var string
+            */
+            $v = $v;
+
             static::assertSame(
                 $v,
                 trim($v),
@@ -139,7 +168,7 @@ class DaftSortableObjectTest extends Base
             ++$prop_counts[$v_lc];
         }
 
-        static::assertSame(count($className::SORTABLE_PROPERTIES), array_sum($prop_counts));
+        static::assertSame(count($sortable_properties), array_sum($prop_counts));
     }
 
     /**
@@ -150,22 +179,43 @@ class DaftSortableObjectTest extends Base
         $a = new Fixtures\DaftSortableObject(['intSortOrder' => 1]);
         $b = new Fixtures\DaftSortableObject(['intSortOrder' => 1]);
 
-        static::assertSame(1, $a->intSortOrder);
-        static::assertSame(1, $b->intSortOrder);
+        static::assertSame(self::SORT_ORDER_TEST_VALUE_DEFAULT, $a->intSortOrder);
+        static::assertSame(self::SORT_ORDER_TEST_VALUE_DEFAULT, $b->intSortOrder);
 
-        static::assertSame(0, 1 <=> 1);
-        static::assertSame(0, $a->CompareToDaftSortableObject($a));
-        static::assertSame(0, $b->CompareToDaftSortableObject($b));
-        static::assertSame(0, $a->CompareToDaftSortableObject($b));
+        static::assertSame(
+            self::SORT_ORDER_TEST_COMPARE_EQUAL,
+            self::SORT_ORDER_TEST_VALUE_DEFAULT <=> self::SORT_ORDER_TEST_VALUE_DEFAULT
+        );
+        static::assertSame(
+            self::SORT_ORDER_TEST_COMPARE_EQUAL,
+            $a->CompareToDaftSortableObject($a)
+        );
+        static::assertSame(
+            self::SORT_ORDER_TEST_COMPARE_EQUAL,
+            $b->CompareToDaftSortableObject($b)
+        );
+        static::assertSame(
+            self::SORT_ORDER_TEST_COMPARE_EQUAL,
+            $a->CompareToDaftSortableObject($b)
+        );
 
-        $b->intSortOrder = 2;
-        static::assertSAme(2, $b->intSortOrder);
-        static::assertSame(-1, 1 <=> 2);
+        $b->intSortOrder = self::SORT_ORDER_TEST_VALUE_LESSTHAN;
+        static::assertSame(self::SORT_ORDER_TEST_VALUE_LESSTHAN, $b->intSortOrder);
+        static::assertSame(
+            -1,
+            self::SORT_ORDER_TEST_VALUE_DEFAULT <=> self::SORT_ORDER_TEST_VALUE_LESSTHAN
+        );
         static::assertSame(-1, $a->CompareToDaftSortableObject($b));
 
-        $b->intSortOrder = -10;
-        static::assertSAme(-10, $b->intSortOrder);
-        static::assertSame(1, 1 <=> -10);
-        static::assertSame(1, $a->CompareToDaftSortableObject($b));
+        $b->intSortOrder = self::SORT_ORDER_TEST_VALUE_GREATERTHAN;
+        static::assertSame(self::SORT_ORDER_TEST_VALUE_GREATERTHAN, $b->intSortOrder);
+        static::assertSame(
+            self::SORT_ORDER_TEST_VALUE_DEFAULT,
+            self::SORT_ORDER_TEST_VALUE_DEFAULT <=> self::SORT_ORDER_TEST_VALUE_GREATERTHAN
+        );
+        static::assertSame(
+            self::SORT_ORDER_TEST_VALUE_DEFAULT,
+            $a->CompareToDaftSortableObject($b)
+        );
     }
 }

@@ -13,7 +13,7 @@ use SignpostMarv\DaftObject\TraitSortableDaftObject;
 /**
 * @template T as DaftSortableObject
 *
-* @template-extends Target<T>
+* @template-implements Target<T>
 */
 class DaftSortableObject extends Base implements Target
 {
