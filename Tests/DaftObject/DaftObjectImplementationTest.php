@@ -51,13 +51,6 @@ class DaftObjectImplementationTest extends TestCase
         $properties = $className::DaftObjectProperties();
 
         static::assertGreaterThan(0, count($properties));
-
-        foreach ($properties as $property) {
-            static::assertIsString(
-                $property,
-                ($className . '::DaftObjectProperties()' . ' must return an array of strings')
-            );
-        }
     }
 
     /**
@@ -96,17 +89,6 @@ class DaftObjectImplementationTest extends TestCase
         ReflectionClass $reflector
     ) : void {
         $nullables = $className::DaftObjectNullableProperties();
-
-        foreach ($nullables as $nullable) {
-            static::assertIsString(
-                $nullable,
-                (
-                    $className .
-                    '::DaftObjectNullableProperties()' .
-                    ' must return an array of strings'
-                )
-            );
-        }
 
         $properties = $className::DaftObjectProperties();
 
@@ -215,17 +197,6 @@ class DaftObjectImplementationTest extends TestCase
         ReflectionClass $reflector
     ) : void {
         $exportables = $className::DaftObjectExportableProperties();
-
-        foreach ($exportables as $exportable) {
-            static::assertIsString(
-                $exportable,
-                (
-                    $className .
-                    '::DaftObjectExportableProperties()' .
-                    ' must return an array of strings'
-                )
-            );
-        }
 
         $properties = $className::DaftObjectProperties();
 
@@ -1097,27 +1068,6 @@ class DaftObjectImplementationTest extends TestCase
             $prop = $v;
 
             if (is_string($k)) {
-                static::assertIsString(
-                    $v,
-                    sprintf(
-                        (
-                            '%s::DaftObjectJsonProperties()' .
-                            ' ' .
-                            'key-value pairs' .
-                            ' ' .
-                            'must be either array<int, string>' .
-                            ' or ' .
-                            'array<string, string>'
-                        ),
-                        $className
-                    )
-                );
-
-                /**
-                * @var string
-                */
-                $v = $v;
-
                 if ('[]' === mb_substr($v, -2)) {
                     $v = mb_substr($v, 0, -2);
                 }
@@ -1378,17 +1328,9 @@ class DaftObjectImplementationTest extends TestCase
     {
         $publicOrProtected = $className::DaftObjectPublicOrProtectedGetters();
 
-        foreach ($publicOrProtected as $k => $v) {
-            static::assertIsInt($k);
-            static::assertIsString($v);
-        }
-
         $properties = $className::DaftSortableObjectProperties();
 
         foreach ($properties as $k => $v) {
-            static::assertIsInt($k);
-            static::assertIsString($v);
-
             $expectedMethod = TypeUtilities::MethodNameFromProperty($v, false);
 
             static::assertTrue(in_array($v, $publicOrProtected, true));

@@ -48,9 +48,6 @@ class DaftJsonTest extends TestCase
 
         list($a, $b) = $obj->json;
 
-        static::assertInstanceOf(HasId::class, $a);
-        static::assertInstanceOf(HasId::class, $b);
-
         static::assertSame('foo', $a->ObtainId());
         static::assertSame('foo', $a->__get('@id'));
 
@@ -65,9 +62,6 @@ class DaftJsonTest extends TestCase
         static::assertNull($obj->single);
 
         list($a, $b) = $obj->json;
-
-        static::assertInstanceOf(HasId::class, $a);
-        static::assertInstanceOf(HasId::class, $b);
 
         static::assertSame('foo', $a->ObtainId());
         static::assertSame('foo', $a->__get('@id'));
