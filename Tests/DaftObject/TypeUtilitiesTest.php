@@ -8,8 +8,8 @@ namespace SignpostMarv\DaftObject\Tests\DaftObject;
 
 use SignpostMarv\DaftObject\AbstractDaftObject;
 use SignpostMarv\DaftObject\DefinesOwnIdPropertiesInterface;
-use SignpostMarv\DaftObject\TypeUtilities;
 use SignpostMarv\DaftObject\Tests\TestCase;
+use SignpostMarv\DaftObject\TypeUtilities;
 
 class TypeUtilitiesTest extends TestCase
 {
@@ -23,7 +23,7 @@ class TypeUtilitiesTest extends TestCase
         $expected = count((array) $className::PROPERTIES);
 
         if (is_a($className, DefinesOwnIdPropertiesInterface::class, true)) {
-            $expected += 1;
+            ++$expected;
         }
 
         static::assertLessThanOrEqual(
