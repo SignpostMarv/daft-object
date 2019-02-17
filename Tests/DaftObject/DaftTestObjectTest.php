@@ -14,6 +14,7 @@ use SignpostMarv\DaftObject\DefinesOwnIntegerIdInterface;
 use SignpostMarv\DaftObject\DefinesOwnStringIdInterface;
 use SignpostMarv\DaftObject\PropertyNotRewriteableException;
 use SignpostMarv\DaftObject\ReadOnlyTwoColumnPrimaryKey;
+use SignpostMarv\DaftObject\ReadWriteJsonJsonArrayBad;
 use SignpostMarv\DaftObject\Tests\TestCase;
 use SignpostMarv\DaftObject\UndefinedPropertyException;
 use SignpostMarv\DaftObject\WriteOnly;
@@ -119,6 +120,20 @@ class DaftTestObjectTest extends TestCase
                     'NotFoo' => 1,
                 ],
                 false,
+                true,
+            ],
+            [
+                ReadWriteJsonJsonArrayBad::class,
+                UndefinedPropertyException::class,
+                (
+                    'Property not defined: ' .
+                    ReadWriteJsonJsonArrayBad::class .
+                    '::$NotFoo'
+                ),
+                [
+                    'NotFoo' => 1,
+                ],
+                true,
                 true,
             ],
         ];
