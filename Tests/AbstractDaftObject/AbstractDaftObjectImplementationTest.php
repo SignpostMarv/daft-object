@@ -41,9 +41,6 @@ use SignpostMarv\DaftObject\UndefinedPropertyException;
 */
 class AbstractDaftObjectImplementationTest extends DaftObjectImplementationTest
 {
-    /**
-    * @return Generator<int, array{0:class-name<T>, 1:string}, mixed, void>
-    */
     public function dataProvider_FuzzingImplementations_NotPublicGetter() : Generator
     {
         foreach ($this->dataProviderNonAbstractGoodFuzzing() as $args) {
@@ -61,9 +58,6 @@ class AbstractDaftObjectImplementationTest extends DaftObjectImplementationTest
         }
     }
 
-    /**
-    * @return Generator<int, array{0:class-name<T>, 1:string}, mixed, void>
-    */
     public function dataProvider_FuzzingImplementations_NotPublicSetter() : Generator
     {
         foreach ($this->dataProviderNonAbstractGoodFuzzing() as $args) {
@@ -81,9 +75,6 @@ class AbstractDaftObjectImplementationTest extends DaftObjectImplementationTest
         }
     }
 
-    /**
-    * @return Generator<int, array{0:class-name<T>, 1:string}, mixed, void>
-    */
     public function dataProvider_FuzzingImplementations_NotDefined() : Generator
     {
         foreach ($this->dataProviderNonAbstractGoodFuzzing() as $args) {
