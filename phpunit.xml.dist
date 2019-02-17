@@ -9,6 +9,9 @@
     <testsuite name="DaftObject">
       <directory>./Tests/DaftObject/</directory>
     </testsuite>
+    <testsuite name="AbstractDaftObject">
+      <directory>./Tests/AbstractDaftObject/</directory>
+    </testsuite>
     <testsuite name="DaftJson">
       <directory>./Tests/DaftJson/</directory>
     </testsuite>

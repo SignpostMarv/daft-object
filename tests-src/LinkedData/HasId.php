@@ -10,14 +10,21 @@ namespace SignpostMarv\DaftObject\LinkedData;
 
 use SignpostMarv\DaftObject\AbstractArrayBackedDaftObject;
 use SignpostMarv\DaftObject\DaftJsonLinkedData;
+use SignpostMarv\DaftObject\DefinesOwnStringIdInterface;
+use SignpostMarv\DaftObject\DaftObjectIdValuesHashLazyInt;
 
 /**
 * @template T as HasId
 *
 * @template-implements DaftJsonLinkedData<T>
 */
-class HasId extends AbstractArrayBackedDaftObject implements DaftJsonLinkedData
+class HasId extends AbstractArrayBackedDaftObject implements DaftJsonLinkedData, DefinesOwnStringIdInterface
 {
+    /**
+    * @use DaftObjectIdValuesHashLazyInt<T>
+    */
+    use DaftObjectIdValuesHashLazyInt;
+
     const PROPERTIES = [
         '@id',
     ];
@@ -34,5 +41,17 @@ class HasId extends AbstractArrayBackedDaftObject implements DaftJsonLinkedData
     public function ObtainId() : string
     {
         return (string) $this->RetrievePropertyValueFromData('@id');
+    }
+
+    public function GetId() : string
+    {
+        return $this->ObtainId();
+    }
+
+    public static function DaftObjectIdProperties() : array
+    {
+        return [
+            '@id',
+        ];
     }
 }
