@@ -10,8 +10,8 @@ use Generator;
 use SignpostMarv\DaftObject\AbstractDaftObject;
 use SignpostMarv\DaftObject\ClassDoesNotImplementClassException;
 use SignpostMarv\DaftObject\DaftSortableObject;
-use SignpostMarv\DaftObject\TraitSortableDaftObject;
 use SignpostMarv\DaftObject\Tests\TestCase as Base;
+use SignpostMarv\DaftObject\TraitSortableDaftObject;
 
 /**
 * @template T as DaftSortableObject
@@ -53,7 +53,7 @@ class DaftSortableObjectTest extends Base
     final public function dataProvider_SortableDaftObject_and_AbstractDaftObject__has_sortable_properties() : Generator
     {
         foreach ($this->dataProvider_AbstractDaftObject__has_properties() as $args) {
-            if(
+            if (
                 is_a($args[0], DaftSortableObject::class, true)
             ) {
                 yield $args;
