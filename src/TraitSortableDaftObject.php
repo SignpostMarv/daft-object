@@ -23,13 +23,6 @@ trait TraitSortableDaftObject
     */
     public function CompareToDaftSortableObject(DaftSortableObject $otherObject) : int
     {
-        if ( ! is_a(static::class, DaftSortableObject::class, true)) {
-            throw new ClassDoesNotImplementClassException(
-                static::class,
-                DaftSortableObject::class
-            );
-        }
-
         foreach (static::DaftSortableObjectProperties() as $property) {
             $sort = $this->__get($property) <=> $otherObject->__get($property);
 

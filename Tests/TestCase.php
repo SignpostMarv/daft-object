@@ -53,6 +53,7 @@ abstract class TestCase extends Base
                 '/src/*.php' => 'SignpostMarv\\DaftObject\\',
                 '/tests-src/*.php' => 'SignpostMarv\\DaftObject\\',
                 '/tests-src/LinkedData/*.php' => 'SignpostMarv\\DaftObject\\LinkedData\\',
+                '/Tests/DaftSortableObject/Fixtures/*.php' => 'SignpostMarv\\DaftObject\\Tests\\DaftSortableObject\\Fixtures\\',
             ] as $glob => $ns
         ) {
             $files = glob(__DIR__ . '/..' . $glob);
