@@ -24,11 +24,13 @@ use SignpostMarv\DaftObject\DaftObjectNotDaftJsonBadMethodCallException;
 use SignpostMarv\DaftObject\DaftObjectWorm;
 use SignpostMarv\DaftObject\DaftSortableObject;
 use SignpostMarv\DaftObject\DateTimeImmutableTestObject;
+use SignpostMarv\DaftObject\LinkedData\HasIdPublicNudge;
 use SignpostMarv\DaftObject\PasswordHashTestObject;
 use SignpostMarv\DaftObject\PropertyNotNullableException;
 use SignpostMarv\DaftObject\PropertyNotRewriteableException;
 use SignpostMarv\DaftObject\Tests\TestCase;
 use SignpostMarv\DaftObject\TypeUtilities;
+use SignpostMarv\DaftObject\UndefinedPropertyException;
 
 /**
 * @template T as DaftObject
@@ -1424,6 +1426,20 @@ class DaftObjectImplementationTest extends TestCase
         );
 
         $implementation::DaftObjectPropertiesWithMultiTypedArraysOfUniqueValues();
+    }
+
+    public function test_public_NudgePropertyValue() : void
+    {
+        $obj = new HasIdPublicNudge();
+
+        static::expectException(UndefinedPropertyException::class);
+        static::expectExceptionMessage(
+            'Property not defined: ' .
+            HasIdPublicNudge::class .
+            '::$foo'
+        );
+
+        $obj->public_NudgePropertyValue('foo', 'bar');
     }
 
     /**
