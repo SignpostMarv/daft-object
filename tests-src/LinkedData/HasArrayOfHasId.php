@@ -13,8 +13,12 @@ use SignpostMarv\DaftObject\DaftJson;
 
 /**
 * @template T as HasArrayOfHasId
+* @template TSub as HasId
 *
 * @template-implements DaftJson<T>
+*
+* @property array<int, HasId> $json
+* @property HasId|null $single
 */
 class HasArrayOfHasId extends AbstractArrayBackedDaftObject implements DaftJson
 {
@@ -39,7 +43,20 @@ class HasArrayOfHasId extends AbstractArrayBackedDaftObject implements DaftJson
     */
     public function GetJson() : array
     {
-        return (array) $this->RetrievePropertyValueFromData('json');
+        /**
+        * @psalm-var array<int, TSub>
+        */
+        $out = array_values(array_filter(
+            (array) $this->RetrievePropertyValueFromData('json'),
+            /**
+            * @param mixed $maybe
+            */
+            function ($maybe) : bool {
+                return $maybe instanceof HasId;
+            }
+        ));
+
+        return $out;
     }
 
     public function SetJson(array $vals) : void
@@ -49,7 +66,12 @@ class HasArrayOfHasId extends AbstractArrayBackedDaftObject implements DaftJson
 
     public function GetSingle() : ? HasId
     {
-        return $this->RetrievePropertyValueFromData('single');
+        /**
+        * @psalm-var TSub|null
+        */
+        $out = $this->RetrievePropertyValueFromData('single');
+
+        return $out;
     }
 
     public function SetSingle(? HasId $value) : void
