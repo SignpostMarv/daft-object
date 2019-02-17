@@ -25,6 +25,8 @@ class TypeUtilities
 
     const BOOL_DEFAULT_SET_NOT_GET = false;
 
+    const BOOL_DOES_NOT_HAVE_METHOD = false;
+
     const SUPPORTED_INVALID_LEADING_CHARACTERS = [
         '@',
     ];
@@ -107,7 +109,7 @@ class TypeUtilities
 
             return ($pub ? $ref->isPublic() : $ref->isProtected()) && false === $ref->isStatic();
         } catch (ReflectionException $e) {
-            return false;
+            return self::BOOL_DOES_NOT_HAVE_METHOD;
         }
     }
 
@@ -158,7 +160,7 @@ class TypeUtilities
                 self::$Getters[$class][$prop] = self::BOOL_METHOD_IS_NON_PUBLIC;
             }
 
-            if (static::HasMethod($class, $prop, true)) {
+            if (static::HasMethod($class, $prop, self::BOOL_METHOD_IS_PUBLIC)) {
                 self::$publicSetters[$class][] = $prop;
             }
         }
