@@ -20,7 +20,7 @@ class TypeUtilitiesTest extends TestCase
     */
     public function test_DaftObjectPublicOrProtectedGetters(string $className) : void
     {
-        $expected = count($className::PROPERTIES);
+        $expected = count((array) $className::PROPERTIES);
 
         if (is_a($className, DefinesOwnIdPropertiesInterface::class, true)) {
             $expected += 1;

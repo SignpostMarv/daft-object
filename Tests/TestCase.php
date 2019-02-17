@@ -17,6 +17,9 @@ use SignpostMarv\DaftObject\DefinesOwnIdPropertiesInterface;
 use SignpostMarv\DaftObject\ReadOnlyBadDefinesOwnId;
 use SignpostMarv\DaftObject\TypeUtilities;
 
+/**
+* @template T as DaftObject
+*/
 abstract class TestCase extends Base
 {
     const MIN_EXPECTED_ARRAY_COUNT = 2;
@@ -328,7 +331,7 @@ abstract class TestCase extends Base
     final public function dataProvider_AbstractDaftObject__has_properties() : Generator
     {
         foreach ($this->dataProvider_AbstractDaftObject__is_subclass_of() as $args) {
-            if (count($args[0]::PROPERTIES) > 0) {
+            if (count((array) $args[0]::PROPERTIES) > 0) {
                 yield $args;
             }
         }

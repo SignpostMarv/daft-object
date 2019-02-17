@@ -9,11 +9,17 @@ namespace SignpostMarv\DaftObject\Tests\DaftJson;
 use SignpostMarv\DaftObject\AbstractArrayBackedDaftObject;
 use SignpostMarv\DaftObject\ClassDoesNotImplementClassException;
 use SignpostMarv\DaftObject\DaftJson;
+use SignpostMarv\DaftObject\DaftObject;
 use SignpostMarv\DaftObject\JsonTypeUtilities;
 use SignpostMarv\DaftObject\PropertyNotNullableException;
 use SignpostMarv\DaftObject\ReadWriteJsonJsonArrayBad;
 use SignpostMarv\DaftObject\Tests\TestCase;
 
+/**
+* @template T as DaftJson
+*
+* @template-extends TestCase<T>
+*/
 class DaftJsonExceptionTest extends TestCase
 {
     public function dataProviderClassDoesNotImplementClassException() : array
