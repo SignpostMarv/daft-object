@@ -18,6 +18,9 @@
     <testsuite name="DaftSortableObject">
       <directory>./Tests/DaftSortableObject/</directory>
     </testsuite>
+    <testsuite name="DefinesOwnIdPropertiesInterface">
+      <directory>./Tests/DefinesOwnIdPropertiesInterface/</directory>
+    </testsuite>
     <testsuite name="PHPStan">
       <directory>./Tests/PHPStan/</directory>
     </testsuite>
