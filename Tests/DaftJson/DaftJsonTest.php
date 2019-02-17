@@ -6,9 +6,9 @@ declare(strict_types=1);
 
 namespace SignpostMarv\DaftObject\Tests\DaftJson;
 
-use SignpostMarv\DaftObject\Tests\TestCase;
 use SignpostMarv\DaftObject\LinkedData\HasArrayOfHasId;
 use SignpostMarv\DaftObject\LinkedData\HasId;
+use SignpostMarv\DaftObject\Tests\TestCase;
 
 class DaftJsonTest extends TestCase
 {
