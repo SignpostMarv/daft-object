@@ -6,6 +6,10 @@ declare(strict_types=1);
 
 namespace SignpostMarv\DaftObject\Tests\DaftJson;
 
+use Generator;
+use SignpostMarv\DaftObject\AbstractDaftObject;
+use SignpostMarv\DaftObject\DaftJson;
+use SignpostMarv\DaftObject\DaftObjectNotDaftJsonBadMethodCallException;
 use SignpostMarv\DaftObject\JsonTypeUtilities;
 use SignpostMarv\DaftObject\LinkedData\HasArrayOfHasId;
 use SignpostMarv\DaftObject\LinkedData\HasId;
@@ -18,9 +22,13 @@ class JsonTypeUtilitiesExceptionsTest extends TestCase
     public function test_DaftObjectFromJsonTypeArray_fails_with_non_array() : void
     {
         static::expectException(PropertyNotJsonDecodableShouldBeArrayException::class);
-        static::expectExceptionMessage('Property not json-decodable (should be an array): ::$');
+        static::expectExceptionMessage(
+            'Property not json-decodable (should be an array): ' .
+            DaftJson::class .
+            '::$'
+        );
 
-        JsonTypeUtilities::DaftObjectFromJsonTypeArray('', '', [null], true);
+        JsonTypeUtilities::DaftObjectFromJsonTypeArray(DaftJson::class, '', [null], true);
     }
 
     public function dataProvider_ThrowIfJsonDefNotValid_fails() : array
@@ -36,6 +44,30 @@ class JsonTypeUtilitiesExceptionsTest extends TestCase
                     'Property not json-decodable: ' .
                     HasArrayOfHasId::class .
                     '::$0'
+                ),
+            ],
+            [
+                HasArrayOfHasId::class,
+                [
+                    'json' => 1,
+                ],
+                PropertyNotJsonDecodableShouldBeArrayException::class,
+                (
+                    'Property not json-decodable (should be an array): ' .
+                    HasArrayOfHasId::class .
+                    '::$json'
+                ),
+            ],
+            [
+                HasArrayOfHasId::class,
+                [
+                    'single' => 1,
+                ],
+                PropertyNotJsonDecodableShouldBeArrayException::class,
+                (
+                    'Property not json-decodable (should be an array): ' .
+                    HasId::class .
+                    '::$single'
                 ),
             ],
         ];
@@ -59,5 +91,34 @@ class JsonTypeUtilitiesExceptionsTest extends TestCase
         static::expectExceptionMessage($message);
 
         JsonTypeUtilities::ThrowIfJsonDefNotValid($className, $array);
+    }
+
+    /**
+    * @psalm-return Generator<int, array{0:class-string<AbstractDaftObject>}, mixed, void>
+    */
+    final public function dataProvider_AbstractDaftObject__is_subclass_of__not_DaftJson() : Generator
+    {
+        foreach ($this->dataProvider_AbstractDaftObject__is_subclass_of() as $args) {
+            if ( ! is_subclass_of($args[0], DaftJson::class, true)) {
+                yield $args;
+            }
+        }
+    }
+
+    /**
+    * @psalm-param class-string<AbstractDaftObject> $className
+    *
+    * @dataProvider dataProvider_AbstractDaftObject__is_subclass_of__not_DaftJson
+    */
+    public function test_ThrowIFNotDaftJson_fails(string $className) : void
+    {
+        static::expectException(DaftObjectNotDaftJsonBadMethodCallException::class);
+        static::expectExceptionMessage(
+            $className .
+            ' does not implement ' .
+            DaftJson::class
+        );
+
+        JsonTypeUtilities::ThrowIfNotDaftJson($className);
     }
 }
