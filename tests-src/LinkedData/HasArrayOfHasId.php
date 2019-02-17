@@ -12,9 +12,9 @@ use SignpostMarv\DaftObject\AbstractArrayBackedDaftObject;
 use SignpostMarv\DaftObject\DaftJson;
 
 /**
-* @template T as HasId
+* @template T as HasArrayOfHasId
 *
-* @template-implements DaftJsonLinkedData<T>
+* @template-implements DaftJson<T>
 */
 class HasArrayOfHasId extends AbstractArrayBackedDaftObject implements DaftJson
 {

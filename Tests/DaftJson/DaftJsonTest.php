@@ -10,11 +10,6 @@ use SignpostMarv\DaftObject\Tests\TestCase;
 use SignpostMarv\DaftObject\LinkedData\HasArrayOfHasId;
 use SignpostMarv\DaftObject\LinkedData\HasId;
 
-/**
-* @template T as DaftJson
-*
-* @template-extends TestCase<T>
-*/
 class DaftJsonTest extends TestCase
 {
     public function test__json_decode() : void
