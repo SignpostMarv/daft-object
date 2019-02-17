@@ -24,6 +24,7 @@
         "LogicalAnd": {
             "ignore": [
                 "SignpostMarv\\DaftObject\\AbstractArrayBackedDaftObject::NudgePropertyValue",
+                "SignpostMarv\\DaftObject\\DefinitionAssistant::MaybeRemapStringsToTrimmedStrings",
                 "SignpostMarv\\DaftObject\\PHPStan\\ClassReflectionExtension::MaybeRegisterTypesOrExitEarly",
                 "SignpostMarv\\DaftObject\\TypeUtilities::HasMethod"
             ]
@@ -48,6 +49,7 @@
         },
         "ProtectedVisibility": {
             "ignore": [
+                "SignpostMarv\\DaftObject\\AbstractDaftObject::MaybeThrowOnDoGetSet",
                 "SignpostMarv\\DaftObject\\DefinitionAssistant::MaybeRegisterAdditionalTypes",
                 "SignpostMarv\\DaftObject\\DefinitionAssistant::RegisterDaftObjectTypeFromTypeAndProps"
             ]
