@@ -138,8 +138,11 @@ class DefinitionAssistant extends Base
     */
     protected static function RegisterDaftObjectTypeFromTypeAndProps(
         string $maybe,
+        string $prop,
         string ...$props
     ) : string {
+        array_unshift($props, $prop);
+
         $args = static::TypeAndGetterAndSetterClosureWithProps($maybe, ...$props);
 
         /**
