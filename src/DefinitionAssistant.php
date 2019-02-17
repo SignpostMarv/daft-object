@@ -150,12 +150,7 @@ class DefinitionAssistant extends Base
         */
         $props = array_slice($args, 3);
 
-        static::RegisterType(
-            $args[self::INT_ARRAY_INDEX_TYPE],
-            $args[self::INT_ARRAY_INDEX_GETTER],
-            $args[self::INT_ARRAY_INDEX_SETTER],
-            ...$props
-        );
+        static::RegisterType($args[self::INT_ARRAY_INDEX_TYPE], $args[self::INT_ARRAY_INDEX_GETTER], $args[self::INT_ARRAY_INDEX_SETTER], ...$props);
 
         /**
         * @psalm-var class-string<T>
