@@ -6,6 +6,9 @@
   executionOrder="random"
 >
   <testsuites>
+    <testsuite name="DefinitionAssistant">
+      <directory>./Tests/DefinitionAssistant/</directory>
+    </testsuite>
     <testsuite name="DaftObject">
       <directory>./Tests/DaftObject/</directory>
     </testsuite>
@@ -26,9 +29,6 @@
     </testsuite>
     <testsuite name="PHPStan">
       <directory>./Tests/PHPStan/</directory>
-    </testsuite>
-    <testsuite name="DefinitionAssistant">
-      <directory>./Tests/DefinitionAssistant/</directory>
     </testsuite>
   </testsuites>
   <logging>

@@ -66,14 +66,6 @@ class DefinitionAssistant extends Base
     }
 
     /**
-    * @psalm-param class-string<T> $type
-    */
-    public static function AutoRegisterType(string $type, string ...$properties) : void
-    {
-        static::RegisterDaftObjectTypeFromTypeAndProps($type, ...$properties);
-    }
-
-    /**
     * @psalm-return Closure(string):?string
     */
     public static function SetterOrGetterClosure(
@@ -173,9 +165,7 @@ class DefinitionAssistant extends Base
         $out = array_reduce(
             array_filter(
                 [
-                    DefinesOwnArrayIdInterface::class,
-                    DefinesOwnIntegerIdInterface::class,
-                    DefinesOwnStringIdInterface::class,
+                    DefinesOwnIdPropertiesInterface::class,
                 ],
                 function (string $otherType) use ($maybe) : bool {
                     return $otherType !== $maybe;

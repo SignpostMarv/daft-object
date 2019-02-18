@@ -18,10 +18,7 @@ class PHPStanTest extends TestCase
     public function testPHPStan() : void
     {
         $version = 'Version unknown';
-        try {
             $version = PrettyVersions::getVersion('phpstan/phpstan')->getPrettyVersion();
-        } catch (OutOfBoundsException $e) {
-        }
 
         $application = new Application('PHPStan Checking', $version);
         $application->add(new AnalyseCommand());

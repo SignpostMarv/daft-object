@@ -10,6 +10,10 @@ use SignpostMarv\DaftObject\AbstractDaftObject;
 
 class DefinesPropertyOnInterfaceClassImplementation extends AbstractDaftObject implements DefinesPropertyOnInterface
 {
+    const PROPERTIES = [
+        'foo',
+    ];
+
     /**
     * @var string|null
     */

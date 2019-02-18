@@ -9,30 +9,39 @@ namespace SignpostMarv\DaftObject\Tests\DefinitionAssistant;
 use Error;
 use InvalidArgumentException;
 use SignpostMarv\DaftMagicPropertyAnalysis\DefinitionAssistant as ParentDefinitionAssistant;
+use SignpostMarv\DaftObject\AbstractDaftObject;
 use SignpostMarv\DaftObject\DaftObject;
 use SignpostMarv\DaftObject\DateTimeImmutableTestObject;
 use SignpostMarv\DaftObject\Tests\TestCase;
 
 class DefinitionAssistantTest extends TestCase
 {
-    public function testIsTypeUnregistered() : void
+    /**
+    * @dataProvider dataProvider_AbstractDaftObject__has_properties
+    *
+    * @psalm-param class-string<AbstractDaftObject> $className
+    */
+    public function testIsTypeUnregistered(string $className) : void
     {
         DefinitionAssistant::ClearTypes();
 
-        static::assertTrue(DefinitionAssistant::IsTypeUnregistered(DaftObject::class));
-        DefinitionAssistant::AutoRegisterType(DaftObject::class, 'foo');
-        static::assertFalse(DefinitionAssistant::IsTypeUnregistered(DaftObject::class));
-        static::assertCount(1, DefinitionAssistant::ObtainExpectedProperties(DaftObject::class));
+        static::assertTrue(DefinitionAssistant::IsTypeUnregistered($className));
+        DefinitionAssistant::RegisterAbstractDaftObjectType($className);
+        static::assertFalse(DefinitionAssistant::IsTypeUnregistered($className));
+        static::assertGreaterThanOrEqual(
+            count($className::DaftObjectProperties()),
+            DefinitionAssistant::ObtainExpectedProperties($className)
+        );
 
-        static::assertTrue(DefinitionAssistant::IsTypeUnregistered(
-            DateTimeImmutableTestObject::class
+        static::assertFalse(DefinitionAssistant::IsTypeUnregistered(
+            $className
         ));
         DefinitionAssistant::ClearTypes();
-        DefinitionAssistant::RegisterAbstractDaftObjectType(DateTimeImmutableTestObject::class);
-        static::assertCount(
-            1,
+        DefinitionAssistant::RegisterAbstractDaftObjectType($className);
+        static::assertGreaterThanOrEqual(
+            $className::PROPERTIES,
             DefinitionAssistant::ObtainExpectedProperties(
-                DateTimeImmutableTestObject::class
+                $className
             )
         );
         DefinitionAssistant::ClearTypes();
@@ -42,7 +51,7 @@ class DefinitionAssistantTest extends TestCase
     {
         return [
             [
-                DaftObject::class,
+                DateTimeImmutableTestObject::class,
                 ['foo' => 'foo'],
                 Error::class,
                 'Cannot unpack array with string keys',
@@ -53,7 +62,7 @@ class DefinitionAssistantTest extends TestCase
     /**
     * @param array<int, string> $properties
     *
-    * @psalm-param class-string<DaftObject> $type
+    * @psalm-param class-string<AbstractDaftObject> $type
     *
     * @dataProvider DataProviderExceptionsInRegisterType
     */
@@ -70,7 +79,7 @@ class DefinitionAssistantTest extends TestCase
         static::expectException($exception);
         static::expectExceptionMessage($message);
 
-        DefinitionAssistant::AutoRegisterType($type, ...$properties);
+        DefinitionAssistant::public_RegisterDaftObjectTypeFromTypeAndProps($type, ...$properties);
     }
 
     public function testRegisterAbstractDaftObjectTypeHasAlreadyBeenRegistered() : void
@@ -99,9 +108,10 @@ class DefinitionAssistantTest extends TestCase
             )('bar')
         );
 
-        DefinitionAssistant::AutoRegisterType(
-            DefinesPropertyOnInterfaceClassImplementation::class,
-            'foo'
+        DefinitionAssistant::ClearTypes();
+
+        DefinitionAssistant::RegisterAbstractDaftObjectType(
+            DefinesPropertyOnInterfaceClassImplementation::class
         );
 
         static::assertSame('GetFoo', DefinitionAssistant::GetterMethodName(
@@ -117,9 +127,8 @@ class DefinitionAssistantTest extends TestCase
             ' has already been registered!'
         );
 
-        DefinitionAssistant::AutoRegisterType(
-            DefinesPropertyOnInterfaceClassImplementation::class,
-            'foo'
+        DefinitionAssistant::RegisterAbstractDaftObjectType(
+            DefinesPropertyOnInterfaceClassImplementation::class
         );
     }
 }
