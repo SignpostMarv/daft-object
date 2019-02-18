@@ -7,7 +7,6 @@ declare(strict_types=1);
 namespace SignpostMarv\DaftObject\Tests\PHPStan;
 
 use Jean85\PrettyVersions;
-use OutOfBoundsException;
 use PHPStan\Command\AnalyseCommand;
 use SignpostMarv\DaftObject\Tests\TestCase;
 use Symfony\Component\Console\Application;

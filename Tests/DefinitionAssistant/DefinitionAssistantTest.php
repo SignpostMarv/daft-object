@@ -10,7 +10,6 @@ use Error;
 use InvalidArgumentException;
 use SignpostMarv\DaftMagicPropertyAnalysis\DefinitionAssistant as ParentDefinitionAssistant;
 use SignpostMarv\DaftObject\AbstractDaftObject;
-use SignpostMarv\DaftObject\DaftObject;
 use SignpostMarv\DaftObject\DateTimeImmutableTestObject;
 use SignpostMarv\DaftObject\Tests\TestCase;
 
