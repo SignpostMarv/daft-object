@@ -548,7 +548,7 @@ class DaftObjectImplementationTest extends TestCase
         string $className,
         ReflectionMethod $reflector
     ) : void {
-        $property = preg_replace('/^(?:[GS]et|Obtain|Alter)/', '', $reflector->getName());
+        $property = (string) preg_replace('/^(?:[GS]et|Obtain|Alter)/', '', $reflector->getName());
 
         $properties = $className::DaftObjectProperties();
 
