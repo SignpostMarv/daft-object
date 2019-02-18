@@ -69,6 +69,17 @@ class DaftJsonTest extends TestCase
         static::assertSame('bar', $b->ObtainId());
         static::assertSame('bar', $b->__get('@id'));
 
+        $obj->json = [];
+
+        static::assertCount(0, $obj->json);
+
+        $obj->json = [$b, $a];
+
+        static::assertCount(2, $obj->json);
+        static::assertSame($a, $obj->json[1]);
+        static::assertSame($b, $obj->json[0]);
+
+
         $json = '{"json":[],"single":{"@id":"foo"}}';
 
         $obj = HasArrayOfHasId::DaftObjectFromJsonString($json);
@@ -82,5 +93,13 @@ class DaftJsonTest extends TestCase
 
         static::assertSame('foo', $a->ObtainId());
         static::assertSame('foo', $a->__get('@id'));
+
+        $obj->single = null;
+
+        static::assertSame('NULL', gettype($obj->single));
+
+        $obj->single = $a;
+
+        static::assertSame($a, $obj->single);
     }
 }

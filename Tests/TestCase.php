@@ -14,7 +14,6 @@ use SignpostMarv\DaftObject\AbstractDaftObject;
 use SignpostMarv\DaftObject\DaftObject;
 use SignpostMarv\DaftObject\DaftSortableObject;
 use SignpostMarv\DaftObject\DefinesOwnIdPropertiesInterface;
-use SignpostMarv\DaftObject\ReadOnlyBadDefinesOwnId;
 use SignpostMarv\DaftObject\TypeUtilities;
 
 /**
@@ -77,7 +76,6 @@ abstract class TestCase extends Base
     final public function dataProviderInvalidImplementations() : array
     {
         return [
-            ReadOnlyBadDefinesOwnId::class,
         ];
     }
 
