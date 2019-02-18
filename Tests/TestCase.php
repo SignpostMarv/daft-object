@@ -14,7 +14,6 @@ use SignpostMarv\DaftObject\AbstractDaftObject;
 use SignpostMarv\DaftObject\DaftObject;
 use SignpostMarv\DaftObject\DaftSortableObject;
 use SignpostMarv\DaftObject\DefinesOwnIdPropertiesInterface;
-use SignpostMarv\DaftObject\TypeUtilities;
 
 /**
 * @template T as DaftObject
