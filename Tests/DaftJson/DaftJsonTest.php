@@ -79,7 +79,6 @@ class DaftJsonTest extends TestCase
         static::assertSame($a, $obj->json[1]);
         static::assertSame($b, $obj->json[0]);
 
-
         $json = '{"json":[],"single":{"@id":"foo"}}';
 
         $obj = HasArrayOfHasId::DaftObjectFromJsonString($json);

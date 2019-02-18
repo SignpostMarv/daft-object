@@ -16,7 +16,7 @@ class LinkedDataTest extends TestCase
         $arr = ['@id' => 'foo'];
 
         foreach (HasId::DaftObjectIdProperties() as $prop) {
-            static::assertTrue(array_key_exists($prop, $arr));
+            static::assertArrayHasKey($prop, $arr);
         }
 
         $foo = new HasId($arr);
