@@ -6,6 +6,10 @@ declare(strict_types=1);
 
 namespace SignpostMarv\DaftObject;
 
+/**
+* @property-write string $password
+* @property string $passwordHash
+*/
 final class PasswordHashTestObject extends AbstractArrayBackedDaftObject
 {
     const PROPERTIES = [
@@ -18,10 +22,6 @@ final class PasswordHashTestObject extends AbstractArrayBackedDaftObject
             'passwordHash',
         ],
     ];
-
-    protected function GetPassword() : void
-    {
-    }
 
     protected function SetPasswordHash(string $hash) : void
     {

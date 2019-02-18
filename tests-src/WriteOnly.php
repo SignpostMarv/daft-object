@@ -6,6 +6,12 @@ declare(strict_types=1);
 
 namespace SignpostMarv\DaftObject;
 
+/**
+* @property-write string $Foo
+* @property-write float $Bar
+* @property-write bool|null $Bat
+* @property-write int $Baz
+*/
 class WriteOnly extends AbstractTestObject implements DefinesOwnStringIdInterface
 {
     /**

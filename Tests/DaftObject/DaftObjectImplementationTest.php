@@ -11,6 +11,7 @@ use Generator;
 use ReflectionClass;
 use ReflectionException;
 use ReflectionMethod;
+use ReflectionNamedType;
 use ReflectionType;
 use SignpostMarv\DaftObject\AbstractArrayBackedDaftObject;
 use SignpostMarv\DaftObject\AbstractDaftObject;
@@ -1368,6 +1369,168 @@ class DaftObjectImplementationTest extends TestCase
         );
 
         $obj->public_NudgePropertyValue('foo', 'bar');
+    }
+
+    /**
+    * @dataProvider dataProvider_AbstractDaftObject__has_properties_each_defined_property
+    *
+    * @psalm-param class-string<AbstractDaftObject>
+    */
+    public function test_AbstractDaftObject__has_properties_each_property(
+        string $className,
+        string $property,
+        ReflectionClass $defined_on
+    ) : void {
+        $reflection = new ReflectionClass($className);
+
+        $docblock = $defined_on->getDocComment();
+
+        $getter_name = TypeUtilities::MethodNameFromProperty($property, false);
+        $setter_name = TypeUtilities::MethodNameFromProperty($property, true);
+        $has_getter = $reflection->hasMethod($getter_name);
+        $has_setter = $reflection->hasMethod($setter_name);
+
+        $getter = $has_getter ? $reflection->getMethod($getter_name) : null;
+        $setter = $has_setter ? $reflection->getMethod($setter_name) : null;
+
+        if (($getter instanceof ReflectionMethod) && ! ($setter instanceof ReflectionMethod)) {
+            $docblock = $getter->getDeclaringClass()->getDocComment();
+        } elseif (
+            ! ($getter instanceof ReflectionMethod) &&
+            ($setter instanceof ReflectionMethod)
+        ) {
+            $docblock = $setter->getDeclaringClass()->getDocComment();
+        }
+
+        static::assertIsString($docblock, $className . ' must implement a docblock!');
+
+        $setter_param =
+            (
+                ($setter instanceof ReflectionMethod) &&
+                (1 === $setter->getNumberOfRequiredParameters())
+            )
+                ? $setter->getParameters()[0]
+                : null;
+        $getter_type =
+            (($getter instanceof ReflectionMethod) && $getter->hasReturnType())
+                ? $getter->getReturnType()
+                : null;
+
+
+        $read_write_regex = '/\* @property(?:-(?:read|write))? ([^\$]+) \$' . preg_quote($property, '/') . '[\r\n]/';
+        $read_regex = '/\* @property-read ([^\$]+) \$' . preg_quote($property, '/') . '[\r\n]/';
+        $write_regex = '/\* @property-write ([^\$]+) \$' . preg_quote($property, '/') . '[\r\n]/';
+
+        if (($getter instanceof ReflectionMethod) && ($setter instanceof ReflectionMethod)) {
+            static::assertSame(
+                1,
+                preg_match($read_write_regex, $docblock, $matches),
+                (
+                    $className .
+                    ' must specify an @property docblock entry or' .
+                    ' both @property-read & @property-write docblocks entries for $' .
+                    $property
+                )
+            );
+        } elseif ($getter instanceof ReflectionMethod) {
+            static::assertSame(
+                1,
+                preg_match($read_regex, $docblock, $matches),
+                (
+                    $getter->getDeclaringClass()->getName() .
+                    ' must specify an @property-read docblock entry for ' .
+                    $defined_on->getName() .
+                    '::$' .
+                    $property .
+                    ' (via ' .
+                    $getter->getDeclaringClass()->getName() .
+                    '::' .
+                    $getter->getName() .
+                    '())'
+                )
+            );
+        } elseif ($setter instanceof ReflectionMethod) {
+            static::assertSame(
+                1,
+                preg_match($write_regex, $docblock, $matches),
+                (
+                    $setter->getDeclaringClass()->getName() .
+                    ' must specify an @property-write docblock entry for ' .
+                    $defined_on->getName() .
+                    '::$' .
+                    $property
+                )
+            );
+        } else {
+            static::assertTrue($reflection->isAbstract());
+        }
+
+        if ($setter_param instanceof ReflectionParameter) {
+            if ($setter_param->hasType()) {
+                $setter_type = $setter_param->getType();
+                static::assertSame($matches[1], $setter_type->getName());
+            } else {
+                $setter_docblock = $setter->getDocComment();
+
+                $regex_setter_type =
+                    '/* @param (.+) \$' .
+                    preg_quote($setter_param->getName(), '/') .
+                    '\n/';
+
+                static::assertSame(
+                    1,
+                    preg_match($regex_setter_type, $setter_docblock, $setter_matches),
+                    (
+                        $className .
+                        ' must specify an @param docblock entry for ' .
+                        $className .
+                        '::' .
+                        $setter->getName() .
+                        '()'
+                    )
+                );
+
+                static::assertSame($matches[1], $setter_matches[1]);
+            }
+        }
+
+        if ($getter_type instanceof ReflectionNamedType && 'array' !== $getter_type->getName()) {
+            if ('|null' === mb_substr($matches[1], -5)) {
+                static::assertSame($getter_type->getName(), mb_substr($matches[1], 0, -5));
+                static::assertTrue($getter_type->allowsNull());
+            } else {
+                static::assertSame($getter_type->getName(), $matches[1]);
+            }
+        } elseif ($getter instanceof ReflectionMethod) {
+            $getter_docblock = $getter->getDocComment();
+
+            static::assertIsString(
+                $getter_docblock,
+                (
+                    $getter->getDeclaringClass()->getName() .
+                    '::' .
+                    $getter->getName() .
+                    '() must specify either an @return or @psalm-return docblock!'
+                )
+            );
+
+            $regex_getter_type = '/\* @(psalm\-return|return) (.+)\n/';
+
+            static::assertSame(
+                1,
+                preg_match($regex_getter_type, $getter_docblock, $getter_matches),
+                (
+                    $className .
+                    ' must specify an @param docblock entry for ' .
+                    $className .
+                    '::' .
+                    $getter->getName() .
+                    '()'
+                )
+            );
+
+            static::assertSame($matches[1], $getter_matches[2]);
+        }
     }
 
     /**

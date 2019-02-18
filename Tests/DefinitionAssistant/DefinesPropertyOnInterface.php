@@ -8,6 +8,9 @@ namespace SignpostMarv\DaftObject\Tests\DefinitionAssistant;
 
 use SignpostMarv\DaftObject\DaftObject;
 
+/**
+* @property string $foo
+*/
 interface DefinesPropertyOnInterface extends DaftObject
 {
     const DefinitionAssistantProperties = [

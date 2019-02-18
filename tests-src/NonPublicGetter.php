@@ -6,6 +6,9 @@ declare(strict_types=1);
 
 namespace SignpostMarv\DaftObject;
 
+/**
+* @property string $foo
+*/
 class NonPublicGetter extends AbstractArrayBackedDaftObject
 {
     const PROPERTIES = [

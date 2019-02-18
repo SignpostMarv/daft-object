@@ -8,6 +8,16 @@ namespace SignpostMarv\DaftObject;
 
 use DateTimeImmutable;
 
+/**
+* @property-read array<int, DateTimeImmutable> $dates
+* @property-write scalar|array|object|null $dates
+* @property-read array<int, DateTimeImmutable|string> $datesOrStrings
+* @property-write scalar|array|object|null $datesOrStrings
+* @property-read array<int, string> $trimmedStrings
+* @property-write scalar|array|object|null $trimmedStrings
+* @property-read string $trimmedString
+* @property-write scalar|array|object|null $trimmedString
+*/
 class MultiTypedArrayPropertiesTester
     extends
         AbstractArrayBackedDaftObject

@@ -11,6 +11,8 @@ use SignpostMarv\DaftObject\TraitSortableDaftObject;
 
 /**
 * @template T as DaftSortableObject
+*
+* @property int $intSortOrder
 */
 class NotDaftSortableObject extends Base
 {

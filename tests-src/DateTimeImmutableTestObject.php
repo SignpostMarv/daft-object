@@ -8,6 +8,9 @@ namespace SignpostMarv\DaftObject;
 
 use DateTimeImmutable;
 
+/**
+* @property DateTimeImmutable $datetime
+*/
 class DateTimeImmutableTestObject extends AbstractArrayBackedDaftObject
 {
     const STR_FORMAT_TEST = 'Y-m-d\TH:i:s.uP';

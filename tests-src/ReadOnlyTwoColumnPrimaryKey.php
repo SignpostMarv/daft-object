@@ -6,6 +6,12 @@ declare(strict_types=1);
 
 namespace SignpostMarv\DaftObject;
 
+/**
+* @property-read string $Foo
+* @property-read float $Bar
+* @property-read bool|null $Bat
+* @property-read int $Baz
+*/
 class ReadOnlyTwoColumnPrimaryKey extends AbstractTestObject implements DefinesOwnArrayIdInterface
 {
     /**

@@ -10,6 +10,8 @@ namespace SignpostMarv\DaftObject;
 * @template T as ReadWriteJsonJsonArrayBad
 *
 * @template-implements DaftJson<T>
+*
+* @property \stdClass[] $json
 */
 class ReadWriteJsonJsonArrayBad extends AbstractArrayBackedDaftObject implements DaftJson
 {
@@ -25,6 +27,9 @@ class ReadWriteJsonJsonArrayBad extends AbstractArrayBackedDaftObject implements
         'json' => 'stdClass[]',
     ];
 
+    /**
+    * @return \stdClass[]
+    */
     public function GetJson() : array
     {
         /**

@@ -9,6 +9,7 @@ namespace SignpostMarv\DaftObject\Tests;
 use Generator;
 use PHPUnit\Framework\TestCase as Base;
 use ReflectionClass;
+use ReflectionClassConstant;
 use ReflectionMethod;
 use SignpostMarv\DaftObject\AbstractDaftObject;
 use SignpostMarv\DaftObject\DaftObject;
@@ -291,6 +292,31 @@ abstract class TestCase extends Base
         foreach ($this->dataProvider_AbstractDaftObject__is_subclass_of() as $args) {
             if (count((array) $args[0]::PROPERTIES) > 0) {
                 yield $args;
+            }
+        }
+    }
+
+    /**
+    * @psalm-return Generator<string, array{0:class-string<AbstractDaftObject>, 1:string, 2:ReflectionClass}, mixed, void>
+    */
+    final public function dataProvider_AbstractDaftObject__has_properties_each_defined_property() : Generator
+    {
+        foreach ($this->dataProvider_AbstractDaftObject__has_properties() as $args) {
+            $reflector = new ReflectionClass($args[0]);
+
+            $reflector_const = new ReflectionClassConstant($args[0], 'PROPERTIES');
+
+            if (! ($reflector_const instanceof ReflectionClassConstant)) {
+                continue;
+            }
+
+            /**
+            * @var string[]
+            */
+            $properties = array_filter((array) $args[0]::PROPERTIES, 'is_string');
+
+            foreach ($properties as $property) {
+                yield [$args[0], $property, $reflector_const->getDeclaringClass()];
             }
         }
     }
