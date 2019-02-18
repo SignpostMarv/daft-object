@@ -72,6 +72,11 @@
                 "SignpostMarv\\DaftObject\\DefinitionAssistant::MaybeRegisterAdditionalTypes",
                 "SignpostMarv\\DaftObject\\DefinitionAssistant::RegisterDaftObjectTypeFromTypeAndProps"
             ]
+        },
+        "PublicVisibility": {
+            "ignore": [
+                "SignpostMarv\\DaftObject\\DefinitionAssistant::SetterOrGetterClosure"
+            ]
         }
     }
 }
