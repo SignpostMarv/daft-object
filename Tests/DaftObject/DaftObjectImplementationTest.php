@@ -548,7 +548,7 @@ class DaftObjectImplementationTest extends TestCase
         string $className,
         ReflectionMethod $reflector
     ) : void {
-        $property = mb_substr($reflector->getName(), 3);
+        $property = preg_replace('/^(?:[GS]et|Obtain|Alter)/', '', $reflector->getName());
 
         $properties = $className::DaftObjectProperties();
 
@@ -1336,20 +1336,6 @@ class DaftObjectImplementationTest extends TestCase
             static::assertTrue(in_array($v, $publicOrProtected, true));
             static::assertTrue(method_exists($className, $expectedMethod));
         }
-    }
-
-    /**
-    * @dataProvider dataProviderNonAbstractGoodNonSortableImplementations
-    *
-    * @psalm-param class-string<AbstractDaftObject> $className
-    */
-    public function testNotSortableImplementation(string $className) : void
-    {
-        static::assertFalse(is_subclass_of(
-            $className,
-            DaftSortableObject::class,
-            true
-        ));
     }
 
     /**

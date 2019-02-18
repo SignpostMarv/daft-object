@@ -37,11 +37,6 @@ abstract class TestCase extends Base
     */
     protected $runTestInSeparateProcess = false;
 
-    public static function MethodNameFromProperty(string $prop, bool $SetNotGet = false) : string
-    {
-        return TypeUtilities::MethodNameFromProperty($prop, $SetNotGet);
-    }
-
     /**
     * @psalm-return Generator<int, array{0:class-string<DaftObject>}, mixed, void>
     */
@@ -180,18 +175,6 @@ abstract class TestCase extends Base
     }
 
     /**
-    * @psalm-return Generator<int, array{0:class-string<T&DefinesOwnIdPropertiesInterface>, 1:ReflectionClass}, mixed, void>
-    */
-    final public function dataProviderNonAbstractDefinesOwnIdGoodImplementations() : Generator
-    {
-        foreach ($this->dataProviderNonAbstractGoodImplementationsWithProperties() as $args) {
-            if (is_a($args[0], DefinesOwnIdPropertiesInterface::class, true)) {
-                yield $args;
-            }
-        }
-    }
-
-    /**
     * @psalm-return Generator<int, array{0:class-string<T>, 1:ReflectionClass}, mixed, void>
     */
     final public function dataProviderNonAbstractGoodNullableImplementations() : Generator
@@ -233,27 +216,18 @@ abstract class TestCase extends Base
     /**
     * @psalm-return Generator<int, array{0:class-string<T>, 1:ReflectionMethod}, mixed, void>
     */
-    final public function dataProviderNonAbstractGetterSetters() : Generator
-    {
-        foreach ($this->dataProviderNonAbstractImplementations() as $args) {
-            foreach ($args[1]->getMethods() as $method) {
-                if (preg_match('/^[GS]et[A-Z]/', $method->getName()) > 0) {
-                    yield [$args[0], $method];
-                }
-            }
-        }
-    }
-
-    /**
-    * @psalm-return Generator<int, array{0:class-string<T>, 1:ReflectionMethod}, mixed, void>
-    */
     final public function dataProviderGoodNonAbstractGetterSetters() : Generator
     {
         $invalid = $this->dataProviderInvalidImplementations();
 
-        foreach ($this->dataProviderNonAbstractGetterSetters() as $args) {
-            if (false === in_array($args[0], $invalid, true)) {
-                yield [$args[0], $args[1]];
+        foreach ($this->dataProviderNonAbstractImplementations() as $args) {
+            foreach ($args[1]->getMethods() as $method) {
+                if (
+                    preg_match('/^(?:[GS]et|Obtain|Alter)[A-Z]/', $method->getName()) > 0 &&
+                    false === in_array($args[0], $invalid, true)
+                ) {
+                    yield [$args[0], $method];
+                }
             }
         }
     }
@@ -293,21 +267,6 @@ abstract class TestCase extends Base
     {
         foreach ($this->dataProviderNonAbstractGoodImplementations() as $args) {
             if (is_a($args[0], DaftSortableObject::class, true)) {
-                yield $args;
-            }
-        }
-    }
-
-    /**
-    * @psalm-return Generator<int, array{0:class-string<T&AbstractDaftObject>, 1:ReflectionClass}, mixed, void>
-    */
-    final public function dataProviderNonAbstractGoodNonSortableImplementations() : Generator
-    {
-        foreach ($this->dataProviderNonAbstractGoodImplementations() as $args) {
-            if (
-                is_a($args[0], AbstractDaftObject::class, true) &&
-                ! is_a($args[0], DaftSortableObject::class, true)
-            ) {
                 yield $args;
             }
         }
