@@ -16,13 +16,25 @@
                 "SignpostMarv\\DaftObject\\TraitSortableDaftObject::DaftSortableObjectProperties"
             ]
         },
+        "FalseValue": {
+            "ignore": [
+                "SignpostMarv\\DaftObject\\TypeUtilities::HasMethod"
+            ]
+        },
         "Foreach_": {
             "ignore": [
-                "SignpostMarv\\DaftObject\\DaftObjectIdValuesHashLazyInt::DaftObjectIdHash"
+                "SignpostMarv\\DaftObject\\DaftObjectIdValuesHashLazyInt::DaftObjectIdHash",
+                "SignpostMarv\\DaftObject\\TypeUtilities::CachePublicGettersAndSettersProperties"
+            ]
+        },
+        "Identical": {
+            "ignore": [
+                "SignpostMarv\\DaftObject\\TypeUtilities::HasMethod"
             ]
         },
         "LogicalAnd": {
             "ignore": [
+                "SignpostMarv\\DaftObject\\AbstractArrayBackedDaftObject::__isset",
                 "SignpostMarv\\DaftObject\\AbstractArrayBackedDaftObject::NudgePropertyValue",
                 "SignpostMarv\\DaftObject\\DefinitionAssistant::MaybeRemapStringsToTrimmedStrings",
                 "SignpostMarv\\DaftObject\\PHPStan\\ClassReflectionExtension::MaybeRegisterTypesOrExitEarly",
@@ -34,11 +46,18 @@
                 "SignpostMarv\\DaftObject\\PHPStan\\ClassReflectionExtension::MaybeRegisterTypesOrExitEarly"
             ]
         },
+        "LogicalOr": {
+            "ignore": [
+                "SignpostMarv\\DaftObject\\AbstractArrayBackedDaftObject::DaftObjectWormPropertyWritten"
+            ]
+        },
         "MethodCallRemoval": {
             "ignore": [
                 "SignpostMarv\\DaftObject\\AbstractDaftObject::__unset",
                 "SignpostMarv\\DaftObject\\DefinitionAssistant::MaybeRegisterAdditionalTypes",
-                "SignpostMarv\\DaftObject\\PHPStan\\ClassReflectionExtension::MaybeRegisterTypesOrExitEarly"
+                "SignpostMarv\\DaftObject\\DefinitionAssistant::ObtainExpectedProperties",
+                "SignpostMarv\\DaftObject\\PHPStan\\ClassReflectionExtension::MaybeRegisterTypesOrExitEarly",
+                "SignpostMarv\\DaftObject\\TypeUtilities::CachePublicGettersAndSetters"
             ]
         },
         "NotIdentical": {
