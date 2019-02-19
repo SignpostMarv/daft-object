@@ -27,7 +27,7 @@ trait DaftObjectIdValuesHashLazyInt
     */
     public static function DaftObjectIdHash(DefinesOwnIdPropertiesInterface $object) : string
     {
-        $id = array_map(
+        return static::DaftObjectIdValuesHash(array_map(
             function (string $prop) use ($object) : string {
                 /**
                 * @var scalar|array|object|null
@@ -37,9 +37,7 @@ trait DaftObjectIdValuesHashLazyInt
                 return static::VarExportNonScalars($val);
             },
             $object::DaftObjectIdProperties()
-        );
-
-        return static::DaftObjectIdValuesHash($id);
+        ));
     }
 
     /**
