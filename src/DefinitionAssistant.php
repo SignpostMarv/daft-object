@@ -34,7 +34,7 @@ class DefinitionAssistant extends Base
     *
     * @psalm-param class-string<A> $maybe
     *
-    * @psalm-return class-string<A&T>
+    * @psalm-return class-string<A>
     */
     public static function RegisterAbstractDaftObjectType(string $maybe) : string
     {
@@ -43,10 +43,27 @@ class DefinitionAssistant extends Base
         */
         $props = $maybe::PROPERTIES;
 
+        $maybe = static::RegisterDaftObjectTypeFromTypeAndProps($maybe, ...$props);
+
+        if ( ! is_a($maybe, AbstractDaftObject::class, true)) {
+            throw new \Exception($maybe);
+        }
+
+        $additional_props = array_filter(
+            $maybe::DaftObjectProperties(),
+            function (string $maybe) use ($props) : bool {
+                return ! in_array($maybe, $props, true);
+            }
+        );
+
+        if (count($additional_props) > 0) {
+            $maybe = static::RegisterDaftObjectTypeFromTypeAndProps($maybe, ...$additional_props);
+        }
+
         /**
         * @psalm-var class-string<A>
         */
-        $maybe = static::RegisterDaftObjectTypeFromTypeAndProps($maybe, ...$props);
+        $maybe = $maybe;
 
         return $maybe;
     }
@@ -161,12 +178,9 @@ class DefinitionAssistant extends Base
 
         static::RegisterType($args[self::INT_ARRAY_INDEX_TYPE], $args[self::INT_ARRAY_INDEX_GETTER], $args[self::INT_ARRAY_INDEX_SETTER], ...$props);
 
-        /**
-        * @psalm-var class-string<T>
-        */
-        $out = self::MaybeRegisterAdditionalTypes($args[self::INT_ARRAY_INDEX_TYPE]);
+        self::MaybeRegisterAdditionalTypes($args[self::INT_ARRAY_INDEX_TYPE]);
 
-        return $out;
+        return $maybe;
     }
 
     /**
