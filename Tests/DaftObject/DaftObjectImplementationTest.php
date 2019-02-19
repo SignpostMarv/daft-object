@@ -1423,6 +1423,69 @@ class DaftObjectImplementationTest extends TestCase
         $matches = [];
 
         if (($getter instanceof ReflectionMethod) && ($setter instanceof ReflectionMethod)) {
+            static::assertInstanceOf(ReflectionParameter::class, $setter_param);
+
+            $getter_docblock = $getter->getDocComment();
+            $setter_docblock = $getter->getDocComment();
+
+            $skip = false;
+
+            if (is_string($getter_docblock) && is_string($setter_docblock)) {
+                $regex_getter_type = '/\* @(psalm\-return|return) (.+)\n/';
+                $regex_setter_type =
+                    '/\* @(psalm-param|param) (.+) $' .
+                    preg_quote($setter_param->getName(), '/') .
+                    '[\r\n]/';
+
+                if (
+                    1 === preg_match($regex_getter_type, $getter_docblock, $getter_matches) &&
+                    1 === preg_match($regex_setter_type, $setter_docblock, $setter_matches)
+                ) {
+                    static::assertSame(
+                        $getter_matches[1],
+                        $setter_matches[2],
+                        (
+                            'Return type of ' .
+                            $getter->getDeclaringClass()->getName() .
+                            '::' .
+                            $getter->getName() .
+                            '() must match param type of ' .
+                            $setter->getDeclaringClass()->getName() .
+                            '::' .
+                            $setter->getName() .
+                            '()'
+                        )
+                    );
+
+                    static::assertRegExp(
+                        $read_regex,
+                        $docblock,
+                        (
+                            $className .
+                            ' must specify both @property-read & @property-write docblock' .
+                            ' entries for $' .
+                            $property .
+                            ', @property-read not specified!'
+                        )
+                    );
+
+                    static::assertRegExp(
+                        $write_regex,
+                        $docblock,
+                        (
+                            $className .
+                            ' must specify both @property-read & @property-write docblock' .
+                            ' entries for $' .
+                            $property .
+                            ', @property-write not specified!'
+                        )
+                    );
+
+                    $skip = true;
+                }
+            }
+
+            if ( ! $skip) {
             static::assertSame(
                 1,
                 preg_match($read_write_regex, $docblock, $matches),
@@ -1433,6 +1496,7 @@ class DaftObjectImplementationTest extends TestCase
                     $property
                 )
             );
+            }
         } elseif ($getter instanceof ReflectionMethod) {
             static::assertSame(
                 1,
@@ -1473,7 +1537,6 @@ class DaftObjectImplementationTest extends TestCase
                 'array' !== $setter_type->getName()
             ) {
                 if ('|null' === mb_substr($matches[1], -5)) {
-                    static::assertSame($setter_type->getName(), mb_substr($matches[1], 0, -5));
                     static::assertTrue($setter_type->allowsNull());
                 } else {
                     static::assertSame($matches[1], $setter_type->getName());
@@ -1510,14 +1573,11 @@ class DaftObjectImplementationTest extends TestCase
                         '()'
                     )
                 );
-
-                static::assertSame($matches[1], $setter_matches[1]);
             }
         }
 
         if ($getter_type instanceof ReflectionNamedType && 'array' !== $getter_type->getName()) {
             if ('|null' === mb_substr($matches[1], -5)) {
-                static::assertSame($getter_type->getName(), mb_substr($matches[1], 0, -5));
                 static::assertTrue($getter_type->allowsNull());
             } else {
                 static::assertSame($getter_type->getName(), $matches[1]);

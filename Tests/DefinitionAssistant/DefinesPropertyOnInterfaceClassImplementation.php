@@ -8,6 +8,9 @@ namespace SignpostMarv\DaftObject\Tests\DefinitionAssistant;
 
 use SignpostMarv\DaftObject\AbstractDaftObject;
 
+/**
+* @property string $foo
+*/
 class DefinesPropertyOnInterfaceClassImplementation extends AbstractDaftObject implements DefinesPropertyOnInterface
 {
     const PROPERTIES = [
@@ -15,7 +18,7 @@ class DefinesPropertyOnInterfaceClassImplementation extends AbstractDaftObject i
     ];
 
     /**
-    * @var string|null
+    * @var string
     */
     protected $foo = '';
 
@@ -26,17 +29,17 @@ class DefinesPropertyOnInterfaceClassImplementation extends AbstractDaftObject i
 
     public function __isset(string $k) : bool
     {
-        return 'foo' === $k;
+        return 'foo' === $k && '' !== $this->foo;
     }
 
     public function __unset(string $k) : void
     {
-        $this->__set('foo', null);
+        $this->__set('foo', '');
     }
 
     public function GetFoo() : string
     {
-        return (string) $this->foo;
+        return $this->foo;
     }
 
     public function SetFoo(string $value) : void
