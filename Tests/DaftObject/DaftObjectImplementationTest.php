@@ -1476,7 +1476,7 @@ class DaftObjectImplementationTest extends TestCase
                     static::assertSame($setter_type->getName(), mb_substr($matches[1], 0, -5));
                     static::assertTrue($setter_type->allowsNull());
                 } else {
-                static::assertSame($matches[1], $setter_type->getName());
+                    static::assertSame($matches[1], $setter_type->getName());
                 }
             } else {
                 static::assertInstanceOf(ReflectionMethod::class, $setter);
