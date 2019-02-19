@@ -14,8 +14,8 @@ use ReflectionMethod;
 use SignpostMarv\DaftObject\AbstractDaftObject;
 use SignpostMarv\DaftObject\DaftObject;
 use SignpostMarv\DaftObject\DaftSortableObject;
-use SignpostMarv\DaftObject\DefinitionAssistant;
 use SignpostMarv\DaftObject\DefinesOwnIdPropertiesInterface;
+use SignpostMarv\DaftObject\DefinitionAssistant;
 
 /**
 * @template T as DaftObject
