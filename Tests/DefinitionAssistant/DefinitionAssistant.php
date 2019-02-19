@@ -10,6 +10,11 @@ use Closure;
 use SignpostMarv\DaftObject\DaftObject;
 use SignpostMarv\DaftObject\DefinitionAssistant as Base;
 
+/**
+* @template T as DaftObject
+*
+* @template-extends Base<T>
+*/
 class DefinitionAssistant extends Base
 {
     public static function ClearTypes() : void
@@ -17,14 +22,6 @@ class DefinitionAssistant extends Base
         static::$properties = [];
         static::$getters = [];
         static::$setters = [];
-    }
-
-    public static function PublicSetterOrGetterClosure(
-        string $type,
-        bool $SetNotGet,
-        string ...$props
-    ) : Closure {
-        return static::SetterOrGetterClosure($type, $SetNotGet, ...$props);
     }
 
     /**
@@ -40,5 +37,15 @@ class DefinitionAssistant extends Base
             $prop,
             ...$props
         );
+    }
+
+    /**
+    * @psalm-param class-string<T> $maybe
+    *
+    * @psalm-return class-string<T>
+    */
+    public static function public_MaybeRegisterAdditionalTypes(string $maybe) : string
+    {
+        return static::MaybeRegisterAdditionalTypes($maybe);
     }
 }

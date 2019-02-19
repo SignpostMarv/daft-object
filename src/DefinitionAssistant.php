@@ -30,16 +30,25 @@ class DefinitionAssistant extends Base
     const IS_A_STRINGS = true;
 
     /**
-    * @psalm-param class-string<AbstractDaftObject> $maybe
+    * @template A as AbstractDaftObject
+    *
+    * @psalm-param class-string<A> $maybe
+    *
+    * @psalm-return class-string<A&T>
     */
-    public static function RegisterAbstractDaftObjectType(string $maybe) : void
+    public static function RegisterAbstractDaftObjectType(string $maybe) : string
     {
         /**
         * @var array<int, string>
         */
         $props = $maybe::PROPERTIES;
 
-        static::RegisterDaftObjectTypeFromTypeAndProps($maybe, ...$props);
+        /**
+        * @psalm-var class-string<A>
+        */
+        $maybe = static::RegisterDaftObjectTypeFromTypeAndProps($maybe, ...$props);
+
+        return $maybe;
     }
 
     /**
@@ -56,7 +65,15 @@ class DefinitionAssistant extends Base
 
         if (static::IsTypeUnregistered($maybe)) {
             if (is_a($maybe, AbstractDaftObject::class, true)) {
-                static::RegisterAbstractDaftObjectType($maybe);
+                /**
+                * @psalm-var class-string<AbstractDaftObject&T>
+                */
+                $maybe = $maybe;
+
+                /**
+                * @psalm-var class-string<T>
+                */
+                $maybe = static::RegisterAbstractDaftObjectType($maybe);
             }
         }
 
@@ -179,7 +196,7 @@ class DefinitionAssistant extends Base
             */
             function (string $maybe, string $otherType) : string {
                 if (self::IsTypeUnregistered($otherType)) {
-                    self::RegisterDaftObjectTypeFromTypeAndProps($otherType, 'id');
+                    return self::RegisterDaftObjectTypeFromTypeAndProps($otherType, 'id');
                 }
 
                 return $maybe;

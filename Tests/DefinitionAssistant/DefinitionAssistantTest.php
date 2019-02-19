@@ -78,7 +78,20 @@ class DefinitionAssistantTest extends TestCase
         static::expectException($exception);
         static::expectExceptionMessage($message);
 
-        DefinitionAssistant::public_RegisterDaftObjectTypeFromTypeAndProps($type, ...$properties);
+        static::assertSame(
+            $type,
+            DefinitionAssistant::public_RegisterDaftObjectTypeFromTypeAndProps(
+                $type,
+                ...$properties
+            )
+        );
+
+        DefinitionAssistant::ClearTypes();
+
+        static::assertSame(
+            $type,
+            DefinitionAssistant::public_MaybeRegisterAdditionalTypes($type)
+        );
     }
 
     public function testRegisterAbstractDaftObjectTypeHasAlreadyBeenRegistered() : void
@@ -100,7 +113,7 @@ class DefinitionAssistantTest extends TestCase
         ));
 
         static::assertNull(
-            DefinitionAssistant::PublicSetterOrGetterClosure(
+            DefinitionAssistant::SetterOrGetterClosure(
                 DefinesPropertyOnInterfaceClassImplementation::class,
                 false,
                 'bar'
