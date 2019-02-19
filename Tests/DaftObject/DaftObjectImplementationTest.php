@@ -1486,16 +1486,16 @@ class DaftObjectImplementationTest extends TestCase
             }
 
             if ( ! $skip) {
-            static::assertSame(
-                1,
-                preg_match($read_write_regex, $docblock, $matches),
-                (
-                    $className .
-                    ' must specify an @property docblock entry or' .
-                    ' both @property-read & @property-write docblocks entries for $' .
-                    $property
-                )
-            );
+                static::assertSame(
+                    1,
+                    preg_match($read_write_regex, $docblock, $matches),
+                    (
+                        $className .
+                        ' must specify an @property docblock entry or' .
+                        ' both @property-read & @property-write docblocks entries for $' .
+                        $property
+                    )
+                );
             }
         } elseif ($getter instanceof ReflectionMethod) {
             static::assertSame(
