@@ -30,7 +30,7 @@ final class PasswordHashTestObject extends AbstractArrayBackedDaftObject
 
     public function SetPassword(string $password) : void
     {
-        $this->SetPasswordHash(password_hash($password, PASSWORD_DEFAULT));
+        $this->SetPasswordHash((string) password_hash($password, PASSWORD_DEFAULT));
     }
 
     public function GetPasswordHash() : string
