@@ -49,7 +49,7 @@ trait TraitSortableDaftObject
         /**
         * @var array<int, string>
         */
-        $out = (array) constant(static::class . '::SORTABLE_PROPERTIES');
+        $out = constant(static::class . '::SORTABLE_PROPERTIES');
 
         return $out;
     }

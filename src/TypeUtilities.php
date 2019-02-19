@@ -142,7 +142,9 @@ class TypeUtilities
     }
 
     /**
-    * @psalm-param class-string<DaftObject> $class
+    * @template T as DaftObject
+    *
+    * @psalm-param class-string<T> $class
     */
     private static function CachePublicGettersAndSettersProperties(string $class) : void
     {
@@ -150,6 +152,9 @@ class TypeUtilities
             is_a($class, AbstractDaftObject::class, true) &&
             DefinitionAssistant::IsTypeUnregistered($class)
         ) {
+            /**
+            * @psalm-var class-string<T>
+            */
             $class = DefinitionAssistant::RegisterAbstractDaftObjectType($class);
         }
 
