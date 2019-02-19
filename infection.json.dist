@@ -2,7 +2,6 @@
     "timeout": 20,
     "source": {
         "directories": [
-            "PHPStan",
             "src"
         ]
     },
@@ -37,13 +36,7 @@
                 "SignpostMarv\\DaftObject\\AbstractArrayBackedDaftObject::__isset",
                 "SignpostMarv\\DaftObject\\AbstractArrayBackedDaftObject::NudgePropertyValue",
                 "SignpostMarv\\DaftObject\\DefinitionAssistant::MaybeRemapStringsToTrimmedStrings",
-                "SignpostMarv\\DaftObject\\PHPStan\\ClassReflectionExtension::MaybeRegisterTypesOrExitEarly",
                 "SignpostMarv\\DaftObject\\TypeUtilities::HasMethod"
-            ]
-        },
-        "LogicalNot": {
-            "ignore": [
-                "SignpostMarv\\DaftObject\\PHPStan\\ClassReflectionExtension::MaybeRegisterTypesOrExitEarly"
             ]
         },
         "LogicalOr": {
@@ -56,7 +49,6 @@
                 "SignpostMarv\\DaftObject\\AbstractDaftObject::__unset",
                 "SignpostMarv\\DaftObject\\DefinitionAssistant::MaybeRegisterAdditionalTypes",
                 "SignpostMarv\\DaftObject\\DefinitionAssistant::ObtainExpectedProperties",
-                "SignpostMarv\\DaftObject\\PHPStan\\ClassReflectionExtension::MaybeRegisterTypesOrExitEarly",
                 "SignpostMarv\\DaftObject\\TypeUtilities::CachePublicGettersAndSetters"
             ]
         },

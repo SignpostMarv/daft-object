@@ -27,9 +27,6 @@
     <testsuite name="DefinesOwnIdPropertiesInterface">
       <directory>./Tests/DefinesOwnIdPropertiesInterface/</directory>
     </testsuite>
-    <testsuite name="PHPStan">
-      <directory>./Tests/PHPStan/</directory>
-    </testsuite>
   </testsuites>
   <logging>
     <log

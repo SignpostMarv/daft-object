@@ -6,6 +6,7 @@ declare(strict_types=1);
 
 namespace SignpostMarv\DaftObject\Tests;
 
+use SignpostMarv\DaftObject\LinkedData\HasArrayOfHasId;
 use SignpostMarv\DaftObject\LinkedData\HasId;
 
 require_once(__DIR__ . '/../vendor/autoload.php');
@@ -16,3 +17,6 @@ echo var_export([
     json_encode($foo),
     HasId::DaftObjectFromJsonString('{"@id":"foo"}'),
 ], true); exit;
+
+$bar = new HasArrayOfHasId();
+$bar->json = [$foo];
