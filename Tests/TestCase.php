@@ -14,6 +14,7 @@ use ReflectionMethod;
 use SignpostMarv\DaftObject\AbstractDaftObject;
 use SignpostMarv\DaftObject\DaftObject;
 use SignpostMarv\DaftObject\DaftSortableObject;
+use SignpostMarv\DaftObject\DefinitionAssistant;
 use SignpostMarv\DaftObject\DefinesOwnIdPropertiesInterface;
 
 /**
@@ -297,7 +298,7 @@ abstract class TestCase extends Base
     }
 
     /**
-    * @psalm-return Generator<string, array{0:class-string<AbstractDaftObject>, 1:string, 2:ReflectionClass}, mixed, void>
+    * @psalm-return Generator<string, array{0:class-string<AbstractDaftObject>, 1:string}, mixed, void>
     */
     final public function dataProvider_AbstractDaftObject__has_properties_each_defined_property() : Generator
     {
@@ -319,8 +320,13 @@ abstract class TestCase extends Base
                 yield ($args[0] . '::$' . $property) => [
                     $args[0],
                     $property,
-                    $reflector_const->getDeclaringClass(),
                 ];
+            }
+
+            foreach (DefinitionAssistant::ObtainExpectedProperties($args[0]) as $prop) {
+                if ( ! in_array($prop, $properties, true)) {
+                    yield ($args[0] . '::$' . $prop) => [$args[0], $prop];
+                }
             }
         }
     }

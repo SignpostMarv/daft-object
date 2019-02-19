@@ -11,6 +11,7 @@ namespace SignpostMarv\DaftObject;
 * @property-write float $Bar
 * @property-write bool|null $Bat
 * @property-write int $Baz
+* @property-read string $id
 */
 class WriteOnly extends AbstractTestObject implements DefinesOwnStringIdInterface
 {

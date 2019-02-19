@@ -1379,12 +1379,11 @@ class DaftObjectImplementationTest extends TestCase
     */
     public function test_AbstractDaftObject__has_properties_each_property(
         string $className,
-        string $property,
-        ReflectionClass $defined_on
+        string $property
     ) : void {
         $reflection = new ReflectionClass($className);
 
-        $docblock = $defined_on->getDocComment();
+        $docblock = $reflection->getDocComment();
 
         $getter_name = TypeUtilities::MethodNameFromProperty($property, false);
         $setter_name = TypeUtilities::MethodNameFromProperty($property, true);
@@ -1504,7 +1503,7 @@ class DaftObjectImplementationTest extends TestCase
                 (
                     $getter->getDeclaringClass()->getName() .
                     ' must specify an @property-read docblock entry for ' .
-                    $defined_on->getName() .
+                    $getter->getDeclaringClass()->getName() .
                     '::$' .
                     $property .
                     ' (via ' .
@@ -1521,7 +1520,7 @@ class DaftObjectImplementationTest extends TestCase
                 (
                     $setter->getDeclaringClass()->getName() .
                     ' must specify an @property-write docblock entry for ' .
-                    $defined_on->getName() .
+                    $setter->getDeclaringClass()->getName() .
                     '::$' .
                     $property
                 )

@@ -11,6 +11,7 @@ namespace SignpostMarv\DaftObject;
 * @property-read float $Bar
 * @property-read bool|null $Bat
 * @property-read int $Baz
+* @property-read scalar[] $id
 */
 class ReadOnlyTwoColumnPrimaryKey extends AbstractTestObject implements DefinesOwnArrayIdInterface
 {

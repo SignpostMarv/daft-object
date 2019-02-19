@@ -17,6 +17,8 @@ use SignpostMarv\DaftObject\DaftObjectIdValuesHashLazyInt;
 * @template T as HasId
 *
 * @template-implements DaftJsonLinkedData<T>
+*
+* @property-read string $id
 */
 class HasId extends AbstractArrayBackedDaftObject implements DaftJsonLinkedData, DefinesOwnStringIdInterface
 {
