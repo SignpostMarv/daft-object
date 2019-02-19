@@ -11,8 +11,8 @@ use Generator;
 use ReflectionClass;
 use ReflectionException;
 use ReflectionMethod;
-use ReflectionParameter;
 use ReflectionNamedType;
+use ReflectionParameter;
 use ReflectionType;
 use SignpostMarv\DaftObject\AbstractArrayBackedDaftObject;
 use SignpostMarv\DaftObject\AbstractDaftObject;
@@ -1416,7 +1416,6 @@ class DaftObjectImplementationTest extends TestCase
             (($getter instanceof ReflectionMethod) && $getter->hasReturnType())
                 ? $getter->getReturnType()
                 : null;
-
 
         $read_write_regex = '/\* @property(?:-(?:read|write))? ([^\$]+) \$' . preg_quote($property, '/') . '[\r\n]/';
         $read_regex = '/\* @property-read ([^\$]+) \$' . preg_quote($property, '/') . '[\r\n]/';
