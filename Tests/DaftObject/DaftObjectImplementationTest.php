@@ -11,6 +11,7 @@ use Generator;
 use ReflectionClass;
 use ReflectionException;
 use ReflectionMethod;
+use ReflectionParameter;
 use ReflectionNamedType;
 use ReflectionType;
 use SignpostMarv\DaftObject\AbstractArrayBackedDaftObject;
@@ -1374,7 +1375,7 @@ class DaftObjectImplementationTest extends TestCase
     /**
     * @dataProvider dataProvider_AbstractDaftObject__has_properties_each_defined_property
     *
-    * @psalm-param class-string<AbstractDaftObject>
+    * @psalm-param class-string<AbstractDaftObject> $className
     */
     public function test_AbstractDaftObject__has_properties_each_property(
         string $className,
@@ -1420,6 +1421,7 @@ class DaftObjectImplementationTest extends TestCase
         $read_write_regex = '/\* @property(?:-(?:read|write))? ([^\$]+) \$' . preg_quote($property, '/') . '[\r\n]/';
         $read_regex = '/\* @property-read ([^\$]+) \$' . preg_quote($property, '/') . '[\r\n]/';
         $write_regex = '/\* @property-write ([^\$]+) \$' . preg_quote($property, '/') . '[\r\n]/';
+        $matches = [];
 
         if (($getter instanceof ReflectionMethod) && ($setter instanceof ReflectionMethod)) {
             static::assertSame(
@@ -1468,9 +1470,15 @@ class DaftObjectImplementationTest extends TestCase
         if ($setter_param instanceof ReflectionParameter) {
             if ($setter_param->hasType()) {
                 $setter_type = $setter_param->getType();
+
+                static::assertInstanceOf(ReflectionNamedType::class, $setter_type);
                 static::assertSame($matches[1], $setter_type->getName());
             } else {
+                static::assertInstanceOf(ReflectionMethod::class, $setter);
+
                 $setter_docblock = $setter->getDocComment();
+
+                static::assertIsString($setter_docblock);
 
                 $regex_setter_type =
                     '/* @param (.+) \$' .

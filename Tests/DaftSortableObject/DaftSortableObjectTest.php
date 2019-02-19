@@ -200,7 +200,7 @@ class DaftSortableObjectTest extends Base
         );
 
         $b->intSortOrder = self::SORT_ORDER_TEST_VALUE_LESSTHAN;
-        static::assertSame(self::SORT_ORDER_TEST_VALUE_LESSTHAN, $b->intSortOrder);
+        static::assertSame(self::SORT_ORDER_TEST_VALUE_LESSTHAN, $b->__get('intSortOrder'));
         static::assertSame(
             -1,
             self::SORT_ORDER_TEST_VALUE_DEFAULT <=> self::SORT_ORDER_TEST_VALUE_LESSTHAN
@@ -208,7 +208,7 @@ class DaftSortableObjectTest extends Base
         static::assertSame(-1, $a->CompareToDaftSortableObject($b));
 
         $b->intSortOrder = self::SORT_ORDER_TEST_VALUE_GREATERTHAN;
-        static::assertSame(self::SORT_ORDER_TEST_VALUE_GREATERTHAN, $b->intSortOrder);
+        static::assertSame(self::SORT_ORDER_TEST_VALUE_GREATERTHAN, $b->__get('intSortOrder'));
         static::assertSame(
             self::SORT_ORDER_TEST_VALUE_DEFAULT,
             self::SORT_ORDER_TEST_VALUE_DEFAULT <=> self::SORT_ORDER_TEST_VALUE_GREATERTHAN

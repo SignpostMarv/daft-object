@@ -306,17 +306,21 @@ abstract class TestCase extends Base
 
             $reflector_const = new ReflectionClassConstant($args[0], 'PROPERTIES');
 
-            if (! ($reflector_const instanceof ReflectionClassConstant)) {
-                continue;
-            }
-
             /**
             * @var string[]
             */
             $properties = array_filter((array) $args[0]::PROPERTIES, 'is_string');
 
             foreach ($properties as $property) {
-                yield [$args[0], $property, $reflector_const->getDeclaringClass()];
+                if (1 === preg_match('/^@/', $property)) {
+                    continue;
+                }
+
+                yield ($args[0] . '::$' . $property) => [
+                    $args[0],
+                    $property,
+                    $reflector_const->getDeclaringClass(),
+                ];
             }
         }
     }

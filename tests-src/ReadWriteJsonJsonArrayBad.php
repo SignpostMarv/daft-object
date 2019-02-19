@@ -33,7 +33,7 @@ class ReadWriteJsonJsonArrayBad extends AbstractArrayBackedDaftObject implements
     public function GetJson() : array
     {
         /**
-        * @var scalar|array|object|null
+        * @var \stdClass|\stdClass[]
         */
         $json = $this->RetrievePropertyValueFromData('json');
 
