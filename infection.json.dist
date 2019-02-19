@@ -22,7 +22,6 @@
         },
         "LogicalAnd": {
             "ignore": [
-                "SignpostMarv\\DaftObject\\AbstractArrayBackedDaftObject::__isset",
                 "SignpostMarv\\DaftObject\\AbstractArrayBackedDaftObject::NudgePropertyValue",
                 "SignpostMarv\\DaftObject\\DefinitionAssistant::MaybeRemapStringsToTrimmedStrings",
                 "SignpostMarv\\DaftObject\\TypeUtilities::HasMethod"
@@ -35,7 +34,6 @@
         },
         "MethodCallRemoval": {
             "ignore": [
-                "SignpostMarv\\DaftObject\\AbstractDaftObject::__unset",
                 "SignpostMarv\\DaftObject\\DefinitionAssistant::MaybeRegisterAdditionalTypes",
                 "SignpostMarv\\DaftObject\\DefinitionAssistant::ObtainExpectedProperties"
             ]
@@ -50,8 +48,7 @@
             "ignore": [
                 "SignpostMarv\\DaftObject\\AbstractDaftObject::MaybeThrowOnDoGetSet",
                 "SignpostMarv\\DaftObject\\DefinitionAssistant::MaybeRegisterAdditionalTypes",
-                "SignpostMarv\\DaftObject\\DefinitionAssistant::RegisterDaftObjectTypeFromTypeAndProps",
-                "SignpostMarv\\DaftObject\\DefinitionAssistant::SetterOrGetterClosure"
+                "SignpostMarv\\DaftObject\\DefinitionAssistant::RegisterDaftObjectTypeFromTypeAndProps"
             ]
         },
         "PublicVisibility": {
