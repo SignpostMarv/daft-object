@@ -29,10 +29,10 @@ trait DaftObjectIdValuesHashLazyInt
     {
         $id = array_map(
             function (string $prop) use ($object) : string {
-            /**
-            * @var scalar|array|object|null
-            */
-            $val = $object->$prop;
+                /**
+                * @var scalar|array|object|null
+                */
+                $val = $object->$prop;
 
                 return static::VarExportNonScalars($val);
             },
