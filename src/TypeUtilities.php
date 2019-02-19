@@ -146,6 +146,13 @@ class TypeUtilities
     */
     private static function CachePublicGettersAndSettersProperties(string $class) : void
     {
+        if (
+            is_a($class, AbstractDaftObject::class, true) &&
+            DefinitionAssistant::IsTypeUnregistered($class)
+        ) {
+            DefinitionAssistant::RegisterAbstractDaftObjectType($class);
+        }
+
         foreach (
             DefinitionAssistant::ObtainExpectedProperties($class) as $prop
         ) {
