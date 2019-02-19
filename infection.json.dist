@@ -15,20 +15,9 @@
                 "SignpostMarv\\DaftObject\\TraitSortableDaftObject::DaftSortableObjectProperties"
             ]
         },
-        "FalseValue": {
-            "ignore": [
-                "SignpostMarv\\DaftObject\\TypeUtilities::HasMethod"
-            ]
-        },
         "Foreach_": {
             "ignore": [
-                "SignpostMarv\\DaftObject\\DaftObjectIdValuesHashLazyInt::DaftObjectIdHash",
-                "SignpostMarv\\DaftObject\\TypeUtilities::CachePublicGettersAndSettersProperties"
-            ]
-        },
-        "Identical": {
-            "ignore": [
-                "SignpostMarv\\DaftObject\\TypeUtilities::HasMethod"
+                "SignpostMarv\\DaftObject\\DaftObjectIdValuesHashLazyInt::DaftObjectIdHash"
             ]
         },
         "LogicalAnd": {
@@ -48,8 +37,7 @@
             "ignore": [
                 "SignpostMarv\\DaftObject\\AbstractDaftObject::__unset",
                 "SignpostMarv\\DaftObject\\DefinitionAssistant::MaybeRegisterAdditionalTypes",
-                "SignpostMarv\\DaftObject\\DefinitionAssistant::ObtainExpectedProperties",
-                "SignpostMarv\\DaftObject\\TypeUtilities::CachePublicGettersAndSetters"
+                "SignpostMarv\\DaftObject\\DefinitionAssistant::ObtainExpectedProperties"
             ]
         },
         "NotIdentical": {
@@ -62,7 +50,8 @@
             "ignore": [
                 "SignpostMarv\\DaftObject\\AbstractDaftObject::MaybeThrowOnDoGetSet",
                 "SignpostMarv\\DaftObject\\DefinitionAssistant::MaybeRegisterAdditionalTypes",
-                "SignpostMarv\\DaftObject\\DefinitionAssistant::RegisterDaftObjectTypeFromTypeAndProps"
+                "SignpostMarv\\DaftObject\\DefinitionAssistant::RegisterDaftObjectTypeFromTypeAndProps",
+                "SignpostMarv\\DaftObject\\DefinitionAssistant::SetterOrGetterClosure"
             ]
         },
         "PublicVisibility": {
