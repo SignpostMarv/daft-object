@@ -59,6 +59,9 @@ class HasArrayOfHasId extends AbstractArrayBackedDaftObject implements DaftJson
         return $out;
     }
 
+    /**
+    * @param array<int, HasId> $vals
+    */
     public function SetJson(array $vals) : void
     {
         $this->NudgePropertyValue('json', $vals);

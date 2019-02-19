@@ -40,6 +40,9 @@ class ReadWriteJsonJsonArrayBad extends AbstractArrayBackedDaftObject implements
         return is_array($json) ? $json : [$json];
     }
 
+    /**
+    * @param \stdClass[] $json
+    */
     public function SetJson(array $json) : void
     {
         $this->NudgePropertyValue('json', $json);

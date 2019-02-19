@@ -1467,20 +1467,34 @@ class DaftObjectImplementationTest extends TestCase
         }
 
         if ($setter_param instanceof ReflectionParameter) {
-            if ($setter_param->hasType()) {
-                $setter_type = $setter_param->getType();
-
-                static::assertInstanceOf(ReflectionNamedType::class, $setter_type);
+            $setter_type = $setter_param->hasType() ? $setter_param->getType() : null;
+            if (
+                $setter_type instanceof ReflectionNamedType &&
+                'array' !== $setter_type->getName()
+            ) {
+                if ('|null' === mb_substr($matches[1], -5)) {
+                    static::assertSame($setter_type->getName(), mb_substr($matches[1], 0, -5));
+                    static::assertTrue($setter_type->allowsNull());
+                } else {
                 static::assertSame($matches[1], $setter_type->getName());
+                }
             } else {
                 static::assertInstanceOf(ReflectionMethod::class, $setter);
 
                 $setter_docblock = $setter->getDocComment();
 
-                static::assertIsString($setter_docblock);
+                static::assertIsString(
+                    $setter_docblock,
+                    (
+                        $setter->getDeclaringClass()->getName() .
+                        '::' .
+                        $setter->getName() .
+                        '() must specifiy a docblock!'
+                    )
+                );
 
                 $regex_setter_type =
-                    '/* @param (.+) \$' .
+                    '/\* @param (.+) \$' .
                     preg_quote($setter_param->getName(), '/') .
                     '\n/';
 
