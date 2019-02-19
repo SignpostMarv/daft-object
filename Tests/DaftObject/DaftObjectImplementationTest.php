@@ -26,6 +26,8 @@ use SignpostMarv\DaftObject\DaftObjectNotDaftJsonBadMethodCallException;
 use SignpostMarv\DaftObject\DaftObjectWorm;
 use SignpostMarv\DaftObject\DaftSortableObject;
 use SignpostMarv\DaftObject\DateTimeImmutableTestObject;
+use SignpostMarv\DaftObject\LinkedData\HasArrayOfHasId;
+use SignpostMarv\DaftObject\LinkedData\HasId;
 use SignpostMarv\DaftObject\LinkedData\HasIdPublicNudge;
 use SignpostMarv\DaftObject\PasswordHashTestObject;
 use SignpostMarv\DaftObject\PropertyNotNullableException;
@@ -1804,6 +1806,40 @@ class DaftObjectImplementationTest extends TestCase
                         DateTimeImmutableTestObject::STR_FORMAT_TEST,
                         1
                     )),
+                ],
+            ],
+            [
+                HasArrayOfHasId::class,
+                [
+                    'json' => [],
+                ],
+            ],
+            [
+                HasArrayOfHasId::class,
+                [
+                    'json' => [],
+                    'single' => null,
+                ],
+            ],
+            [
+                HasArrayOfHasId::class,
+                [
+                    'json' => [],
+                    'single' => new HasId(['@id' => 'foo']),
+                ],
+            ],
+            [
+                HasArrayOfHasId::class,
+                [
+                    'json' => [new HasId(['@id' => 'foo'])],
+                    'single' => new HasId(['@id' => 'foo']),
+                ],
+            ],
+            [
+                HasArrayOfHasId::class,
+                [
+                    'json' => [new HasId(['@id' => 'foo'])],
+                    'single' => new HasId(['@id' => 'bar']),
                 ],
             ],
         ];
