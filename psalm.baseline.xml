@@ -18,6 +18,9 @@
       <code>public function testPropertyNotThingableException(</code>
       <code>public function test_ThrowIfNotJsonType(string $type) : void</code>
     </PossiblyUnusedMethod>
+    <TypeCoercion occurrences="1">
+      <code>$expectingException</code>
+    </TypeCoercion>
   </file>
   <file src="Tests\DaftJson\DaftJsonTest.php">
     <PossiblyUnusedMethod occurrences="2">
@@ -33,6 +36,9 @@
       <code>final public function dataProvider_AbstractDaftObject__is_subclass_of__not_DaftJson() : Generator</code>
       <code>public function test_ThrowIFNotDaftJson_fails(string $className) : void</code>
     </PossiblyUnusedMethod>
+    <TypeCoercion occurrences="1">
+      <code>$exception</code>
+    </TypeCoercion>
   </file>
   <file src="Tests\DaftObject\DaftObjectImplementationTest.php">
     <PossiblyUnusedMethod occurrences="27">
@@ -90,6 +96,9 @@
       <code>public function testNonUniqueThrows(</code>
       <code>public function testAutoTrimmedStrings(</code>
     </PossiblyUnusedMethod>
+    <TypeCoercion occurrences="1">
+      <code>$expectedException</code>
+    </TypeCoercion>
   </file>
   <file src="Tests\DaftObject\TypeUtilitiesTest.php">
     <PossiblyUnusedMethod occurrences="1">
@@ -140,6 +149,9 @@
       <code>public function testExceptionsInRegisterType(</code>
       <code>public function testRegisterAbstractDaftObjectTypeHasAlreadyBeenRegistered() : void</code>
     </PossiblyUnusedMethod>
+    <TypeCoercion occurrences="1">
+      <code>$exception</code>
+    </TypeCoercion>
   </file>
   <file src="Tests\TestCase.php">
     <PossiblyUnusedMethod occurrences="8">
