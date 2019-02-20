@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "c8f86d2c9527434de54ea94a0811afc1",
+    "content-hash": "08b40b1160fc8197586a68f32d47cf25",
     "packages": [
         {
             "name": "signpostmarv/daft-magic-property-analysis",
@@ -3083,28 +3083,28 @@
         },
         {
             "name": "psalm/plugin-phpunit",
-            "version": "dev-dataproviders",
+            "version": "0.4.1",
             "source": {
                 "type": "git",
-                "url": "https://github.com/weirdan/phpunit-psalm-plugin.git",
-                "reference": "4fe3c88acae8e3c0df22761dc87be0e346fedb00"
+                "url": "https://github.com/psalm/phpunit-psalm-plugin.git",
+                "reference": "707b2472bad6655d85c39a4e2e1d210800c73b75"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/weirdan/phpunit-psalm-plugin/zipball/4fe3c88acae8e3c0df22761dc87be0e346fedb00",
-                "reference": "4fe3c88acae8e3c0df22761dc87be0e346fedb00",
+                "url": "https://api.github.com/repos/psalm/phpunit-psalm-plugin/zipball/707b2472bad6655d85c39a4e2e1d210800c73b75",
+                "reference": "707b2472bad6655d85c39a4e2e1d210800c73b75",
                 "shasum": ""
             },
             "require": {
                 "composer/semver": "^1.4",
                 "muglug/package-versions-56": "^1.2",
-                "phpunit/phpunit": "^6.0 || ^7.0 || ^8.0",
-                "vimeo/psalm": "^3.0.13 || dev-master"
+                "phpunit/phpunit": "^5.0 || ^6.0 || ^7.0",
+                "vimeo/psalm": "^3.0 || dev-master"
             },
             "require-dev": {
                 "codeception/base": "^2.5",
                 "squizlabs/php_codesniffer": "^3.3.1",
-                "weirdan/codeception-psalm-module": "^0.2.1"
+                "weirdan/codeception-psalm-module": "^0.1.0"
             },
             "type": "psalm-plugin",
             "extra": {
@@ -3116,41 +3116,10 @@
                 "psr-4": {
                     "Psalm\\PhpUnitPlugin\\": [
                         "."
-                    ],
-                    "Psalm\\PhpUnitPlugin\\Hooks\\": [
-                        "hooks"
-                    ],
-                    "Psalm\\PhpUnitPlugin\\Exception\\": [
-                        "Exception"
                     ]
                 }
             },
-            "autoload-dev": {
-                "psr-4": {
-                    "Psalm\\PhpUnitPlugin\\Tests\\": [
-                        "tests/_support"
-                    ]
-                }
-            },
-            "scripts": {
-                "check": [
-                    "@cs-check",
-                    "@analyze",
-                    "@test"
-                ],
-                "analyze": [
-                    "psalm"
-                ],
-                "cs-check": [
-                    "phpcs"
-                ],
-                "cs-fix": [
-                    "phpcbf"
-                ],
-                "test": [
-                    "codecept run -v"
-                ]
-            },
+            "notification-url": "https://packagist.org/downloads/",
             "license": [
                 "MIT"
             ],
@@ -3161,10 +3130,7 @@
                 }
             ],
             "description": "Psalm plugin for PHPUnit",
-            "support": {
-                "source": "https://github.com/weirdan/phpunit-psalm-plugin/tree/dataproviders"
-            },
-            "time": "2019-02-20T11:19:11+00:00"
+            "time": "2019-02-14T05:10:52+00:00"
         },
         {
             "name": "psr/container",
@@ -5221,7 +5187,6 @@
     "aliases": [],
     "minimum-stability": "stable",
     "stability-flags": {
-        "psalm/plugin-phpunit": 20,
         "roave/security-advisories": 20
     },
     "prefer-stable": false,
