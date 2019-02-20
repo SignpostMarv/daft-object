@@ -1,25 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <files>
-  <file src="Tests\AbstractDaftObject\AbstractDaftObjectImplementationTest.php">
-    <InvalidReturnType occurrences="3">
-      <code>Generator</code>
-      <code>Generator</code>
-      <code>Generator</code>
-    </InvalidReturnType>
-  </file>
   <file src="Tests\DaftJson\DaftJsonExceptionTest.php">
-    <InvalidReturnType occurrences="2">
-      <code>array</code>
-      <code>array</code>
-    </InvalidReturnType>
-  </file>
-  <file src="Tests\DaftJson\JsonTypeUtilitiesExceptionsTest.php">
-    <InvalidArgument occurrences="1">
-      <code>@dataProvider dataProvider_ThrowIfJsonDefNotValid_fails</code>
+    <InvalidArgument occurrences="2">
+      <code>@dataProvider dataProviderClassDoesNotImplementClassException</code>
+      <code>@dataProvider dataProviderPropertyNotThingableException</code>
     </InvalidArgument>
-    <TooFewArguments occurrences="1">
-      <code>@dataProvider dataProvider_ThrowIfJsonDefNotValid_fails</code>
-    </TooFewArguments>
   </file>
   <file src="Tests\DaftObject\DaftObjectImplementationTest.php">
     <InvalidArgument occurrences="6">
@@ -30,20 +15,11 @@
       <code>@dataProvider dataProviderNonAbstractGoodFuzzingHasSettersPerPropertyNotNullable</code>
       <code>@dataProvider dataProviderNonAbstractGoodSortableImplementations</code>
     </InvalidArgument>
-    <InvalidReturnType occurrences="1">
-      <code>Generator</code>
-    </InvalidReturnType>
-    <PossiblyUnusedMethod occurrences="2">
-      <code>final public function dataProviderDaftObjectCreatedByArray() : Generator</code>
-      <code>protected function SortableFuzzingImplementationsViaGenerator() : Generator</code>
-    </PossiblyUnusedMethod>
   </file>
   <file src="Tests\DaftObject\MultiTypedArrayPropertyImplementationTest.php">
-    <InvalidReturnType occurrences="3">
-      <code>Generator</code>
-      <code>Generator</code>
-      <code>Generator</code>
-    </InvalidReturnType>
+    <MoreSpecificReturnType occurrences="1">
+      <code>@return Generator&lt;int, array{0:MultiTypedArrayPropertiesTester, 1:string, 2:array&lt;int, mixed&gt;}, mixed, void&gt;</code>
+    </MoreSpecificReturnType>
   </file>
   <file src="Tests\DaftSortableObject\DaftSortableObjectTest.php">
     <InvalidArgument occurrences="1">
@@ -74,10 +50,6 @@
     </InvalidArgument>
   </file>
   <file src="Tests\TestCase.php">
-    <InvalidReturnType occurrences="2">
-      <code>Generator</code>
-      <code>Generator</code>
-    </InvalidReturnType>
     <UnusedProperty occurrences="3">
       <code>$backupGlobals</code>
       <code>$backupStaticAttributes</code>

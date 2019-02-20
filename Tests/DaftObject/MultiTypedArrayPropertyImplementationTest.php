@@ -17,6 +17,9 @@ use SignpostMarv\DaftObject\Tests\TestCase;
 
 class MultiTypedArrayPropertyImplementationTest extends TestCase
 {
+    /**
+    * @return Generator<int, array{0: MultiTypedArrayPropertiesTester, 1:string, 2:scalar|array|object|null, 3:class-string<\Throwable>, 4:string}, mixed, void>
+    */
     public function DataProviderObjectPropertyValueException() : Generator
     {
         yield from [
@@ -58,21 +61,26 @@ class MultiTypedArrayPropertyImplementationTest extends TestCase
         ];
     }
 
+    /**
+    * @return Generator<int, array{0:MultiTypedArrayPropertiesTester, 1:string, 2:array<int, mixed>}, mixed, void>
+    */
     public function DataProviderObjectPropertyValueNotUniqueAutoDouble() : Generator
     {
-        /**
-        * @var iterable<array<int, mixed>>
-        */
-        $sources = $this->DataProviderObjectPropertyValueNotUnique();
-
-        foreach ($sources as $args) {
+        foreach ($this->DataProviderObjectPropertyValueNotUnique() as $args) {
             static::assertIsArray($args[2] ?? null);
-            $args[2] = array_merge(array_values((array) $args[2]), array_values((array) $args[2]));
+            /**
+            * @var array<int, mixed>
+            */
+            $args_2 = array_merge(array_values((array) $args[2]), array_values((array) $args[2]));
+            $args[2] = $args_2;
 
             yield $args;
         }
     }
 
+    /**
+    * @return Generator<int, array{0:MultiTypedArrayPropertiesTester, 1:string, 2:scalar|array|object|null, 3:scalar|array|object|null}, mixed, void>
+    */
     public function DataProviderObjectPropertyValueTrimmedStrings() : Generator
     {
         yield from [
@@ -146,6 +154,9 @@ class MultiTypedArrayPropertyImplementationTest extends TestCase
         static::assertSame($expected, $obj->__get($property));
     }
 
+    /**
+    * @return Generator<int, array{0:MultiTypedArrayPropertiesTester, 1:string, 2:scalar|array|object|null}, mixed, void>
+    */
     protected function DataProviderObjectPropertyValueNotUnique() : Generator
     {
         yield from [

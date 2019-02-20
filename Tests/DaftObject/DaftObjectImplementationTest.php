@@ -1252,21 +1252,9 @@ class DaftObjectImplementationTest extends TestCase
         }
     }
 
-    final public function dataProviderDaftObjectCreatedByArray() : Generator
-    {
-        foreach ($this->dataProviderNonAbstractGoodImplementations() as $args) {
-            if (
-                is_array($args) &&
-                count($args) >= 1 &&
-                is_string($args[0]) &&
-                is_a($args[0], DaftObjectCreatedByArray::class, true)
-            ) {
-                yield [$args[0], true];
-                yield [$args[0], false];
-            }
-        }
-    }
-
+    /**
+    * @return Generator<int, array{0:class-string<AbstractDaftObject>}, mixed, void>
+    */
     final public function DataProviderNotDaftObjectHasPropertiesWithMultiTypedArraysOfUniqueValues(
     ) : Generator {
         foreach ($this->dataProviderImplementations() as $args) {
@@ -1852,19 +1840,5 @@ class DaftObjectImplementationTest extends TestCase
     protected function FuzzingImplementationsViaGenerator() : Generator
     {
         yield from $this->FuzzingImplementationsViaArray();
-    }
-
-    /**
-    * @psalm-return Generator<int, array{0:class-string<T&DaftSortableObject>, 1:ReflectionClass, 2:array<string, scalar|array|object|null>, 3:array<int, string>, 4:array<int, string>}, mixed, void>
-    */
-    protected function SortableFuzzingImplementationsViaGenerator() : Generator
-    {
-        foreach ($this->dataProviderNonAbstractGoodFuzzing() as $args) {
-            if (
-                is_a($args[0], DaftSortableObject::class)
-            ) {
-                yield $args;
-            }
-        }
     }
 }

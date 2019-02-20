@@ -22,6 +22,9 @@ use SignpostMarv\DaftObject\Tests\TestCase;
 */
 class DaftJsonExceptionTest extends TestCase
 {
+    /**
+    * @psalm-return array<int, array{0:class-string<DaftObject>, 1:string, 2:array<string, scalar|array|object|null>, 3:bool}>
+    */
     public function dataProviderClassDoesNotImplementClassException() : array
     {
         return [
@@ -43,6 +46,9 @@ class DaftJsonExceptionTest extends TestCase
         ];
     }
 
+    /**
+    * @psalm-return array<int, array{0:class-string<DaftObject>, 1:class-string<DaftObject>, 2:string, 3:class-string<\Throwable>, 4:string, 5:array<string, scalar|array|object|null>, 6:bool}>
+    */
     public function dataProviderPropertyNotThingableException() : array
     {
         return [

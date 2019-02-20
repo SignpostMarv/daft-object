@@ -346,6 +346,9 @@ abstract class TestCase extends Base
         }
     }
 
+    /**
+    * @psalm-return Generator<int, array{0:class-string<DaftObject>}, mixed, void>
+    */
     public function dataProvider_DaftObject__has_properties() : Generator
     {
         yield from $this->dataProvider_AbstractDaftObject__has_properties();
@@ -403,6 +406,9 @@ abstract class TestCase extends Base
         }
     }
 
+    /**
+    * @psalm-return Generator<string, array{0:class-string<AbstractDaftObject>, 1:string}, mixed, void>
+    */
     public function dataProvider_DaftObject__has_properties_each_defined_property() : Generator
     {
         yield from $this->dataProvider_AbstractDaftObject__has_properties_each_defined_property();
