@@ -18,9 +18,6 @@
       <code>public function testPropertyNotThingableException(</code>
       <code>public function test_ThrowIfNotJsonType(string $type) : void</code>
     </PossiblyUnusedMethod>
-    <TypeCoercion occurrences="1">
-      <code>$expectingException</code>
-    </TypeCoercion>
   </file>
   <file src="Tests\DaftJson\DaftJsonTest.php">
     <PossiblyUnusedMethod occurrences="2">
@@ -36,9 +33,6 @@
       <code>final public function dataProvider_AbstractDaftObject__is_subclass_of__not_DaftJson() : Generator</code>
       <code>public function test_ThrowIFNotDaftJson_fails(string $className) : void</code>
     </PossiblyUnusedMethod>
-    <TypeCoercion occurrences="1">
-      <code>$exception</code>
-    </TypeCoercion>
   </file>
   <file src="Tests\DaftObject\DaftObjectImplementationTest.php">
     <PossiblyUnusedMethod occurrences="27">
@@ -70,17 +64,6 @@
       <code>public function test_AbstractDaftObject__has_properties_each_property(</code>
       <code>protected function SortableFuzzingImplementationsViaGenerator() : Generator</code>
     </PossiblyUnusedMethod>
-    <PossiblyUnusedParam occurrences="4">
-      <code>$reflector</code>
-      <code>$args</code>
-      <code>$getters</code>
-      <code>$setters</code>
-    </PossiblyUnusedParam>
-    <UnusedVariable occurrences="3">
-      <code>$settersNotNull</code>
-      <code>$setterProperty</code>
-      <code>$k</code>
-    </UnusedVariable>
   </file>
   <file src="Tests\DaftObject\LinkedDataTest.php">
     <PossiblyUnusedMethod occurrences="1">
@@ -96,9 +79,6 @@
       <code>public function testNonUniqueThrows(</code>
       <code>public function testAutoTrimmedStrings(</code>
     </PossiblyUnusedMethod>
-    <TypeCoercion occurrences="1">
-      <code>$expectedException</code>
-    </TypeCoercion>
   </file>
   <file src="Tests\DaftObject\TypeUtilitiesTest.php">
     <PossiblyUnusedMethod occurrences="1">
@@ -137,11 +117,6 @@
       <code>public function SetFoo(string $value) : void;</code>
     </PossiblyUnusedMethod>
   </file>
-  <file src="Tests\DefinitionAssistant\DefinesPropertyOnInterfaceClassImplementation.php">
-    <UnusedVariable occurrences="1">
-      <code>$was</code>
-    </UnusedVariable>
-  </file>
   <file src="Tests\DefinitionAssistant\DefinitionAssistantTest.php">
     <PossiblyUnusedMethod occurrences="4">
       <code>public function testIsTypeUnregistered(string $className) : void</code>
@@ -149,9 +124,6 @@
       <code>public function testExceptionsInRegisterType(</code>
       <code>public function testRegisterAbstractDaftObjectTypeHasAlreadyBeenRegistered() : void</code>
     </PossiblyUnusedMethod>
-    <TypeCoercion occurrences="1">
-      <code>$exception</code>
-    </TypeCoercion>
   </file>
   <file src="Tests\TestCase.php">
     <PossiblyUnusedMethod occurrences="8">
@@ -169,10 +141,6 @@
       <code>$backupStaticAttributes</code>
       <code>$runTestInSeparateProcess</code>
     </UnusedProperty>
-    <UnusedVariable occurrences="2">
-      <code>$reflector</code>
-      <code>$reflector_const</code>
-    </UnusedVariable>
   </file>
   <file src="src\AbstractArrayBackedDaftObject.php">
     <PossiblyUnusedMethod occurrences="1">

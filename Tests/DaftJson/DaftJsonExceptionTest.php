@@ -87,6 +87,7 @@ class DaftJsonExceptionTest extends TestCase
     * @dataProvider dataProviderPropertyNotThingableException
     *
     * @psalm-param class-string<DaftJson> $implementation
+    * @psalm-param class-string<\Throwable> $expectingException
     */
     public function testPropertyNotThingableException(
         string $implementation,

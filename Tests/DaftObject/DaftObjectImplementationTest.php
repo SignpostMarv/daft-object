@@ -608,8 +608,6 @@ class DaftObjectImplementationTest extends TestCase
             ($className . '::ChangedProperties() must be empty after instantiation')
         );
 
-        $settersNotNull = [];
-
         $otherProperties = $className::DaftObjectPropertiesChangeOtherProperties();
 
         foreach ($setters as $setterProperty) {
@@ -744,14 +742,12 @@ class DaftObjectImplementationTest extends TestCase
 
         static::assertRegExp($regex, str_replace(["\n"], ' ', $debugInfo));
 
-        foreach ($setters as $setterProperty) {
             foreach ($propertiesExpectedToBeChanged as $property) {
                 static::assertTrue(
                     in_array($property, $obj->ChangedProperties(), true),
                     ($className . '::ChangedProperties() must contain changed properties')
                 );
             }
-        }
 
         $properties = $className::DaftObjectNullableProperties();
 
@@ -927,11 +923,7 @@ class DaftObjectImplementationTest extends TestCase
     * @psalm-param class-string<AbstractArrayBackedDaftObject> $className
     */
     final public function testProviderNonAbstractGoodFuzzingJsonFromStringFailure(
-        string $className,
-        ReflectionClass $reflector,
-        array $args,
-        array $getters,
-        array $setters
+        string $className
     ) : void {
         $this->expectException(DaftObjectNotDaftJsonBadMethodCallException::class);
         $this->expectExceptionMessage(sprintf(
@@ -1030,18 +1022,10 @@ class DaftObjectImplementationTest extends TestCase
     * @psalm-param class-string<AbstractArrayBackedDaftObject> $className
     */
     final public function testProviderNonAbstractGoodFuzzingJsonFromStringFailure_dataProviderNonAbstractGoodFuzzingHasSetters(
-        string $className,
-        ReflectionClass $reflector,
-        array $args,
-        array $getters,
-        array $setters
+        string $className
     ) : void {
         $this->testProviderNonAbstractGoodFuzzingJsonFromStringFailure(
-            $className,
-            $reflector,
-            $args,
-            $getters,
-            $setters
+            $className
         );
     }
 
@@ -1334,7 +1318,7 @@ class DaftObjectImplementationTest extends TestCase
 
         $properties = $className::DaftSortableObjectProperties();
 
-        foreach ($properties as $k => $v) {
+        foreach ($properties as $v) {
             $expectedMethod = TypeUtilities::MethodNameFromProperty($v, false);
 
             static::assertTrue(in_array($v, $publicOrProtected, true));

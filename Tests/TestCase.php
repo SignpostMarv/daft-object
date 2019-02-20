@@ -359,10 +359,6 @@ abstract class TestCase extends Base
     final public function dataProvider_AbstractDaftObject__has_properties_each_defined_property() : Generator
     {
         foreach ($this->dataProvider_AbstractDaftObject__has_properties() as $args) {
-            $reflector = new ReflectionClass($args[0]);
-
-            $reflector_const = new ReflectionClassConstant($args[0], 'PROPERTIES');
-
             /**
             * @var string[]
             */

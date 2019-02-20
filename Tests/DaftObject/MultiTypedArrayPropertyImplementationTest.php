@@ -94,6 +94,8 @@ class MultiTypedArrayPropertyImplementationTest extends TestCase
     /**
     * @param scalar|array|object|null $value
     *
+    * @psalm-param class-string<\Throwable> $expectedException
+    *
     * @dataProvider DataProviderObjectPropertyValueException
     */
     public function testNudgingThrows(
