@@ -31,6 +31,8 @@ class TypeUtilities
         '@',
     ];
 
+    const BOOL_METHOD_IS_NOT_STATIC = false;
+
     /**
     * @var array<string, array<string, bool>>
     *
@@ -107,7 +109,10 @@ class TypeUtilities
         try {
             $ref = new ReflectionMethod($class, $method);
 
-            return ($pub ? $ref->isPublic() : $ref->isProtected()) && false === $ref->isStatic();
+            return (
+                ($pub ? $ref->isPublic() : $ref->isProtected()) &&
+                self::BOOL_METHOD_IS_NOT_STATIC === $ref->isStatic()
+            );
         } catch (ReflectionException $e) {
             return self::BOOL_DOES_NOT_HAVE_METHOD;
         }
