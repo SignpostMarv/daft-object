@@ -12,9 +12,11 @@ use ReflectionClass;
 use ReflectionMethod;
 use SignpostMarv\DaftObject\AbstractDaftObject;
 use SignpostMarv\DaftObject\DaftObject;
+use SignpostMarv\DaftObject\DaftObjectCreatedByArray;
 use SignpostMarv\DaftObject\DaftSortableObject;
 use SignpostMarv\DaftObject\DefinesOwnIdPropertiesInterface;
 use SignpostMarv\DaftObject\DefinitionAssistant;
+use SignpostMarv\DaftObject\TypeUtilities;
 
 /**
 * @template T as DaftObject
@@ -413,5 +415,52 @@ abstract class TestCase extends Base
     {
         yield from $this->dataProvider_AbstractDaftObject__has_properties_each_defined_property();
         yield from $this->dataProvider_DaftObject__interface__has_properties_each_defined_property();
+    }
+
+    /**
+    * @psalm-return Generator<int, array{0:class-string<AbstractDaftObject&DaftObjectCreatedByArray>, 1:string, 2:bool, 3:bool}, mixed, void>
+    */
+    public function dataProvider_NonAbstract_AbstractDaftObject__and__DaftObjectCreatedByArray__has_properties_each_defined_property() : Generator
+    {
+        foreach (
+            $this->dataProvider_AbstractDaftObject__has_properties_each_defined_property() as $args
+        ) {
+            if ( ! is_a($args[0], DaftObjectCreatedByArray::class, true)) {
+                continue;
+            }
+
+            $reflector = new ReflectionClass($args[0]);
+
+            if ( ! $reflector->isAbstract()) {
+                $getter = TypeUtilities::MethodNameFromProperty($args[1], false);
+                $setter = TypeUtilities::MethodNameFromProperty($args[1], true);
+
+                yield [
+                    $args[0],
+                    $args[1],
+                    method_exists($args[0], $getter),
+                    method_exists($args[0], $setter),
+                ];
+            }
+        }
+    }
+
+    /**
+    * @psalm-return Generator<int, array{0:class-string<AbstractDaftObject&DaftObjectCreatedByArray>, 1:string}, mixed, void>
+    */
+    public function dataProvider_NonAbstract_AbstractDaftObject__and__DaftObjectCreatedByArray__has_properties_each_defined_property__writeOnly() : Generator
+    {
+        foreach (
+            $this->dataProvider_NonAbstract_AbstractDaftObject__and__DaftObjectCreatedByArray__has_properties_each_defined_property() as $args
+        ) {
+            if ( ! $args[2] && $args[3]) {
+                /**
+                * @var array{0:class-string<AbstractDaftObject&DaftObjectCreatedByArray>, 1:string}
+                */
+                $out = [$args[0], $args[1]];
+
+                yield $out;
+            }
+        }
     }
 }

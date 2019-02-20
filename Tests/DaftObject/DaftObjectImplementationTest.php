@@ -20,6 +20,7 @@ use SignpostMarv\DaftObject\AbstractTestObject;
 use SignpostMarv\DaftObject\ClassDoesNotImplementClassException;
 use SignpostMarv\DaftObject\DaftJson;
 use SignpostMarv\DaftObject\DaftObject;
+use SignpostMarv\DaftObject\DaftObjectCreatedByArray;
 use SignpostMarv\DaftObject\DaftObjectHasPropertiesWithMultiTypedArraysOfUniqueValues;
 use SignpostMarv\DaftObject\DaftObjectNotDaftJsonBadMethodCallException;
 use SignpostMarv\DaftObject\DaftObjectWorm;
@@ -28,12 +29,14 @@ use SignpostMarv\DaftObject\DateTimeImmutableTestObject;
 use SignpostMarv\DaftObject\LinkedData\HasArrayOfHasId;
 use SignpostMarv\DaftObject\LinkedData\HasId;
 use SignpostMarv\DaftObject\LinkedData\HasIdPublicNudge;
+use SignpostMarv\DaftObject\NotPublicGetterPropertyException;
 use SignpostMarv\DaftObject\PasswordHashTestObject;
 use SignpostMarv\DaftObject\PropertyNotNullableException;
 use SignpostMarv\DaftObject\PropertyNotRewriteableException;
 use SignpostMarv\DaftObject\Tests\TestCase;
 use SignpostMarv\DaftObject\TypeUtilities;
 use SignpostMarv\DaftObject\UndefinedPropertyException;
+use SignpostMarv\DaftObject\WriteOnly;
 
 /**
 * @template T as DaftObject
@@ -1601,6 +1604,46 @@ class DaftObjectImplementationTest extends TestCase
 
             static::assertSame($matches[1], $getter_matches[2]);
         }
+    }
+
+    /**
+    * @dataProvider dataProvider_NonAbstract_AbstractDaftObject__and__DaftObjectCreatedByArray__has_properties_each_defined_property__writeOnly
+    *
+    * @psalm-param class-string<AbstractDaftObject&DaftObjectCreatedByArray> $className
+    */
+    final public function test_NonAbstract_AbstractDaftObject__and__DaftObjectCreatedByArray__has_properties_each_defined_property__writeOnly(
+        string $className,
+        string $property
+    ) : void {
+        $obj = new $className();
+
+        static::expectException(NotPublicGetterPropertyException::class);
+        static::expectExceptionMessage(
+            'Property not a public getter: ' .
+            $className .
+            '::$' .
+            $property
+        );
+
+        $obj->$property;
+    }
+
+    public function testWriteOnly() : void
+    {
+        $obj = new WriteOnly();
+
+        $obj->SetFoo('bar');
+        $obj->SetBar(1.2);
+        $obj->SetBaz(3);
+        $obj->SetBat(true);
+        $obj->SetBat(false);
+        $obj->SetBat(null);
+
+        static::assertSame('bar', $obj->GetId());
+
+        $obj->SetFoo('baz');
+        static::assertSame('baz', $obj->GetId());
+
     }
 
     /**
