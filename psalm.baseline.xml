@@ -12,17 +12,14 @@
       <code>array</code>
       <code>array</code>
     </InvalidReturnType>
-    <TypeCoercion occurrences="1">
-      <code>$expectingException</code>
-    </TypeCoercion>
   </file>
   <file src="Tests\DaftJson\JsonTypeUtilitiesExceptionsTest.php">
-    <InvalidReturnType occurrences="1">
-      <code>array</code>
-    </InvalidReturnType>
-    <TypeCoercion occurrences="1">
-      <code>$exception</code>
-    </TypeCoercion>
+    <InvalidArgument occurrences="1">
+      <code>@dataProvider dataProvider_ThrowIfJsonDefNotValid_fails</code>
+    </InvalidArgument>
+    <TooFewArguments occurrences="1">
+      <code>@dataProvider dataProvider_ThrowIfJsonDefNotValid_fails</code>
+    </TooFewArguments>
   </file>
   <file src="Tests\DaftObject\DaftObjectImplementationTest.php">
     <InvalidArgument occurrences="6">
@@ -47,9 +44,6 @@
       <code>Generator</code>
       <code>Generator</code>
     </InvalidReturnType>
-    <TypeCoercion occurrences="1">
-      <code>$expectedException</code>
-    </TypeCoercion>
   </file>
   <file src="Tests\DaftSortableObject\DaftSortableObjectTest.php">
     <InvalidArgument occurrences="1">
@@ -75,12 +69,9 @@
     </PossiblyUnusedMethod>
   </file>
   <file src="Tests\DefinitionAssistant\DefinitionAssistantTest.php">
-    <InvalidReturnType occurrences="1">
-      <code>array</code>
-    </InvalidReturnType>
-    <TypeCoercion occurrences="1">
-      <code>$exception</code>
-    </TypeCoercion>
+    <InvalidArgument occurrences="1">
+      <code>@dataProvider DataProviderExceptionsInRegisterType</code>
+    </InvalidArgument>
   </file>
   <file src="Tests\TestCase.php">
     <InvalidReturnType occurrences="2">
