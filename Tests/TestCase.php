@@ -9,7 +9,6 @@ namespace SignpostMarv\DaftObject\Tests;
 use Generator;
 use PHPUnit\Framework\TestCase as Base;
 use ReflectionClass;
-use ReflectionClassConstant;
 use ReflectionMethod;
 use SignpostMarv\DaftObject\AbstractDaftObject;
 use SignpostMarv\DaftObject\DaftObject;

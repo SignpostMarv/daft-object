@@ -109,10 +109,9 @@ class TypeUtilities
         try {
             $ref = new ReflectionMethod($class, $method);
 
-            return (
+            return
                 ($pub ? $ref->isPublic() : $ref->isProtected()) &&
-                self::BOOL_METHOD_IS_NOT_STATIC === $ref->isStatic()
-            );
+                self::BOOL_METHOD_IS_NOT_STATIC === $ref->isStatic();
         } catch (ReflectionException $e) {
             return self::BOOL_DOES_NOT_HAVE_METHOD;
         }
