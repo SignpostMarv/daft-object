@@ -1375,13 +1375,14 @@ class DaftObjectImplementationTest extends TestCase
     }
 
     /**
-    * @dataProvider dataProvider_AbstractDaftObject__has_properties_each_defined_property
+    * @dataProvider dataProvider_DaftObject__has_properties_each_defined_property
     *
     * @psalm-param class-string<AbstractDaftObject> $className
     */
     public function test_AbstractDaftObject__has_properties_each_property(
         string $className,
-        string $property
+        string $property,
+        bool $maybe_mixed_case = false
     ) : void {
         $reflection = new ReflectionClass($className);
 
@@ -1422,6 +1423,12 @@ class DaftObjectImplementationTest extends TestCase
         $read_regex = '/\* @property-read ([^\$]+) \$' . preg_quote($property, '/') . '[\r\n]/';
         $write_regex = '/\* @property-write ([^\$]+) \$' . preg_quote($property, '/') . '[\r\n]/';
         $matches = [];
+
+        if ($maybe_mixed_case) {
+            $read_write_regex .= 'i';
+            $read_regex .= 'i';
+            $write_regex .= 'i';
+        }
 
         if (($getter instanceof ReflectionMethod) && ($setter instanceof ReflectionMethod)) {
             static::assertInstanceOf(ReflectionParameter::class, $setter_param);
@@ -1508,6 +1515,16 @@ class DaftObjectImplementationTest extends TestCase
                     $getter->getDeclaringClass()->getName() .
                     '::$' .
                     $property .
+                    (
+                        $maybe_mixed_case
+                            ? (
+                                ' or ' .
+                                $getter->getDeclaringClass()->getName() .
+                                '::$' .
+                                lcfirst($property)
+                            )
+                            : ''
+                    ) .
                     ' (via ' .
                     $getter->getDeclaringClass()->getName() .
                     '::' .

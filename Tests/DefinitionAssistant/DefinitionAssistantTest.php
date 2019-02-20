@@ -10,21 +10,23 @@ use Error;
 use InvalidArgumentException;
 use SignpostMarv\DaftMagicPropertyAnalysis\DefinitionAssistant as ParentDefinitionAssistant;
 use SignpostMarv\DaftObject\AbstractDaftObject;
+use SignpostMarv\DaftObject\DaftObject;
 use SignpostMarv\DaftObject\DateTimeImmutableTestObject;
 use SignpostMarv\DaftObject\Tests\TestCase;
 
 class DefinitionAssistantTest extends TestCase
 {
     /**
-    * @dataProvider dataProvider_AbstractDaftObject__has_properties
+    * @dataProvider dataProvider_DaftObject__has_properties
     *
-    * @psalm-param class-string<AbstractDaftObject> $className
+    * @psalm-param class-string<DaftObject> $className
     */
     public function testIsTypeUnregistered(string $className) : void
     {
         DefinitionAssistant::ClearTypes();
 
         static::assertTrue(DefinitionAssistant::IsTypeUnregistered($className));
+        if (is_a($className, AbstractDaftObject::class, true)) {
         DefinitionAssistant::RegisterAbstractDaftObjectType($className);
         static::assertFalse(DefinitionAssistant::IsTypeUnregistered($className));
         static::assertGreaterThanOrEqual(
@@ -36,6 +38,8 @@ class DefinitionAssistantTest extends TestCase
             $className
         ));
         DefinitionAssistant::ClearTypes();
+        }
+        if (is_a($className, AbstractDaftObject::class, true)) {
         DefinitionAssistant::RegisterAbstractDaftObjectType($className);
         static::assertGreaterThanOrEqual(
             $className::PROPERTIES,
@@ -44,6 +48,7 @@ class DefinitionAssistantTest extends TestCase
             )
         );
         DefinitionAssistant::ClearTypes();
+        }
     }
 
     public function DataProviderExceptionsInRegisterType() : array

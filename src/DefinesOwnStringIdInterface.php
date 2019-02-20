@@ -10,6 +10,8 @@ namespace SignpostMarv\DaftObject;
 
 /**
 * Interface for allowing daft object implementations to define their own ids.
+*
+* @property-read string $id
 */
 interface DefinesOwnStringIdInterface extends DefinesOwnIdPropertiesInterface
 {

@@ -13,12 +13,19 @@
         "LogicalAnd": {
             "ignore": [
                 "SignpostMarv\\DaftObject\\AbstractArrayBackedDaftObject::NudgePropertyValue",
+                "SignpostMarv\\DaftObject\\DefinitionAssistant::MaybeRemapStringsToTrimmedStrings",
+                "SignpostMarv\\DaftObject\\TypeUtilities::CachePublicGettersAndSettersProperties",
                 "SignpostMarv\\DaftObject\\TypeUtilities::HasMethod"
             ]
         },
         "LogicalOr": {
             "ignore": [
                 "SignpostMarv\\DaftObject\\AbstractArrayBackedDaftObject::DaftObjectWormPropertyWritten"
+            ]
+        },
+        "LogicalNot": {
+            "ignore": [
+                "SignpostMarv\\DaftObject\\DefinitionAssistant::RegisterAbstractDaftObjectType"
             ]
         },
         "NotIdentical": {

@@ -29,6 +29,8 @@ class DefinitionAssistant extends Base
 
     const IS_A_STRINGS = true;
 
+    const COUNT_IS_EMPTY = 0;
+
     /**
     * @template A as AbstractDaftObject
     *
@@ -45,20 +47,12 @@ class DefinitionAssistant extends Base
 
         $maybe = static::RegisterDaftObjectTypeFromTypeAndProps($maybe, ...$props);
 
-        if ( ! is_a($maybe, AbstractDaftObject::class, true)) {
-            throw new \Exception($maybe);
-        }
-
         $additional_props = array_filter(
             $maybe::DaftObjectProperties(),
             function (string $maybe) use ($props) : bool {
                 return ! in_array($maybe, $props, true);
             }
         );
-
-        if (count($additional_props) > 0) {
-            $maybe = static::RegisterDaftObjectTypeFromTypeAndProps($maybe, ...$additional_props);
-        }
 
         /**
         * @psalm-var class-string<A>
@@ -79,20 +73,6 @@ class DefinitionAssistant extends Base
         * @psalm-var class-string<T>
         */
         $maybe = is_string($maybe) ? $maybe : get_class($maybe);
-
-        if (static::IsTypeUnregistered($maybe)) {
-            if (is_a($maybe, AbstractDaftObject::class, true)) {
-                /**
-                * @psalm-var class-string<AbstractDaftObject&T>
-                */
-                $maybe = $maybe;
-
-                /**
-                * @psalm-var class-string<T>
-                */
-                $maybe = static::RegisterAbstractDaftObjectType($maybe);
-            }
-        }
 
         $maybe = self::MaybeRegisterAdditionalTypes($maybe);
 

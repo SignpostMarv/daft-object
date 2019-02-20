@@ -41,7 +41,7 @@ abstract class TestCase extends Base
     /**
     * @psalm-return Generator<int, array{0:class-string<DaftObject>}, mixed, void>
     */
-    public function dataProviderImplementations() : Generator
+    public function dataProviderImplementations_class_or_interface() : Generator
     {
         foreach (
             [
@@ -56,11 +56,38 @@ abstract class TestCase extends Base
             foreach ($files as $file) {
                 if (
                     is_file($file) &&
-                    class_exists($className = ($ns . pathinfo($file, PATHINFO_FILENAME))) &&
+                    (
+                        class_exists($className = ($ns . pathinfo($file, PATHINFO_FILENAME))) ||
+                        interface_exists($className)
+                    ) &&
                     is_a($className, DaftObject::class, true)
                 ) {
                     yield [$className];
                 }
+            }
+        }
+    }
+
+    /**
+    * @psalm-return Generator<int, array{0:class-string<DaftObject>}, mixed, void>
+    */
+    public function dataProviderImplementations() : Generator
+    {
+        foreach ($this->dataProviderImplementations_class_or_interface() as $args) {
+            if (class_exists($args[0])) {
+                yield $args;
+            }
+        }
+    }
+
+    /**
+    * @psalm-return Generator<int, array{0:class-string<DaftObject>}, mixed, void>
+    */
+    public function dataProviderImplementations_interfaces() : Generator
+    {
+        foreach ($this->dataProviderImplementations_class_or_interface() as $args) {
+            if (interface_exists($args[0])) {
+                yield $args;
             }
         }
     }
@@ -298,6 +325,35 @@ abstract class TestCase extends Base
     }
 
     /**
+    * @psalm-return Generator<int, array{0:class-string<DaftObject>}, mixed, void>
+    */
+    final public function dataProvider_DaftObject__interface__has_properties() : Generator
+    {
+        foreach ($this->dataProviderImplementations_interfaces() as $args) {
+            if (is_subclass_of($args[0], DaftObject::class, true)) {
+                $reflector = new ReflectionClass($args[0]);
+
+                foreach ($reflector->getMethods() as $method) {
+                    if (
+                        ! $method->isStatic() &&
+                        1 === preg_match('/^(Get|Set|Alter|Obtain)[A-Za-z]/', $method->getName())
+                    ) {
+                        yield $args;
+
+                        break;
+                    }
+                }
+            }
+        }
+    }
+
+    public function dataProvider_DaftObject__has_properties() : Generator
+    {
+        yield from $this->dataProvider_AbstractDaftObject__has_properties();
+        yield from $this->dataProvider_DaftObject__interface__has_properties();
+    }
+
+    /**
     * @psalm-return Generator<string, array{0:class-string<AbstractDaftObject>, 1:string}, mixed, void>
     */
     final public function dataProvider_AbstractDaftObject__has_properties_each_defined_property() : Generator
@@ -329,5 +385,32 @@ abstract class TestCase extends Base
                 }
             }
         }
+    }
+
+    /**
+    * @psalm-return Generator<string, array{0:class-string<DaftObject>, 1:string}, mixed, void>
+    */
+    final public function dataProvider_DaftObject__interface__has_properties_each_defined_property() : Generator
+    {
+        foreach ($this->dataProvider_DaftObject__interface__has_properties() as $args) {
+            $reflector = new ReflectionClass($args[0]);
+
+            foreach ($reflector->getMethods() as $method) {
+                if (
+                    ! $method->isStatic() &&
+                    1 === preg_match('/^(Get|Set|Alter|Obtain)[A-Za-z]/', $method->getName())
+                ) {
+                    $prop = preg_replace('/^(Get|Set|Alter|Obtain)/', '', $method->getName());
+
+                    yield ($args[0] . '::$' . $prop) => [$args[0], $prop, true];
+                }
+            }
+        }
+    }
+
+    public function dataProvider_DaftObject__has_properties_each_defined_property() : Generator
+    {
+        yield from $this->dataProvider_AbstractDaftObject__has_properties_each_defined_property();
+        yield from $this->dataProvider_DaftObject__interface__has_properties_each_defined_property();
     }
 }
