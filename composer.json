@@ -68,7 +68,7 @@
         "phpunit/phpcov": "^5.0",
         "phpunit/phpunit": "^7.5",
         "povils/phpmnd": "^2.1",
-        "psalm/plugin-phpunit": "^0.4.1",
+        "psalm/plugin-phpunit": "dev-master",
         "roave/security-advisories": "dev-master",
         "sebastian/phpcpd": "^4.1",
         "signpostmarv/php-cs-fixer-config": "^0.9.0",
