@@ -16,11 +16,6 @@
       <code>@dataProvider dataProviderNonAbstractGoodSortableImplementations</code>
     </InvalidArgument>
   </file>
-  <file src="Tests\DaftObject\MultiTypedArrayPropertyImplementationTest.php">
-    <MoreSpecificReturnType occurrences="1">
-      <code>@return Generator&lt;int, array{0:MultiTypedArrayPropertiesTester, 1:string, 2:array&lt;int, mixed&gt;}, mixed, void&gt;</code>
-    </MoreSpecificReturnType>
-  </file>
   <file src="Tests\DaftSortableObject\DaftSortableObjectTest.php">
     <InvalidArgument occurrences="1">
       <code>@dataProvider dataProvider_UsesTrait_NotInterface</code>
