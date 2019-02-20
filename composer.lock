@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "ab15fe34a91ab4200ee29e4c54b65bf3",
+    "content-hash": "c8f86d2c9527434de54ea94a0811afc1",
     "packages": [
         {
             "name": "signpostmarv/daft-magic-property-analysis",
@@ -3083,28 +3083,28 @@
         },
         {
             "name": "psalm/plugin-phpunit",
-            "version": "dev-master",
+            "version": "dev-dataproviders",
             "source": {
                 "type": "git",
                 "url": "https://github.com/weirdan/phpunit-psalm-plugin.git",
-                "reference": "949e3b235d86f0dd84d706d31b4d2d2231b30d6b"
+                "reference": "4fe3c88acae8e3c0df22761dc87be0e346fedb00"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/weirdan/phpunit-psalm-plugin/zipball/949e3b235d86f0dd84d706d31b4d2d2231b30d6b",
-                "reference": "949e3b235d86f0dd84d706d31b4d2d2231b30d6b",
+                "url": "https://api.github.com/repos/weirdan/phpunit-psalm-plugin/zipball/4fe3c88acae8e3c0df22761dc87be0e346fedb00",
+                "reference": "4fe3c88acae8e3c0df22761dc87be0e346fedb00",
                 "shasum": ""
             },
             "require": {
                 "composer/semver": "^1.4",
                 "muglug/package-versions-56": "^1.2",
                 "phpunit/phpunit": "^6.0 || ^7.0 || ^8.0",
-                "vimeo/psalm": "^3.0.8 || dev-master"
+                "vimeo/psalm": "^3.0.13 || dev-master"
             },
             "require-dev": {
                 "codeception/base": "^2.5",
                 "squizlabs/php_codesniffer": "^3.3.1",
-                "weirdan/codeception-psalm-module": "^0.1.0"
+                "weirdan/codeception-psalm-module": "^0.2.1"
             },
             "type": "psalm-plugin",
             "extra": {
@@ -3119,6 +3119,9 @@
                     ],
                     "Psalm\\PhpUnitPlugin\\Hooks\\": [
                         "hooks"
+                    ],
+                    "Psalm\\PhpUnitPlugin\\Exception\\": [
+                        "Exception"
                     ]
                 }
             },
@@ -3159,9 +3162,9 @@
             ],
             "description": "Psalm plugin for PHPUnit",
             "support": {
-                "source": "https://github.com/weirdan/phpunit-psalm-plugin/tree/master"
+                "source": "https://github.com/weirdan/phpunit-psalm-plugin/tree/dataproviders"
             },
-            "time": "2019-02-18T02:38:11+00:00"
+            "time": "2019-02-20T11:19:11+00:00"
         },
         {
             "name": "psr/container",
