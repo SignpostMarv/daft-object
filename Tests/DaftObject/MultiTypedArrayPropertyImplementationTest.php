@@ -67,12 +67,16 @@ class MultiTypedArrayPropertyImplementationTest extends TestCase
     public function DataProviderObjectPropertyValueNotUniqueAutoDouble() : Generator
     {
         foreach ($this->DataProviderObjectPropertyValueNotUnique() as $args) {
-            static::assertIsArray($args[2] ?? null);
+            $args_2 = $args[2] ?? null;
+
+            static::assertIsArray($args_2);
+
+            $args[2] = array_merge(array_values($args_2), array_values($args_2));
+
             /**
-            * @var array<int, mixed>
+            * @psalm-var array{0:MultiTypedArrayPropertiesTester, 1:string, 2:array<int, mixed>}
             */
-            $args_2 = array_merge(array_values((array) $args[2]), array_values((array) $args[2]));
-            $args[2] = $args_2;
+            $args = $args;
 
             yield $args;
         }
