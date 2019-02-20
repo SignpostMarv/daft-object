@@ -26,28 +26,27 @@ class DefinitionAssistantTest extends TestCase
         DefinitionAssistant::ClearTypes();
 
         static::assertTrue(DefinitionAssistant::IsTypeUnregistered($className));
-        if (is_a($className, AbstractDaftObject::class, true)) {
-        DefinitionAssistant::RegisterAbstractDaftObjectType($className);
-        static::assertFalse(DefinitionAssistant::IsTypeUnregistered($className));
-        static::assertGreaterThanOrEqual(
-            count($className::DaftObjectProperties()),
-            DefinitionAssistant::ObtainExpectedProperties($className)
-        );
 
-        static::assertFalse(DefinitionAssistant::IsTypeUnregistered(
-            $className
-        ));
-        DefinitionAssistant::ClearTypes();
-        }
         if (is_a($className, AbstractDaftObject::class, true)) {
-        DefinitionAssistant::RegisterAbstractDaftObjectType($className);
-        static::assertGreaterThanOrEqual(
-            $className::PROPERTIES,
-            DefinitionAssistant::ObtainExpectedProperties(
+            DefinitionAssistant::RegisterAbstractDaftObjectType($className);
+            static::assertFalse(DefinitionAssistant::IsTypeUnregistered($className));
+            static::assertGreaterThanOrEqual(
+                count($className::DaftObjectProperties()),
+                DefinitionAssistant::ObtainExpectedProperties($className)
+            );
+
+            static::assertFalse(DefinitionAssistant::IsTypeUnregistered(
                 $className
-            )
-        );
-        DefinitionAssistant::ClearTypes();
+            ));
+            DefinitionAssistant::ClearTypes();
+            DefinitionAssistant::RegisterAbstractDaftObjectType($className);
+            static::assertGreaterThanOrEqual(
+                $className::PROPERTIES,
+                DefinitionAssistant::ObtainExpectedProperties(
+                    $className
+                )
+            );
+            DefinitionAssistant::ClearTypes();
         }
     }
 
