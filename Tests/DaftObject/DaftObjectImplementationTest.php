@@ -1253,7 +1253,7 @@ class DaftObjectImplementationTest extends TestCase
     }
 
     /**
-    * @return Generator<int, array{0:class-string<AbstractDaftObject>}, mixed, void>
+    * @psalm-return Generator<int, array{0:class-string<AbstractDaftObject>}, mixed, void>
     */
     final public function DataProviderNotDaftObjectHasPropertiesWithMultiTypedArraysOfUniqueValues(
     ) : Generator {

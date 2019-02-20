@@ -22,7 +22,7 @@ use SignpostMarv\DaftObject\UndefinedPropertyException;
 class AbstractDaftObjectImplementationTest extends DaftObjectImplementationTest
 {
     /**
-    * @return Generator<int, array{0:class-string<AbstractDaftObject>, 1:string}, mixed, void>
+    * @psalm-return Generator<int, array{0:class-string<AbstractDaftObject>, 1:string}, mixed, void>
     */
     public function dataProvider_FuzzingImplementations_NotPublicGetter() : Generator
     {
@@ -42,7 +42,7 @@ class AbstractDaftObjectImplementationTest extends DaftObjectImplementationTest
     }
 
     /**
-    * @return Generator<int, array{0:class-string<AbstractDaftObject>, 1:string}, mixed, void>
+    * @psalm-return Generator<int, array{0:class-string<AbstractDaftObject>, 1:string}, mixed, void>
     */
     public function dataProvider_FuzzingImplementations_NotPublicSetter() : Generator
     {
@@ -62,7 +62,7 @@ class AbstractDaftObjectImplementationTest extends DaftObjectImplementationTest
     }
 
     /**
-    * @return Generator<int, array{0:class-string<AbstractDaftObject>, 1:string}, mixed, void>
+    * @psalm-return Generator<int, array{0:class-string<AbstractDaftObject>, 1:string}, mixed, void>
     */
     public function dataProvider_FuzzingImplementations_NotDefined() : Generator
     {

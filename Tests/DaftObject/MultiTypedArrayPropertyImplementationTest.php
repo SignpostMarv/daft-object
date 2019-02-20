@@ -18,7 +18,7 @@ use SignpostMarv\DaftObject\Tests\TestCase;
 class MultiTypedArrayPropertyImplementationTest extends TestCase
 {
     /**
-    * @return Generator<int, array{0: MultiTypedArrayPropertiesTester, 1:string, 2:scalar|array|object|null, 3:class-string<\Throwable>, 4:string}, mixed, void>
+    * @psalm-return Generator<int, array{0: MultiTypedArrayPropertiesTester, 1:string, 2:scalar|array|object|null, 3:class-string<\Throwable>, 4:string}, mixed, void>
     */
     public function DataProviderObjectPropertyValueException() : Generator
     {
@@ -62,7 +62,7 @@ class MultiTypedArrayPropertyImplementationTest extends TestCase
     }
 
     /**
-    * @return Generator<int, array{0:MultiTypedArrayPropertiesTester, 1:string, 2:array<int, mixed>}, mixed, void>
+    * @psalm-return Generator<int, array{0:MultiTypedArrayPropertiesTester, 1:string, 2:array<int, mixed>}, mixed, void>
     */
     public function DataProviderObjectPropertyValueNotUniqueAutoDouble() : Generator
     {
@@ -79,7 +79,7 @@ class MultiTypedArrayPropertyImplementationTest extends TestCase
     }
 
     /**
-    * @return Generator<int, array{0:MultiTypedArrayPropertiesTester, 1:string, 2:scalar|array|object|null, 3:scalar|array|object|null}, mixed, void>
+    * @psalm-return Generator<int, array{0:MultiTypedArrayPropertiesTester, 1:string, 2:scalar|array|object|null, 3:scalar|array|object|null}, mixed, void>
     */
     public function DataProviderObjectPropertyValueTrimmedStrings() : Generator
     {
@@ -155,7 +155,7 @@ class MultiTypedArrayPropertyImplementationTest extends TestCase
     }
 
     /**
-    * @return Generator<int, array{0:MultiTypedArrayPropertiesTester, 1:string, 2:scalar|array|object|null}, mixed, void>
+    * @psalm-return Generator<int, array{0:MultiTypedArrayPropertiesTester, 1:string, 2:scalar|array|object|null}, mixed, void>
     */
     protected function DataProviderObjectPropertyValueNotUnique() : Generator
     {
