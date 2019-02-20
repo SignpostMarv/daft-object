@@ -176,19 +176,19 @@ class TypeUtilities
         string $class,
         string $prop
     ) : void {
-            if (static::HasMethod($class, $prop, self::BOOL_EXPECTING_GETTER)) {
-                self::$Getters[$class][$prop] = self::BOOL_METHOD_IS_PUBLIC;
-            } elseif (static::HasMethod(
-                $class,
-                $prop,
-                self::BOOL_EXPECTING_GETTER,
-                self::BOOL_EXPECTING_NON_PUBLIC_METHOD
-            )) {
-                self::$Getters[$class][$prop] = self::BOOL_METHOD_IS_NON_PUBLIC;
-            }
+        if (static::HasMethod($class, $prop, self::BOOL_EXPECTING_GETTER)) {
+            self::$Getters[$class][$prop] = self::BOOL_METHOD_IS_PUBLIC;
+        } elseif (static::HasMethod(
+            $class,
+            $prop,
+            self::BOOL_EXPECTING_GETTER,
+            self::BOOL_EXPECTING_NON_PUBLIC_METHOD
+        )) {
+            self::$Getters[$class][$prop] = self::BOOL_METHOD_IS_NON_PUBLIC;
+        }
 
-            if (static::HasMethod($class, $prop, self::BOOL_METHOD_IS_PUBLIC)) {
-                self::$publicSetters[$class][] = $prop;
-            }
+        if (static::HasMethod($class, $prop, self::BOOL_METHOD_IS_PUBLIC)) {
+            self::$publicSetters[$class][] = $prop;
+        }
     }
 }
