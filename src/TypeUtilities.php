@@ -165,6 +165,17 @@ class TypeUtilities
         foreach (
             DefinitionAssistant::ObtainExpectedProperties($class) as $prop
         ) {
+            static::CachePublicGettersAndSettersProperty($class, $prop);
+        }
+    }
+
+    /**
+    * @psalm-param class-string<DaftObject> $class
+    */
+    private static function CachePublicGettersAndSettersProperty(
+        string $class,
+        string $prop
+    ) : void {
             if (static::HasMethod($class, $prop, self::BOOL_EXPECTING_GETTER)) {
                 self::$Getters[$class][$prop] = self::BOOL_METHOD_IS_PUBLIC;
             } elseif (static::HasMethod(
@@ -179,6 +190,5 @@ class TypeUtilities
             if (static::HasMethod($class, $prop, self::BOOL_METHOD_IS_PUBLIC)) {
                 self::$publicSetters[$class][] = $prop;
             }
-        }
     }
 }
