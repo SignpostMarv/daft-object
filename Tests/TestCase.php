@@ -429,17 +429,21 @@ abstract class TestCase extends Base
                 continue;
             }
 
-            $reflector = new ReflectionClass($args[0]);
+            /**
+            * @var string
+            *
+            * @psalm-var class-string<AbstractDaftObject&DaftObjectCreatedByArray>
+            */
+            $className = $args[0];
+
+            $reflector = new ReflectionClass($className);
 
             if ( ! $reflector->isAbstract()) {
-                $getter = TypeUtilities::MethodNameFromProperty($args[1], false);
-                $setter = TypeUtilities::MethodNameFromProperty($args[1], true);
-
                 yield [
-                    $args[0],
+                    $className,
                     $args[1],
-                    method_exists($args[0], $getter),
-                    method_exists($args[0], $setter),
+                    TypeUtilities::HasMethod($className, $args[1], false, true),
+                    TypeUtilities::HasMethod($className, $args[1], true, true),
                 ];
             }
         }

@@ -98,7 +98,7 @@ class TypeUtilities
         return ($SetNotGet ? 'Set' : 'Get') . ucfirst($prop);
     }
 
-    private static function HasMethod(
+    public static function HasMethod(
         string $class,
         string $property,
         bool $SetNotGet,
