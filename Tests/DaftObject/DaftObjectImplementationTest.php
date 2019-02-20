@@ -742,12 +742,12 @@ class DaftObjectImplementationTest extends TestCase
 
         static::assertRegExp($regex, str_replace(["\n"], ' ', $debugInfo));
 
-            foreach ($propertiesExpectedToBeChanged as $property) {
-                static::assertTrue(
-                    in_array($property, $obj->ChangedProperties(), true),
-                    ($className . '::ChangedProperties() must contain changed properties')
-                );
-            }
+        foreach ($propertiesExpectedToBeChanged as $property) {
+            static::assertTrue(
+                in_array($property, $obj->ChangedProperties(), true),
+                ($className . '::ChangedProperties() must contain changed properties')
+            );
+        }
 
         $properties = $className::DaftObjectNullableProperties();
 
