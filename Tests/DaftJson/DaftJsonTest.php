@@ -18,6 +18,8 @@ class DaftJsonTest extends TestCase
 
         $obj = HasId::DaftObjectFromJsonString($json);
 
+        static::assertSame(json_decode($json, true), $obj->jsonSerialize());
+
         static::assertInstanceOf(HasId::class, $obj);
         static::assertSame('foo', $obj->ObtainId());
         static::assertSame('foo', $obj->__get('@id'));

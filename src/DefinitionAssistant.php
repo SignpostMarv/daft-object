@@ -45,19 +45,10 @@ class DefinitionAssistant extends Base
         */
         $props = $maybe::PROPERTIES;
 
-        $maybe = static::RegisterDaftObjectTypeFromTypeAndProps($maybe, ...$props);
-
-        $additional_props = array_filter(
-            $maybe::DaftObjectProperties(),
-            function (string $maybe) use ($props) : bool {
-                return ! in_array($maybe, $props, true);
-            }
-        );
-
         /**
         * @psalm-var class-string<A>
         */
-        $maybe = $maybe;
+        $maybe = static::RegisterDaftObjectTypeFromTypeAndProps($maybe, ...$props);
 
         return $maybe;
     }
