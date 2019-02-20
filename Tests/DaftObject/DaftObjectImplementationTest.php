@@ -20,7 +20,6 @@ use SignpostMarv\DaftObject\AbstractTestObject;
 use SignpostMarv\DaftObject\ClassDoesNotImplementClassException;
 use SignpostMarv\DaftObject\DaftJson;
 use SignpostMarv\DaftObject\DaftObject;
-use SignpostMarv\DaftObject\DaftObjectCreatedByArray;
 use SignpostMarv\DaftObject\DaftObjectHasPropertiesWithMultiTypedArraysOfUniqueValues;
 use SignpostMarv\DaftObject\DaftObjectNotDaftJsonBadMethodCallException;
 use SignpostMarv\DaftObject\DaftObjectWorm;
