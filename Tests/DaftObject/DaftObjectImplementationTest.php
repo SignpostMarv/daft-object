@@ -1615,6 +1615,9 @@ class DaftObjectImplementationTest extends TestCase
         string $className,
         string $property
     ) : void {
+        /**
+        * @var AbstractDaftObject&DaftObjectCreatedByArray
+        */
         $obj = new $className();
 
         static::expectException(NotPublicGetterPropertyException::class);
@@ -1625,7 +1628,7 @@ class DaftObjectImplementationTest extends TestCase
             $property
         );
 
-        $obj->$property;
+        $obj->__get($property);
     }
 
     public function testWriteOnly() : void
