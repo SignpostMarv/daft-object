@@ -44,7 +44,7 @@ class DefinesPropertyOnInterfaceClassImplementation extends AbstractDaftObject i
 
     public function SetFoo(string $value) : void
     {
-        $was = $this->foo;
+        $this->was = $this->foo;
         $this->foo = $value;
     }
 

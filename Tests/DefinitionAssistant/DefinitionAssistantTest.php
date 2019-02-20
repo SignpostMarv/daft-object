@@ -50,6 +50,9 @@ class DefinitionAssistantTest extends TestCase
         }
     }
 
+    /**
+    * @psalm-return array<int, array{0:class-string<DaftObject>, 1:array, 2:class-string<\Throwable>, 3:string}>
+    */
     public function DataProviderExceptionsInRegisterType() : array
     {
         return [
@@ -66,6 +69,7 @@ class DefinitionAssistantTest extends TestCase
     * @param array<int, string> $properties
     *
     * @psalm-param class-string<AbstractDaftObject> $type
+    * @psalm-param class-string<\Throwable> $exception
     *
     * @dataProvider DataProviderExceptionsInRegisterType
     */

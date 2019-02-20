@@ -40,17 +40,6 @@
       <code>final public function dataProviderDaftObjectCreatedByArray() : Generator</code>
       <code>protected function SortableFuzzingImplementationsViaGenerator() : Generator</code>
     </PossiblyUnusedMethod>
-    <PossiblyUnusedParam occurrences="4">
-      <code>$reflector</code>
-      <code>$args</code>
-      <code>$getters</code>
-      <code>$setters</code>
-    </PossiblyUnusedParam>
-    <UnusedVariable occurrences="3">
-      <code>$settersNotNull</code>
-      <code>$setterProperty</code>
-      <code>$k</code>
-    </UnusedVariable>
   </file>
   <file src="Tests\DaftObject\MultiTypedArrayPropertyImplementationTest.php">
     <InvalidReturnType occurrences="3">
@@ -85,11 +74,6 @@
       <code>public function SetFoo(string $value) : void;</code>
     </PossiblyUnusedMethod>
   </file>
-  <file src="Tests\DefinitionAssistant\DefinesPropertyOnInterfaceClassImplementation.php">
-    <UnusedVariable occurrences="1">
-      <code>$was</code>
-    </UnusedVariable>
-  </file>
   <file src="Tests\DefinitionAssistant\DefinitionAssistantTest.php">
     <InvalidReturnType occurrences="1">
       <code>array</code>
@@ -108,10 +92,6 @@
       <code>$backupStaticAttributes</code>
       <code>$runTestInSeparateProcess</code>
     </UnusedProperty>
-    <UnusedVariable occurrences="2">
-      <code>$reflector</code>
-      <code>$reflector_const</code>
-    </UnusedVariable>
   </file>
   <file src="src\AbstractArrayBackedDaftObject.php">
     <PossiblyUnusedMethod occurrences="1">

@@ -31,6 +31,9 @@ class JsonTypeUtilitiesExceptionsTest extends TestCase
         JsonTypeUtilities::DaftObjectFromJsonTypeArray(DaftJson::class, '', [null], true);
     }
 
+    /**
+    * @psalm-return array<int, array{0:class-string<DaftJson>, 1:array, 2:class-string<\Throwable>, 2:string}>
+    */
     public function dataProvider_ThrowIfJsonDefNotValid_fails() : array
     {
         return [
@@ -77,7 +80,7 @@ class JsonTypeUtilitiesExceptionsTest extends TestCase
     * @param mixed[] $array
     *
     * @psalm-param class-string<\SignpostMarv\DaftObject\DaftJson> $className
-    * @psalm-param class-string<\Throwable> $expection
+    * @psalm-param class-string<\Throwable> $exception
     *
     * @dataProvider dataProvider_ThrowIfJsonDefNotValid_fails
     */

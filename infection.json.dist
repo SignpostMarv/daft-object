@@ -23,11 +23,6 @@
                 "SignpostMarv\\DaftObject\\AbstractArrayBackedDaftObject::DaftObjectWormPropertyWritten"
             ]
         },
-        "LogicalNot": {
-            "ignore": [
-                "SignpostMarv\\DaftObject\\DefinitionAssistant::RegisterAbstractDaftObjectType"
-            ]
-        },
         "NotIdentical": {
             "ignore": [
                 "SignpostMarv\\DaftObject\\AbstractArrayBackedDaftObject::NudgePropertyValue",
