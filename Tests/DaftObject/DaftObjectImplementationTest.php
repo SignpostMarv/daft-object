@@ -1646,7 +1646,6 @@ class DaftObjectImplementationTest extends TestCase
 
         $obj->SetFoo('baz');
         static::assertSame('baz', $obj->GetId());
-
     }
 
     /**
