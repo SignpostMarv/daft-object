@@ -6,7 +6,6 @@ declare(strict_types=1);
 
 namespace SignpostMarv\DaftObject\Tests\DefinitionAssistant;
 
-use Closure;
 use SignpostMarv\DaftObject\DaftObject;
 use SignpostMarv\DaftObject\DefinitionAssistant as Base;
 
