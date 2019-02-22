@@ -8,6 +8,7 @@ declare(strict_types=1);
 
 namespace SignpostMarv\DaftObject\Tests\DefinesOwnIdPropertiesInterface\Fixtures;
 
+use InvalidArgumentException;
 use SignpostMarv\DaftObject\AbstractArrayBackedDaftObject;
 use SignpostMarv\DaftObject\DaftObjectIdValuesHashLazyInt;
 use SignpostMarv\DaftObject\DefinesOwnIntegerIdInterface;
@@ -24,13 +25,18 @@ class DefinesOwnIntIdProperties extends AbstractArrayBackedDaftObject implements
 
     const PROPERTIES = ['id'];
 
-    /**
-    * {@inheritdoc}
-    *
-    * @psalm-param array{id:int} $data
-    */
     public function __construct(array $data = ['id' => 0], bool $writeAll = false)
     {
+        if ( ! isset($data['id']) || ! is_int($data['id'])) {
+            throw new InvalidArgumentException(
+                'Argument 1 passed to ' .
+                __METHOD__ .
+                ' was not array{id:int}!'
+            );
+        }
+
+        $data = ['id' => $data['id']];
+
         parent::__construct($data, $writeAll);
     }
 

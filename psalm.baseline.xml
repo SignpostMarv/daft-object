@@ -1,18 +1,2 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<files>
-  <file src="Tests\DefinesOwnIdPropertiesInterface\Fixtures\DefinesOwnArrayIdProperties.php">
-    <MoreSpecificImplementedParamType occurrences="1">
-      <code>$data</code>
-    </MoreSpecificImplementedParamType>
-  </file>
-  <file src="Tests\DefinesOwnIdPropertiesInterface\Fixtures\DefinesOwnIntIdProperties.php">
-    <MoreSpecificImplementedParamType occurrences="1">
-      <code>$data</code>
-    </MoreSpecificImplementedParamType>
-  </file>
-  <file src="Tests\DefinesOwnIdPropertiesInterface\Fixtures\DefinesOwnScalarIdProperties.php">
-    <MoreSpecificImplementedParamType occurrences="1">
-      <code>$data</code>
-    </MoreSpecificImplementedParamType>
-  </file>
-</files>
+<files/>
