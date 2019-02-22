@@ -1,11 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <files>
-  <file src="Tests\DaftJson\DaftJsonExceptionTest.php">
-    <InvalidArgument occurrences="2">
-      <code>@dataProvider dataProviderClassDoesNotImplementClassException</code>
-      <code>@dataProvider dataProviderPropertyNotThingableException</code>
-    </InvalidArgument>
-  </file>
   <file src="Tests\DaftObject\DaftObjectImplementationTest.php">
     <InvalidArgument occurrences="6">
       <code>@dataProvider dataProviderNonAbstractJsonArrayBackedGoodFuzzingHasSetters</code>
@@ -32,21 +26,6 @@
       <code>public function GetIntSortOrder() : int</code>
       <code>public function SetIntSortOrder(int $value) : void</code>
     </PossiblyUnusedMethod>
-  </file>
-  <file src="Tests\DefinesOwnIdPropertiesInterface\Fixtures\DefinesOwnArrayIdProperties.php">
-    <MoreSpecificImplementedParamType occurrences="1">
-      <code>$data</code>
-    </MoreSpecificImplementedParamType>
-  </file>
-  <file src="Tests\DefinesOwnIdPropertiesInterface\Fixtures\DefinesOwnIntIdProperties.php">
-    <MoreSpecificImplementedParamType occurrences="1">
-      <code>$data</code>
-    </MoreSpecificImplementedParamType>
-  </file>
-  <file src="Tests\DefinesOwnIdPropertiesInterface\Fixtures\DefinesOwnScalarIdProperties.php">
-    <MoreSpecificImplementedParamType occurrences="1">
-      <code>$data</code>
-    </MoreSpecificImplementedParamType>
   </file>
   <file src="Tests\DefinitionAssistant\DefinesPropertyOnInterface.php">
     <PossiblyUnusedMethod occurrences="2">
@@ -132,12 +111,6 @@
     <PossiblyUnusedMethod occurrences="2">
       <code>public function GetBaz() : int</code>
       <code>public function GetBat() : ? bool</code>
-    </PossiblyUnusedMethod>
-  </file>
-  <file src="tests-src\ReadWriteJsonJsonArrayBad.php">
-    <PossiblyUnusedMethod occurrences="2">
-      <code>public function GetJson() : array</code>
-      <code>public function SetJson(array $json) : void</code>
     </PossiblyUnusedMethod>
   </file>
 </files>

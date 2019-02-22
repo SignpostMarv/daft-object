@@ -8,6 +8,7 @@ declare(strict_types=1);
 
 namespace SignpostMarv\DaftObject\Tests\DefinesOwnIdPropertiesInterface\Fixtures;
 
+use InvalidArgumentException;
 use SignpostMarv\DaftObject\AbstractArrayBackedDaftObject;
 use SignpostMarv\DaftObject\DaftObjectIdValuesHashLazyInt;
 use SignpostMarv\DaftObject\DefinesOwnIdPropertiesInterface;
@@ -26,13 +27,21 @@ class DefinesOwnScalarIdProperties extends AbstractArrayBackedDaftObject impleme
 
     const PROPERTIES = ['id'];
 
-    /**
-    * {@inheritdoc}
-    *
-    * @psalm-param array{id:T} $data
-    */
     public function __construct(array $data = ['id' => 0], bool $writeAll = false)
     {
+        if ( ! isset($data['id']) || ! is_scalar($data['id'])) {
+            throw new InvalidArgumentException(
+                'Argument 1 passed to ' .
+                __METHOD__ .
+                ' was not array{id:scalar}!'
+            );
+        }
+
+        /**
+        * @psalm-var array{id:T}
+        */
+        $data = $data;
+
         parent::__construct($data, $writeAll);
     }
 
