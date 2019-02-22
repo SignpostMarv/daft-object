@@ -15,6 +15,9 @@
     <testsuite name="AbstractDaftObject">
       <directory>./Tests/AbstractDaftObject/</directory>
     </testsuite>
+    <testsuite name="AbstractArrayBackedDaftObject">
+      <directory>./Tests/AbstractArrayBackedDaftObject/</directory>
+    </testsuite>
     <testsuite name="DaftJson">
       <directory>./Tests/DaftJson/</directory>
     </testsuite>

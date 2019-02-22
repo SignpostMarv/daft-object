@@ -1,5 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <files>
+  <file src="Tests\AbstractArrayBackedDaftObject\AbstractArrayBackedDaftObjectTest.php">
+    <PossiblyUnusedMethod occurrences="1">
+      <code>public function test_RetrievePropertyValueFromData__not_nullable() : void</code>
+    </PossiblyUnusedMethod>
+  </file>
   <file src="Tests\AbstractDaftObject\AbstractDaftObjectImplementationTest.php">
     <PossiblyUnusedMethod occurrences="6">
       <code>public function dataProvider_FuzzingImplementations_NotPublicGetter() : Generator</code>
@@ -11,11 +16,7 @@
     </PossiblyUnusedMethod>
   </file>
   <file src="Tests\DaftJson\DaftJsonExceptionTest.php">
-    <PossiblyUnusedMethod occurrences="5">
-      <code>public function dataProviderClassDoesNotImplementClassException() : array</code>
-      <code>public function dataProviderPropertyNotThingableException() : array</code>
-      <code>public function testClassDoesNotImplementClassException(</code>
-      <code>public function testPropertyNotThingableException(</code>
+    <PossiblyUnusedMethod occurrences="1">
       <code>public function test_ThrowIfNotJsonType(string $type) : void</code>
     </PossiblyUnusedMethod>
   </file>
@@ -215,12 +216,6 @@
     <PossiblyUnusedMethod occurrences="2">
       <code>public function GetBaz() : int</code>
       <code>public function GetBat() : ? bool</code>
-    </PossiblyUnusedMethod>
-  </file>
-  <file src="tests-src\ReadWriteJsonJsonArrayBad.php">
-    <PossiblyUnusedMethod occurrences="2">
-      <code>public function GetJson() : array</code>
-      <code>public function SetJson(array $json) : void</code>
     </PossiblyUnusedMethod>
   </file>
 </files>

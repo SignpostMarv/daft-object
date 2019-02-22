@@ -49,6 +49,7 @@ abstract class TestCase extends Base
                 '/src/*.php' => 'SignpostMarv\\DaftObject\\',
                 '/tests-src/*.php' => 'SignpostMarv\\DaftObject\\',
                 '/tests-src/LinkedData/*.php' => 'SignpostMarv\\DaftObject\\LinkedData\\',
+                '/Tests/AbstractArrayBackedDaftObject/Fixtures/*.php' => 'SignpostMarv\\DaftObject\\Tests\\AbstractArrayBackedDaftObject\\Fixtures\\',
                 '/Tests/DaftSortableObject/Fixtures/*.php' => 'SignpostMarv\\DaftObject\\Tests\\DaftSortableObject\\Fixtures\\',
                 '/Tests/DefinitionAssistant/*.php' => 'SignpostMarv\\DaftObject\\Tests\\DefinitionAssistant\\',
                 '/Tests/DefinesOwnIdPropertiesInterface/Fixtures/*.php' => 'SignpostMarv\\DaftObject\\Tests\\DefinesOwnIdPropertiesInterface\\Fixtures\\',
