@@ -15,7 +15,7 @@ use SignpostMarv\DaftObject\DefinesOwnIntegerIdInterface;
 /**
 * @property-read int $id
 */
-class DefinesOwnIntIdProperties  extends AbstractArrayBackedDaftObject implements DefinesOwnIntegerIdInterface
+class DefinesOwnIntIdProperties extends AbstractArrayBackedDaftObject implements DefinesOwnIntegerIdInterface
 {
     /**
     * @use DaftObjectIdValuesHashLazyInt<DefinesOwnIntIdProperties>

@@ -55,7 +55,7 @@ trait DaftObjectIdValuesHashLazyInt
                 /**
                 * @param mixed $val
                 */
-                function($val) : string {
+                function ($val) : string {
                     return static::VarExportNonScalars($val);
                 },
                 $id
