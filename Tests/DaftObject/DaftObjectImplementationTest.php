@@ -410,47 +410,47 @@ class DaftObjectImplementationTest extends TestCase
                     is_a($className, DefinesOwnIntegerIdInterface::class, true) ||
                     is_a($className, DefinesOwnStringIdInterface::class, true)
                 ) {
-                static::assertTrue(
-                    $reflectorGetter->hasReturnType(),
-                    (
-                        $reflectorGetter->getNumberOfParameters() .
-                        $reflectorGetter->getDeclaringClass()->getName() .
-                        '::' .
-                        $reflectorGetter->getName() .
-                        '() must have a return type.'
-                    )
-                );
-                }
-
-                if ($reflectorGetter->hasReturnType()) {
-                /**
-                * @var ReflectionType
-                */
-                $returnType = $reflectorGetter->getReturnType();
-
-                static::assertTrue(
-                    ('void' !== $returnType->__toString()),
-                    (
-                        $reflectorGetter->getNumberOfParameters() .
-                        $reflectorGetter->getDeclaringClass()->getName() .
-                        '::' .
-                        $reflectorGetter->getName() .
-                        '() must have a non-void return type.'
-                    )
-                );
-
-                if ($isNullable) {
                     static::assertTrue(
-                        $returnType->allowsNull(),
+                        $reflectorGetter->hasReturnType(),
                         (
                             $reflectorGetter->getNumberOfParameters() .
                             $reflectorGetter->getDeclaringClass()->getName() .
                             '::' .
                             $reflectorGetter->getName() .
-                            '() must have a nullable return type.'
+                            '() must have a return type.'
                         )
                     );
                 }
+
+                if ($reflectorGetter->hasReturnType()) {
+                    /**
+                    * @var ReflectionType
+                    */
+                    $returnType = $reflectorGetter->getReturnType();
+
+                    static::assertTrue(
+                        ('void' !== $returnType->__toString()),
+                        (
+                            $reflectorGetter->getNumberOfParameters() .
+                            $reflectorGetter->getDeclaringClass()->getName() .
+                            '::' .
+                            $reflectorGetter->getName() .
+                            '() must have a non-void return type.'
+                        )
+                    );
+
+                    if ($isNullable) {
+                        static::assertTrue(
+                            $returnType->allowsNull(),
+                            (
+                                $reflectorGetter->getNumberOfParameters() .
+                                $reflectorGetter->getDeclaringClass()->getName() .
+                                '::' .
+                                $reflectorGetter->getName() .
+                                '() must have a nullable return type.'
+                            )
+                        );
+                    }
                 }
             }
 
@@ -1551,6 +1551,7 @@ class DaftObjectImplementationTest extends TestCase
 
         if ($setter_param instanceof ReflectionParameter) {
             $setter_type = $setter_param->hasType() ? $setter_param->getType() : null;
+
             if (
                 $setter_type instanceof ReflectionNamedType &&
                 'array' !== $setter_type->getName()
@@ -1637,7 +1638,7 @@ class DaftObjectImplementationTest extends TestCase
                 is_a($className, DefinesOwnIntegerIdInterface::class, true) ||
                 is_a($className, DefinesOwnStringIdInterface::class, true)
             ) {
-            static::assertSame($matches[1], $getter_matches[2]);
+                static::assertSame($matches[1], $getter_matches[2]);
             }
         }
     }
