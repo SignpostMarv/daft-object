@@ -6,13 +6,10 @@ declare(strict_types=1);
 
 namespace SignpostMarv\DaftObject\Tests\DaftJson;
 
-use SignpostMarv\DaftObject\AbstractArrayBackedDaftObject;
 use SignpostMarv\DaftObject\ClassDoesNotImplementClassException;
 use SignpostMarv\DaftObject\DaftJson;
 use SignpostMarv\DaftObject\DaftObject;
 use SignpostMarv\DaftObject\JsonTypeUtilities;
-use SignpostMarv\DaftObject\PropertyNotNullableException;
-use SignpostMarv\DaftObject\ReadWriteJsonJsonArrayBad;
 use SignpostMarv\DaftObject\Tests\TestCase;
 
 /**
