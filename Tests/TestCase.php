@@ -51,6 +51,7 @@ abstract class TestCase extends Base
                 '/tests-src/LinkedData/*.php' => 'SignpostMarv\\DaftObject\\LinkedData\\',
                 '/Tests/DaftSortableObject/Fixtures/*.php' => 'SignpostMarv\\DaftObject\\Tests\\DaftSortableObject\\Fixtures\\',
                 '/Tests/DefinitionAssistant/*.php' => 'SignpostMarv\\DaftObject\\Tests\\DefinitionAssistant\\',
+                '/Tests/DefinesOwnIdPropertiesInterface/Fixtures/*.php' => 'SignpostMarv\\DaftObject\\Tests\\DefinesOwnIdPropertiesInterface\\Fixtures\\',
             ] as $glob => $ns
         ) {
             $files = glob(__DIR__ . '/..' . $glob);

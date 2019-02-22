@@ -111,6 +111,27 @@
       <code>public function test_DaftObjectIdHash() : void</code>
     </PossiblyUnusedMethod>
   </file>
+  <file src="Tests\DefinesOwnIdPropertiesInterface\DefinesOwnIdPropertiesInterfaceTest.php">
+    <PossiblyUnusedMethod occurrences="2">
+      <code>public function dataProvider_DefinesOwnScalarIdProperties() : array</code>
+      <code>public function test_DefinesOwnScalarIdProperties($id) : void</code>
+    </PossiblyUnusedMethod>
+  </file>
+  <file src="Tests\DefinesOwnIdPropertiesInterface\Fixtures\DefinesOwnArrayIdProperties.php">
+    <MoreSpecificImplementedParamType occurrences="1">
+      <code>$data</code>
+    </MoreSpecificImplementedParamType>
+  </file>
+  <file src="Tests\DefinesOwnIdPropertiesInterface\Fixtures\DefinesOwnIntIdProperties.php">
+    <MoreSpecificImplementedParamType occurrences="1">
+      <code>$data</code>
+    </MoreSpecificImplementedParamType>
+  </file>
+  <file src="Tests\DefinesOwnIdPropertiesInterface\Fixtures\DefinesOwnScalarIdProperties.php">
+    <MoreSpecificImplementedParamType occurrences="1">
+      <code>$data</code>
+    </MoreSpecificImplementedParamType>
+  </file>
   <file src="Tests\DefinitionAssistant\DefinesPropertyOnInterface.php">
     <PossiblyUnusedMethod occurrences="2">
       <code>public function GetFoo() : string;</code>
@@ -162,11 +183,6 @@
     <PossiblyUnusedMethod occurrences="1">
       <code>public function DaftObjectWormPropertyWritten(string $property) : bool;</code>
     </PossiblyUnusedMethod>
-  </file>
-  <file src="src\DefinesOwnIntegerIdInterface.php">
-    <UnusedClass occurrences="1">
-      <code>interface DefinesOwnIntegerIdInterface extends DefinesOwnIdPropertiesInterface</code>
-    </UnusedClass>
   </file>
   <file src="tests-src\DateTimeImmutableTestObject.php">
     <PossiblyUnusedMethod occurrences="2">

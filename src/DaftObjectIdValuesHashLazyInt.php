@@ -32,7 +32,7 @@ trait DaftObjectIdValuesHashLazyInt
                 /**
                 * @var scalar|array|object|null
                 */
-                $val = $object->$prop;
+                $val = $object->__get($prop);
 
                 return static::VarExportNonScalars($val);
             },
@@ -49,7 +49,18 @@ trait DaftObjectIdValuesHashLazyInt
     {
         $className = static::class;
 
-        $objectIds = implode('::', array_map(static::class . '::VarExportNonScalars', $id));
+        $objectIds = implode(
+            '::',
+            array_map(
+                /**
+                * @param mixed $val
+                */
+                function($val) : string {
+                    return static::VarExportNonScalars($val);
+                },
+                $id
+            )
+        );
 
         if ( ! isset(self::$ids[$className])) {
             self::$ids[$className] = [];

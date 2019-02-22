@@ -12,6 +12,9 @@
         <directory name="tests-src"/>
         <directory name="Tests"/>
         <directory name="quick-checks"/>
+        <ignoreFiles>
+            <file name="./vendor/phpunit/phpunit/src/Framework/TestCase.php" />
+        </ignoreFiles>
     </projectFiles>
 
     <issueHandlers>

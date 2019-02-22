@@ -26,6 +26,9 @@ use SignpostMarv\DaftObject\DaftObjectNotDaftJsonBadMethodCallException;
 use SignpostMarv\DaftObject\DaftObjectWorm;
 use SignpostMarv\DaftObject\DaftSortableObject;
 use SignpostMarv\DaftObject\DateTimeImmutableTestObject;
+use SignpostMarv\DaftObject\DefinesOwnArrayIdInterface;
+use SignpostMarv\DaftObject\DefinesOwnIntegerIdInterface;
+use SignpostMarv\DaftObject\DefinesOwnStringIdInterface;
 use SignpostMarv\DaftObject\LinkedData\HasArrayOfHasId;
 use SignpostMarv\DaftObject\LinkedData\HasId;
 use SignpostMarv\DaftObject\LinkedData\HasIdPublicNudge;
@@ -44,6 +47,10 @@ use SignpostMarv\DaftObject\WriteOnly;
 class DaftObjectImplementationTest extends TestCase
 {
     const NUM_EXPECTED_ARGS_FOR_IMPLEMENTATION = 5;
+
+    const REGEX_PSALM_GETTER_TYPE = '/\* @(psalm\-return) (.+)\n/';
+
+    const REGEX_GETTER_TYPE = '/\* @(return) (.+)\n/';
 
     /**
     * @dataProvider dataProviderNonAbstractGoodImplementationsWithProperties
@@ -396,6 +403,13 @@ class DaftObjectImplementationTest extends TestCase
                         '() must not have any parameters.'
                     )
                 );
+
+                if (
+                    'id' !== $property ||
+                    is_a($className, DefinesOwnArrayIdInterface::class, true) ||
+                    is_a($className, DefinesOwnIntegerIdInterface::class, true) ||
+                    is_a($className, DefinesOwnStringIdInterface::class, true)
+                ) {
                 static::assertTrue(
                     $reflectorGetter->hasReturnType(),
                     (
@@ -406,7 +420,9 @@ class DaftObjectImplementationTest extends TestCase
                         '() must have a return type.'
                     )
                 );
+                }
 
+                if ($reflectorGetter->hasReturnType()) {
                 /**
                 * @var ReflectionType
                 */
@@ -434,6 +450,7 @@ class DaftObjectImplementationTest extends TestCase
                             '() must have a nullable return type.'
                         )
                     );
+                }
                 }
             }
 
@@ -1413,14 +1430,24 @@ class DaftObjectImplementationTest extends TestCase
             $skip = false;
 
             if (is_string($getter_docblock) && is_string($setter_docblock)) {
-                $regex_getter_type = '/\* @(psalm\-return|return) (.+)\n/';
                 $regex_setter_type =
                     '/\* @(psalm-param|param) (.+) $' .
                     preg_quote($setter_param->getName(), '/') .
                     '[\r\n]/';
 
                 if (
-                    1 === preg_match($regex_getter_type, $getter_docblock, $getter_matches) &&
+                    (
+                        1 === preg_match(
+                            self::REGEX_PSALM_GETTER_TYPE,
+                            $getter_docblock,
+                            $getter_matches
+                        ) ||
+                        1 === preg_match(
+                            self::REGEX_GETTER_TYPE,
+                            $getter_docblock,
+                            $getter_matches
+                        )
+                    ) &&
                     1 === preg_match($regex_setter_type, $setter_docblock, $setter_matches)
                 ) {
                     static::assertSame(
@@ -1586,15 +1613,18 @@ class DaftObjectImplementationTest extends TestCase
                     '() must specify either an @return or @psalm-return docblock!'
                 )
             );
-
-            $regex_getter_type = '/\* @(psalm\-return|return) (.+)\n/';
-
             static::assertSame(
                 1,
-                preg_match($regex_getter_type, $getter_docblock, $getter_matches),
+                (
+                    preg_match(
+                        self::REGEX_PSALM_GETTER_TYPE,
+                        $getter_docblock,
+                        $getter_matches
+                    ) ?: preg_match(self::REGEX_GETTER_TYPE, $getter_docblock, $getter_matches)
+                ),
                 (
                     $className .
-                    ' must specify an @param docblock entry for ' .
+                    ' must specify an @return docblock entry for ' .
                     $className .
                     '::' .
                     $getter->getName() .
@@ -1602,7 +1632,13 @@ class DaftObjectImplementationTest extends TestCase
                 )
             );
 
+            if (
+                'id' !== $property ||
+                is_a($className, DefinesOwnIntegerIdInterface::class, true) ||
+                is_a($className, DefinesOwnStringIdInterface::class, true)
+            ) {
             static::assertSame($matches[1], $getter_matches[2]);
+            }
         }
     }
 
