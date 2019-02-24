@@ -1599,8 +1599,6 @@ class DaftObjectImplementationTest extends TestCase
         if ($getter_type instanceof ReflectionNamedType && 'array' !== $getter_type->getName()) {
             if ('|null' === mb_substr($matches[1], -5)) {
                 static::assertTrue($getter_type->allowsNull());
-            } else {
-                static::assertSame($getter_type->getName(), $matches[1]);
             }
         } elseif ($getter instanceof ReflectionMethod) {
             $getter_docblock = $getter->getDocComment();
