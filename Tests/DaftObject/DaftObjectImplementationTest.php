@@ -1325,6 +1325,12 @@ class DaftObjectImplementationTest extends TestCase
 
         $properties = $className::DaftSortableObjectProperties();
 
+        static::assertGreaterThan(
+            0,
+            count($properties),
+            ($className . ' must specify one or more sortable properties!')
+        );
+
         foreach ($properties as $v) {
             $expectedMethod = TypeUtilities::MethodNameFromProperty($v, false);
 
