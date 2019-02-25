@@ -118,34 +118,6 @@ class TypeUtilities
     }
 
     /**
-    * @psalm-param class-string<DaftObject> $class
-    */
-    private static function CachePublicGettersAndSetters(string $class) : void
-    {
-        if (false === isset(self::$Getters[$class])) {
-            self::$Getters[$class] = [];
-            self::$publicSetters[$class] = [];
-
-            if (
-                is_a(
-                    $class,
-                    DefinesOwnIdPropertiesInterface::class,
-                    true
-                )
-            ) {
-                self::$Getters[$class]['id'] = self::BOOL_METHOD_IS_PUBLIC;
-            }
-
-            /**
-            * @psalm-var class-string<DaftObject>
-            */
-            $class = $class;
-
-            static::CachePublicGettersAndSettersProperties($class);
-        }
-    }
-
-    /**
     * @template T as DaftObject
     *
     * @psalm-param class-string<T> $class
@@ -189,6 +161,34 @@ class TypeUtilities
 
         if (static::HasMethod($class, $prop, self::BOOL_METHOD_IS_PUBLIC)) {
             self::$publicSetters[$class][] = $prop;
+        }
+    }
+
+    /**
+    * @psalm-param class-string<DaftObject> $class
+    */
+    private static function CachePublicGettersAndSetters(string $class) : void
+    {
+        if (false === isset(self::$Getters[$class])) {
+            self::$Getters[$class] = [];
+            self::$publicSetters[$class] = [];
+
+            if (
+                is_a(
+                    $class,
+                    DefinesOwnIdPropertiesInterface::class,
+                    true
+                )
+            ) {
+                self::$Getters[$class]['id'] = self::BOOL_METHOD_IS_PUBLIC;
+            }
+
+            /**
+            * @psalm-var class-string<DaftObject>
+            */
+            $class = $class;
+
+            static::CachePublicGettersAndSettersProperties($class);
         }
     }
 }
