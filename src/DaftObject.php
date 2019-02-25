@@ -18,7 +18,7 @@ interface DaftObject
     *
     * @param string $property the property being retrieved
     *
-    * @throws UndefinedPropertyException if a property is undefined
+    * @throws Exceptions\UndefinedPropertyException if a property is undefined
     *
     * @return scalar|array|object|null
     */
@@ -30,7 +30,7 @@ interface DaftObject
     * @param string $property the property being retrieved
     * @param scalar|array|object|null $v
     *
-    * @throws NotPublicSetterPropertyException if a property is not publicly settable
+    * @throws Exceptions\NotPublicSetterPropertyException if a property is not publicly settable
     */
     public function __set(string $property, $v) : void;
 

@@ -6,14 +6,14 @@
 */
 declare(strict_types=1);
 
-namespace SignpostMarv\DaftObject;
+namespace SignpostMarv\DaftObject\Exceptions;
 
 use Throwable;
 
 /**
 * Exception thrown when a property is not writeable.
 */
-class PropertyNotJsonDecodableShouldBeArrayException extends AbstractPropertyNotThingableException
+class PropertyNotJsonDecodableException extends AbstractPropertyNotThingableException
 {
     /**
     * Wraps to AbstractPropertyNotThingableException::__construct().
@@ -29,12 +29,6 @@ class PropertyNotJsonDecodableShouldBeArrayException extends AbstractPropertyNot
         int $code = self::INT_DEFAULT_CODE,
         Throwable $previous = null
     ) {
-        parent::__construct(
-            'json-decodable (should be an array)',
-            $className,
-            $property,
-            $code,
-            $previous
-        );
+        parent::__construct('json-decodable', $className, $property, $code, $previous);
     }
 }

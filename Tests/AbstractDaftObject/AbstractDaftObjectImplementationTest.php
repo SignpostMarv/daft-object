@@ -8,11 +8,11 @@ namespace SignpostMarv\DaftObject\Tests\AbstractDaftObject;
 
 use Generator;
 use SignpostMarv\DaftObject\AbstractDaftObject;
-use SignpostMarv\DaftObject\NotPublicGetterPropertyException;
-use SignpostMarv\DaftObject\NotPublicSetterPropertyException;
+use SignpostMarv\DaftObject\Exceptions\NotPublicGetterPropertyException;
+use SignpostMarv\DaftObject\Exceptions\NotPublicSetterPropertyException;
+use SignpostMarv\DaftObject\Exceptions\UndefinedPropertyException;
 use SignpostMarv\DaftObject\Tests\DaftObject\DaftObjectImplementationTest;
 use SignpostMarv\DaftObject\TypeUtilities;
-use SignpostMarv\DaftObject\UndefinedPropertyException;
 
 /**
 * @template T as AbstractDaftObject

@@ -160,15 +160,15 @@
       <code>public static function DaftObjectPropertiesWithMultiTypedArraysOfUniqueValues() : array;</code>
     </PossiblyUnusedMethod>
   </file>
-  <file src="src\DaftObjectNotRecalledException.php">
-    <UnusedClass occurrences="1">
-      <code>class DaftObjectNotRecalledException extends Exception</code>
-    </UnusedClass>
-  </file>
   <file src="src\DaftObjectWorm.php">
     <PossiblyUnusedMethod occurrences="1">
       <code>public function DaftObjectWormPropertyWritten(string $property) : bool;</code>
     </PossiblyUnusedMethod>
+  </file>
+  <file src="src\Exceptions\DaftObjectNotRecalledException.php">
+    <UnusedClass occurrences="1">
+      <code>class DaftObjectNotRecalledException extends Exception</code>
+    </UnusedClass>
   </file>
   <file src="tests-src\DateTimeImmutableTestObject.php">
     <PossiblyUnusedMethod occurrences="2">

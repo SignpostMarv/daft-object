@@ -168,7 +168,7 @@ abstract class AbstractArrayBackedDaftObject extends AbstractDaftObject implemen
     *
     * @param string $property the property being retrieved
     *
-    * @throws PropertyNotNullableException if value is not set and $property is not listed as nullabe
+    * @throws Exceptions\PropertyNotNullableException if value is not set and $property is not listed as nullabe
     *
     * @return mixed the property value
     */
@@ -181,7 +181,7 @@ abstract class AbstractArrayBackedDaftObject extends AbstractDaftObject implemen
         );
 
         if ( ! array_key_exists($property, $this->data) && ! $isNullable) {
-            throw new PropertyNotNullableException(static::class, $property);
+            throw new Exceptions\PropertyNotNullableException(static::class, $property);
         } elseif ($isNullable) {
             return $this->data[$property] ?? null;
         }
@@ -310,9 +310,9 @@ abstract class AbstractArrayBackedDaftObject extends AbstractDaftObject implemen
         $properties = static::DaftObjectProperties();
 
         if ( ! in_array($property, $properties, DefinitionAssistant::IN_ARRAY_STRICT_MODE)) {
-            throw new UndefinedPropertyException(static::class, $property);
+            throw new Exceptions\UndefinedPropertyException(static::class, $property);
         } elseif ($this->DaftObjectWormPropertyWritten($property)) {
-            throw new PropertyNotRewriteableException(static::class, $property);
+            throw new Exceptions\PropertyNotRewriteableException(static::class, $property);
         }
 
         return $property;
@@ -331,7 +331,7 @@ abstract class AbstractArrayBackedDaftObject extends AbstractDaftObject implemen
             true === is_null($value) &&
             ! in_array($property, $properties, DefinitionAssistant::IN_ARRAY_STRICT_MODE)
         ) {
-            throw new PropertyNotNullableException(static::class, $property);
+            throw new Exceptions\PropertyNotNullableException(static::class, $property);
         }
     }
 }

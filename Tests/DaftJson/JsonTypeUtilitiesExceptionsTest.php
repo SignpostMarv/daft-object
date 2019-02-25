@@ -9,12 +9,12 @@ namespace SignpostMarv\DaftObject\Tests\DaftJson;
 use Generator;
 use SignpostMarv\DaftObject\AbstractDaftObject;
 use SignpostMarv\DaftObject\DaftJson;
-use SignpostMarv\DaftObject\DaftObjectNotDaftJsonBadMethodCallException;
+use SignpostMarv\DaftObject\Exceptions\DaftObjectNotDaftJsonBadMethodCallException;
+use SignpostMarv\DaftObject\Exceptions\PropertyNotJsonDecodableException;
+use SignpostMarv\DaftObject\Exceptions\PropertyNotJsonDecodableShouldBeArrayException;
 use SignpostMarv\DaftObject\JsonTypeUtilities;
 use SignpostMarv\DaftObject\LinkedData\HasArrayOfHasId;
 use SignpostMarv\DaftObject\LinkedData\HasId;
-use SignpostMarv\DaftObject\PropertyNotJsonDecodableException;
-use SignpostMarv\DaftObject\PropertyNotJsonDecodableShouldBeArrayException;
 use SignpostMarv\DaftObject\Tests\TestCase;
 
 class JsonTypeUtilitiesExceptionsTest extends TestCase

@@ -8,8 +8,8 @@ namespace SignpostMarv\DaftObject\Tests\DaftSortableObject;
 
 use Generator;
 use SignpostMarv\DaftObject\AbstractDaftObject;
-use SignpostMarv\DaftObject\ClassDoesNotImplementClassException;
 use SignpostMarv\DaftObject\DaftSortableObject;
+use SignpostMarv\DaftObject\Exceptions\ClassDoesNotImplementClassException;
 use SignpostMarv\DaftObject\Tests\TestCase as Base;
 use SignpostMarv\DaftObject\TraitSortableDaftObject;
 

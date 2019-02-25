@@ -40,7 +40,7 @@ trait TraitSortableDaftObject
     public static function DaftSortableObjectProperties() : array
     {
         if ( ! is_a(static::class, DaftSortableObject::class, true)) {
-            throw new ClassDoesNotImplementClassException(
+            throw new Exceptions\ClassDoesNotImplementClassException(
                 static::class,
                 DaftSortableObject::class
             );

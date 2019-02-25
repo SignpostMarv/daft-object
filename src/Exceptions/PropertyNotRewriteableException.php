@@ -6,20 +6,20 @@
 */
 declare(strict_types=1);
 
-namespace SignpostMarv\DaftObject;
+namespace SignpostMarv\DaftObject\Exceptions;
 
 use Throwable;
 
 /**
-* Exception thrown when a property is not defined.
+* Exception thrown when a property is not writeable.
 */
-class NotPublicGetterPropertyException extends AbstractPropertyNotThingableException
+class PropertyNotRewriteableException extends AbstractPropertyNotThingableException
 {
     /**
     * Wraps to AbstractPropertyNotThingableException::__construct().
     *
-    * @param string $className name of the class on which the $property is not a public getter
-    * @param string $property name of the property which is not a public getter
+    * @param string $className name of the class on which the property is not writeable
+    * @param string $property name of the property which is not writeable
     * @param int $code @see Exception::__construct()
     * @param Throwable|null $previous @see Exception::__construct()
     */
@@ -29,6 +29,6 @@ class NotPublicGetterPropertyException extends AbstractPropertyNotThingableExcep
         int $code = self::INT_DEFAULT_CODE,
         Throwable $previous = null
     ) {
-        parent::__construct('a public getter', $className, $property, $code, $previous);
+        parent::__construct('rewriteable', $className, $property, $code, $previous);
     }
 }

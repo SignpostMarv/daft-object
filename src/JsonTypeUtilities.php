@@ -22,7 +22,7 @@ class JsonTypeUtilities
     public static function ThrowIfNotDaftJson(string $class) : string
     {
         if ( ! is_a($class, DaftJson::class, self::IS_A_STRINGS)) {
-            throw new DaftObjectNotDaftJsonBadMethodCallException($class);
+            throw new Exceptions\DaftObjectNotDaftJsonBadMethodCallException($class);
         }
 
         return $class;
@@ -77,7 +77,7 @@ class JsonTypeUtilities
     public static function ThrowIfNotJsonType(string $jsonType) : string
     {
         if ( ! is_a($jsonType, DaftJson::class, DefinitionAssistant::IS_A_STRINGS)) {
-            throw new ClassDoesNotImplementClassException($jsonType, DaftJson::class);
+            throw new Exceptions\ClassDoesNotImplementClassException($jsonType, DaftJson::class);
         }
 
         return $jsonType;
@@ -106,11 +106,11 @@ class JsonTypeUtilities
             *
             * @psalm-return T
             *
-            * @throws PropertyNotJsonDecodableShouldBeArrayException if $val is not an array
+            * @throws Exceptions\PropertyNotJsonDecodableShouldBeArrayException if $val is not an array
             */
             function ($val) use ($jsonType, $writeAll, $prop) : DaftJson {
                 if ( ! is_array($val)) {
-                    throw new PropertyNotJsonDecodableShouldBeArrayException($jsonType, $prop);
+                    throw new Exceptions\PropertyNotJsonDecodableShouldBeArrayException($jsonType, $prop);
                 }
 
                 return JsonTypeUtilities::ArrayToJsonType($jsonType, $val, $writeAll);
@@ -156,7 +156,7 @@ class JsonTypeUtilities
     ) : array {
         $filter = function (string $prop) use ($jsonProps, $array, $class) : bool {
             if ( ! in_array($prop, $jsonProps, DefinitionAssistant::IN_ARRAY_STRICT_MODE)) {
-                throw new PropertyNotJsonDecodableException($class, $prop);
+                throw new Exceptions\PropertyNotJsonDecodableException($class, $prop);
             }
 
             return false === is_null($array[$prop]);
@@ -183,8 +183,8 @@ class JsonTypeUtilities
         string $prop
     ) : void {
         if ('[]' === mb_substr($type, self::INT_TYPE_EXPECT_IS_ARRAY)) {
-            throw new PropertyNotJsonDecodableShouldBeArrayException($class, $prop);
+            throw new Exceptions\PropertyNotJsonDecodableShouldBeArrayException($class, $prop);
         }
-        throw new PropertyNotJsonDecodableShouldBeArrayException($type, $prop);
+        throw new Exceptions\PropertyNotJsonDecodableShouldBeArrayException($type, $prop);
     }
 }

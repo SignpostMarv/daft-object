@@ -6,9 +6,9 @@ declare(strict_types=1);
 
 namespace SignpostMarv\DaftObject\Tests\DaftJson;
 
-use SignpostMarv\DaftObject\ClassDoesNotImplementClassException;
 use SignpostMarv\DaftObject\DaftJson;
 use SignpostMarv\DaftObject\DaftObject;
+use SignpostMarv\DaftObject\Exceptions\ClassDoesNotImplementClassException;
 use SignpostMarv\DaftObject\JsonTypeUtilities;
 use SignpostMarv\DaftObject\Tests\TestCase;
 

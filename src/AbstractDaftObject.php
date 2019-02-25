@@ -217,7 +217,7 @@ abstract class AbstractDaftObject implements DaftObject
                 true
             )
         ) {
-            throw new ClassDoesNotImplementClassException(
+            throw new Exceptions\ClassDoesNotImplementClassException(
                 static::class,
                 DaftObjectHasPropertiesWithMultiTypedArraysOfUniqueValues::class
             );
@@ -237,9 +237,9 @@ abstract class AbstractDaftObject implements DaftObject
     * @param string $property property being nudged
     * @param scalar|array|object|null $value value to nudge property with
     *
-    * @throws UndefinedPropertyException if $property is not in static::DaftObjectProperties()
-    * @throws PropertyNotNullableException if $property is not in static::DaftObjectNullableProperties()
-    * @throws PropertyNotRewriteableException if class is write-once read-many and $property was already changed
+    * @throws Exceptions\UndefinedPropertyException if $property is not in static::DaftObjectProperties()
+    * @throws Exceptions\PropertyNotNullableException if $property is not in static::DaftObjectNullableProperties()
+    * @throws Exceptions\PropertyNotRewriteableException if class is write-once read-many and $property was already changed
     */
     abstract protected function NudgePropertyValue(string $property, $value) : void;
 
@@ -253,12 +253,12 @@ abstract class AbstractDaftObject implements DaftObject
                     DefinitionAssistant::IN_ARRAY_STRICT_MODE
                 )
             ) {
-                throw new UndefinedPropertyException(static::class, $property);
+                throw new Exceptions\UndefinedPropertyException(static::class, $property);
             } elseif ($setter) {
-                throw new NotPublicSetterPropertyException(static::class, $property);
+                throw new Exceptions\NotPublicSetterPropertyException(static::class, $property);
             }
 
-            throw new NotPublicGetterPropertyException(static::class, $property);
+            throw new Exceptions\NotPublicGetterPropertyException(static::class, $property);
         }
     }
 

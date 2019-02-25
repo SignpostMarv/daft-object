@@ -6,20 +6,20 @@
 */
 declare(strict_types=1);
 
-namespace SignpostMarv\DaftObject;
+namespace SignpostMarv\DaftObject\Exceptions;
 
 use Throwable;
 
 /**
-* Exception thrown when a property is not nullable.
+* Exception thrown when a property is not defined.
 */
-class PropertyNotNullableException extends AbstractPropertyNotThingableException
+class NotPublicSetterPropertyException extends AbstractPropertyNotThingableException
 {
     /**
     * Wraps to AbstractPropertyNotThingableException::__construct().
     *
-    * @param string $className name of the class on which the property is not nullable
-    * @param string $property name of the property which is not nullable
+    * @param string $className name of the class on which the property is not a public setter
+    * @param string $property name of the property which is not a public setter
     * @param int $code @see Exception::__construct()
     * @param Throwable|null $previous @see Exception::__construct()
     */
@@ -29,6 +29,6 @@ class PropertyNotNullableException extends AbstractPropertyNotThingableException
         int $code = self::INT_DEFAULT_CODE,
         Throwable $previous = null
     ) {
-        parent::__construct('nullable', $className, $property, $code, $previous);
+        parent::__construct('a public setter', $className, $property, $code, $previous);
     }
 }
