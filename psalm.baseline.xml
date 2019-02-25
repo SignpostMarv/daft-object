@@ -165,11 +165,6 @@
       <code>public function DaftObjectWormPropertyWritten(string $property) : bool;</code>
     </PossiblyUnusedMethod>
   </file>
-  <file src="src\Exceptions\DaftObjectNotRecalledException.php">
-    <UnusedClass occurrences="1">
-      <code>class DaftObjectNotRecalledException extends Exception</code>
-    </UnusedClass>
-  </file>
   <file src="tests-src\DateTimeImmutableTestObject.php">
     <PossiblyUnusedMethod occurrences="2">
       <code>public function GetDatetime() : DateTimeImmutable</code>
