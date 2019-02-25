@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "ab3f272e0e90a162a67bf4ce20140e83",
+    "content-hash": "82fc55d338d67bf8d79712f03ebfe6b6",
     "packages": [
         {
             "name": "signpostmarv/daft-magic-property-analysis",
@@ -55,6 +55,56 @@
             ],
             "description": "Daft way to implement static analysis for magic properties",
             "time": "2019-02-16T15:11:58+00:00"
+        },
+        {
+            "name": "signpostmarv/sprintf-exception-factory",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/SignpostMarv/sprintf-exception-factory.git",
+                "reference": "e2ee88f7be101fdd97c855d1cb665dbd55f96bc3"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/SignpostMarv/sprintf-exception-factory/zipball/e2ee88f7be101fdd97c855d1cb665dbd55f96bc3",
+                "reference": "e2ee88f7be101fdd97c855d1cb665dbd55f96bc3",
+                "shasum": ""
+            },
+            "require": {
+                "php": "^7.1,<7.4"
+            },
+            "require-dev": {
+                "infection/infection": "^0.12.2",
+                "maglnet/composer-require-checker": "^1.1",
+                "phpunit/phpunit": "^7.5",
+                "povils/phpmnd": "^2.1",
+                "psalm/plugin-phpunit": "^0.4.1",
+                "roave/security-advisories": "dev-master",
+                "sebastian/phpcpd": "^4.1",
+                "signpostmarv/php-cs-fixer-config": "^0.9.0",
+                "vimeo/psalm": "^3.0"
+            },
+            "suggest": {
+                "vimeo/psalm": "Needed to pick up static type hints for method input"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "SignpostMarv\\SprintfExceptionFactory\\": "./src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "SignpostMarv",
+                    "email": "me@signpostmarv.name"
+                }
+            ],
+            "description": "Generate exceptions without overriding the exception constructor",
+            "time": "2019-02-25T20:09:50+00:00"
         }
     ],
     "packages-dev": [
@@ -5271,6 +5321,7 @@
     "aliases": [],
     "minimum-stability": "stable",
     "stability-flags": {
+        "signpostmarv/sprintf-exception-factory": 20,
         "roave/security-advisories": 20,
         "vimeo/psalm": 20
     },

@@ -181,7 +181,7 @@ abstract class AbstractArrayBackedDaftObject extends AbstractDaftObject implemen
         );
 
         if ( ! array_key_exists($property, $this->data) && ! $isNullable) {
-            throw new Exceptions\PropertyNotNullableException(static::class, $property);
+            throw Exceptions\Factory::PropertyNotNullableException(static::class, $property);
         } elseif ($isNullable) {
             return $this->data[$property] ?? null;
         }
@@ -245,7 +245,12 @@ abstract class AbstractArrayBackedDaftObject extends AbstractDaftObject implemen
                 $propVal = (is_array($array[$prop]) ? $array[$prop] : [$array[$prop]]);
 
                 if ('[]' === mb_substr($jsonType, -2)) {
-                    $jsonType = JsonTypeUtilities::ThrowIfNotJsonType(mb_substr($jsonType, 0, -2));
+                    /**
+                    * @psalm-var class-string<DaftObject>
+                    */
+                    $jsonType = mb_substr($jsonType, 0, -2);
+
+                    $jsonType = JsonTypeUtilities::ThrowIfNotJsonType($jsonType);
 
                     return JsonTypeUtilities::DaftObjectFromJsonTypeArray(
                         $jsonType,
@@ -254,6 +259,11 @@ abstract class AbstractArrayBackedDaftObject extends AbstractDaftObject implemen
                         $writeAll
                     );
                 }
+
+                /**
+                * @psalm-var class-string<DaftObject>
+                */
+                $jsonType = $jsonType;
 
                 $jsonType = JsonTypeUtilities::ThrowIfNotJsonType($jsonType);
 
@@ -310,9 +320,9 @@ abstract class AbstractArrayBackedDaftObject extends AbstractDaftObject implemen
         $properties = static::DaftObjectProperties();
 
         if ( ! in_array($property, $properties, DefinitionAssistant::IN_ARRAY_STRICT_MODE)) {
-            throw new Exceptions\UndefinedPropertyException(static::class, $property);
+            throw Exceptions\Factory::UndefinedPropertyException(static::class, $property);
         } elseif ($this->DaftObjectWormPropertyWritten($property)) {
-            throw new Exceptions\PropertyNotRewriteableException(static::class, $property);
+            throw Exceptions\Factory::PropertyNotRewriteableException(static::class, $property);
         }
 
         return $property;
@@ -331,7 +341,7 @@ abstract class AbstractArrayBackedDaftObject extends AbstractDaftObject implemen
             true === is_null($value) &&
             ! in_array($property, $properties, DefinitionAssistant::IN_ARRAY_STRICT_MODE)
         ) {
-            throw new Exceptions\PropertyNotNullableException(static::class, $property);
+            throw Exceptions\Factory::PropertyNotNullableException(static::class, $property);
         }
     }
 }

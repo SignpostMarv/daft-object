@@ -217,7 +217,7 @@ abstract class AbstractDaftObject implements DaftObject
                 true
             )
         ) {
-            throw new Exceptions\ClassDoesNotImplementClassException(
+            throw Exceptions\Factory::ClassDoesNotImplementClassException(
                 static::class,
                 DaftObjectHasPropertiesWithMultiTypedArraysOfUniqueValues::class
             );
@@ -253,12 +253,12 @@ abstract class AbstractDaftObject implements DaftObject
                     DefinitionAssistant::IN_ARRAY_STRICT_MODE
                 )
             ) {
-                throw new Exceptions\UndefinedPropertyException(static::class, $property);
+                throw Exceptions\Factory::UndefinedPropertyException(static::class, $property);
             } elseif ($setter) {
-                throw new Exceptions\NotPublicSetterPropertyException(static::class, $property);
+                throw Exceptions\Factory::NotPublicSetterPropertyException(static::class, $property);
             }
 
-            throw new Exceptions\NotPublicGetterPropertyException(static::class, $property);
+            throw Exceptions\Factory::NotPublicGetterPropertyException(static::class, $property);
         }
     }
 

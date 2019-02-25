@@ -22,7 +22,7 @@ class JsonTypeUtilities
     public static function ThrowIfNotDaftJson(string $class) : string
     {
         if ( ! is_a($class, DaftJson::class, self::IS_A_STRINGS)) {
-            throw new Exceptions\DaftObjectNotDaftJsonBadMethodCallException($class);
+            throw Exceptions\Factory::DaftObjectNotDaftJsonBadMethodCallException($class);
         }
 
         return $class;
@@ -72,12 +72,14 @@ class JsonTypeUtilities
     /**
     * @template T as DaftJson
     *
+    * @psalm-param class-string<DaftObject> $jsonType
+    *
     * @psalm-return class-string<T>
     */
     public static function ThrowIfNotJsonType(string $jsonType) : string
     {
         if ( ! is_a($jsonType, DaftJson::class, DefinitionAssistant::IS_A_STRINGS)) {
-            throw new Exceptions\ClassDoesNotImplementClassException($jsonType, DaftJson::class);
+            throw Exceptions\Factory::ClassDoesNotImplementClassException($jsonType, DaftJson::class);
         }
 
         return $jsonType;
@@ -110,7 +112,7 @@ class JsonTypeUtilities
             */
             function ($val) use ($jsonType, $writeAll, $prop) : DaftJson {
                 if ( ! is_array($val)) {
-                    throw new Exceptions\PropertyNotJsonDecodableShouldBeArrayException($jsonType, $prop);
+                    throw Exceptions\Factory::PropertyNotJsonDecodableShouldBeArrayException($jsonType, $prop);
                 }
 
                 return JsonTypeUtilities::ArrayToJsonType($jsonType, $val, $writeAll);
@@ -121,6 +123,8 @@ class JsonTypeUtilities
 
     /**
     * @param array<string|int, string> $jsonDef
+    *
+    * @psalm-param class-string $class
     */
     private static function MakeMapperThrowIfJsonDefNotValid(
         string $class,
@@ -156,7 +160,7 @@ class JsonTypeUtilities
     ) : array {
         $filter = function (string $prop) use ($jsonProps, $array, $class) : bool {
             if ( ! in_array($prop, $jsonProps, DefinitionAssistant::IN_ARRAY_STRICT_MODE)) {
-                throw new Exceptions\PropertyNotJsonDecodableException($class, $prop);
+                throw Exceptions\Factory::PropertyNotJsonDecodableException($class, $prop);
             }
 
             return false === is_null($array[$prop]);
@@ -177,14 +181,23 @@ class JsonTypeUtilities
         return $type::DaftObjectFromJsonArray($value, $writeAll);
     }
 
+    /**
+    * @psalm-param class-string $class
+    */
     private static function ThrowBecauseArrayJsonTypeNotValid(
         string $class,
         string $type,
         string $prop
     ) : void {
         if ('[]' === mb_substr($type, self::INT_TYPE_EXPECT_IS_ARRAY)) {
-            throw new Exceptions\PropertyNotJsonDecodableShouldBeArrayException($class, $prop);
+            throw Exceptions\Factory::PropertyNotJsonDecodableShouldBeArrayException($class, $prop);
         }
-        throw new Exceptions\PropertyNotJsonDecodableShouldBeArrayException($type, $prop);
+
+        /**
+        * @psalm-var class-string
+        */
+        $type = $type;
+
+        throw Exceptions\Factory::PropertyNotJsonDecodableShouldBeArrayException($type, $prop);
     }
 }
