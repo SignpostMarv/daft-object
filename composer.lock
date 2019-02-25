@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "82fc55d338d67bf8d79712f03ebfe6b6",
+    "content-hash": "941e88ae9e3fe60664338424aba01cbe",
     "packages": [
         {
             "name": "signpostmarv/daft-magic-property-analysis",
@@ -58,7 +58,7 @@
         },
         {
             "name": "signpostmarv/sprintf-exception-factory",
-            "version": "dev-master",
+            "version": "v1.2.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/SignpostMarv/sprintf-exception-factory.git",
@@ -5321,7 +5321,6 @@
     "aliases": [],
     "minimum-stability": "stable",
     "stability-flags": {
-        "signpostmarv/sprintf-exception-factory": 20,
         "roave/security-advisories": 20,
         "vimeo/psalm": 20
     },
