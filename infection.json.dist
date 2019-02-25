@@ -33,7 +33,9 @@
             "ignore": [
                 "SignpostMarv\\DaftObject\\AbstractDaftObject::MaybeThrowOnDoGetSet",
                 "SignpostMarv\\DaftObject\\DefinitionAssistant::MaybeRegisterAdditionalTypes",
-                "SignpostMarv\\DaftObject\\DefinitionAssistant::RegisterDaftObjectTypeFromTypeAndProps"
+                "SignpostMarv\\DaftObject\\DefinitionAssistant::RegisterDaftObjectTypeFromTypeAndProps",
+                "SignpostMarv\\DaftObject\\TypeUtilities::CachePublicGettersAndSettersProperties",
+                "SignpostMarv\\DaftObject\\TypeUtilities::CachePublicGettersAndSettersProperty"
             ]
         },
         "PublicVisibility": {

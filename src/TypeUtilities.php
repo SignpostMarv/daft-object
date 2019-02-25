@@ -150,7 +150,7 @@ class TypeUtilities
     *
     * @psalm-param class-string<T> $class
     */
-    private static function CachePublicGettersAndSettersProperties(string $class) : void
+    protected static function CachePublicGettersAndSettersProperties(string $class) : void
     {
         if (
             is_a($class, AbstractDaftObject::class, true) &&
@@ -172,7 +172,7 @@ class TypeUtilities
     /**
     * @psalm-param class-string<DaftObject> $class
     */
-    private static function CachePublicGettersAndSettersProperty(
+    protected static function CachePublicGettersAndSettersProperty(
         string $class,
         string $prop
     ) : void {
