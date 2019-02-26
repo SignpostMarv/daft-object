@@ -100,7 +100,7 @@ abstract class TestCase extends Base
     *
     * @psalm-return array<int, class-string<DaftObject>>
     */
-    final public function dataProviderInvalidImplementations() : array
+    public function dataProviderInvalidImplementations() : array
     {
         return [
         ];
