@@ -8,7 +8,8 @@ declare(strict_types=1);
 
 namespace SignpostMarv\DaftObject\Tests\DefinesOwnIdPropertiesInterface;
 
-use PHPUnit\Framework\TestCase as Base;
+use SignpostMarv\DaftObject\DefinesOwnIdPropertiesInterface;
+use SignpostMarv\DaftObject\Tests\TestCase as Base;
 
 class DefinesOwnIdPropertiesInterfaceTest extends Base
 {
@@ -61,5 +62,24 @@ class DefinesOwnIdPropertiesInterfaceTest extends Base
             ],
             $obj->id
         );
+    }
+
+    /**
+    * @dataProvider dataProvider_DefinesOwnIdPropertiesInterface_NonAbstract
+    *
+    * @psalm-param class-string<DefinesOwnIdPropertiesInterface> $className
+    */
+    public function test_DefinesIdPropertiesCorrectly(string $className) : void
+    {
+        $id_args = $className::DaftObjectIdProperties();
+
+        $props = $className::DaftObjectProperties();
+
+        static::assertGreaterThan(0, count($props));
+        static::assertGreaterThan(0, count($id_args));
+
+        foreach ($id_args as $arg) {
+            static::assertContains($arg, $props);
+        }
     }
 }

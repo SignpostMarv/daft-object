@@ -359,6 +359,18 @@ abstract class TestCase extends Base
         yield from $this->dataProvider_DaftObject__interface__has_properties();
     }
 
+    public function dataProvider_DefinesOwnIdPropertiesInterface_NonAbstract() : Generator
+    {
+        foreach ($this->dataProvider_AbstractDaftObject__has_properties() as $args) {
+            if (
+                is_a($args[0], DefinesOwnIdPropertiesInterface::class, true) &&
+                ! (new ReflectionClass($args[0]))->isAbstract()
+            ) {
+                yield $args;
+            }
+        }
+    }
+
     /**
     * @psalm-return Generator<string, array{0:class-string<AbstractDaftObject>, 1:string}, mixed, void>
     */
