@@ -318,7 +318,7 @@ abstract class TestCase extends Base
     /**
     * @psalm-return Generator<int, array{0:class-string<AbstractDaftObject>}, mixed, void>
     */
-    final public function dataProvider_AbstractDaftObject__has_properties() : Generator
+    public function dataProvider_AbstractDaftObject__has_properties() : Generator
     {
         foreach ($this->dataProvider_AbstractDaftObject__is_subclass_of() as $args) {
             if (count((array) $args[0]::PROPERTIES) > 0) {
@@ -362,7 +362,7 @@ abstract class TestCase extends Base
     /**
     * @psalm-return Generator<string, array{0:class-string<AbstractDaftObject>, 1:string}, mixed, void>
     */
-    final public function dataProvider_AbstractDaftObject__has_properties_each_defined_property() : Generator
+    public function dataProvider_AbstractDaftObject__has_properties_each_defined_property() : Generator
     {
         foreach ($this->dataProvider_AbstractDaftObject__has_properties() as $args) {
             /**
