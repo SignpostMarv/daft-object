@@ -3,3 +3,7 @@ includes:
     - ./vendor/phpstan/phpstan-strict-rules/rules.neon
     - ./vendor/phpstan/phpstan-phpunit/extension.neon
     - ./vendor/phpstan/phpstan-phpunit/rules.neon
+
+parameters:
+    ignoreErrors:
+        - "/Method SignpostMarv\\\\DaftObject\\\\Tests\\\\DefinesOwnIdPropertiesInterface\\\\Fixtures\\\\DefinesOwn(Array|Scalar|Int)IdProperties::VarExportNonScalars\\(\\) has parameter \\$maybe with no typehint specified./"

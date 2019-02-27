@@ -153,8 +153,17 @@
     </UnusedProperty>
   </file>
   <file src="src\AbstractArrayBackedDaftObject.php">
-    <PossiblyUnusedMethod occurrences="1">
+    <DocblockTypeContradiction occurrences="1">
+      <code>'0' === $value || 0 === $value</code>
+    </DocblockTypeContradiction>
+    <PossiblyUnusedMethod occurrences="7">
       <code>public function jsonSerialize() : array</code>
+      <code>protected function RetrievePropertyValueFromDataExpectStringOrNull(string $property) : ? string</code>
+      <code>protected function RetrievePropertyValueFromDataExpectArrayOrNull(string $property) : ? array</code>
+      <code>protected function RetrievePropertyValueFromDataExpectIntishOrNull(string $property) : ? int</code>
+      <code>protected function RetrievePropertyValueFromDataExpectFloatishOrNull(string $property) : ? float</code>
+      <code>protected function RetrievePropertyValueFromDataExpectBoolish(string $property) : bool</code>
+      <code>protected function RetrievePropertyValueFromDataExpectBoolishOrNull(string $property) : ? bool</code>
     </PossiblyUnusedMethod>
   </file>
   <file src="src\DaftObjectHasPropertiesWithMultiTypedArraysOfUniqueValues.php">
