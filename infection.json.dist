@@ -10,8 +10,14 @@
     },
     "mutators": {
         "@default": true,
+        "FalseValue": {
+            "ignore": [
+                "SignpostMarv\\DaftObject\\AbstractArrayBackedDaftObject::ExpectRetrievedValueIsBoolish"
+            ]
+        },
         "LogicalAnd": {
             "ignore": [
+                "SignpostMarv\\DaftObject\\AbstractArrayBackedDaftObject::ExpectRetrievedValueIsIntish",
                 "SignpostMarv\\DaftObject\\AbstractArrayBackedDaftObject::NudgePropertyValue",
                 "SignpostMarv\\DaftObject\\DefinitionAssistant::MaybeRemapStringsToTrimmedStrings",
                 "SignpostMarv\\DaftObject\\TypeUtilities::CachePublicGettersAndSettersProperties",
@@ -42,6 +48,11 @@
         "PublicVisibility": {
             "ignore": [
                 "SignpostMarv\\DaftObject\\TypeUtilities::HasMethod"
+            ]
+        },
+        "TrueValue": {
+            "ignore": [
+                "SignpostMarv\\DaftObject\\AbstractArrayBackedDaftObject::ExpectRetrievedValueIsBoolish"
             ]
         }
     }
