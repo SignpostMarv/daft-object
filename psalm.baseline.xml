@@ -163,9 +163,6 @@
     </UnusedProperty>
   </file>
   <file src="src\AbstractArrayBackedDaftObject.php">
-    <DocblockTypeContradiction occurrences="1">
-      <code>'0' === $value || 0 === $value</code>
-    </DocblockTypeContradiction>
     <PossiblyUnusedMethod occurrences="1">
       <code>public function jsonSerialize() : array</code>
     </PossiblyUnusedMethod>
