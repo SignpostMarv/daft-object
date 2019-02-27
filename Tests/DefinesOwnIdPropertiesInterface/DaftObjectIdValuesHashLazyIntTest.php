@@ -13,8 +13,8 @@ class DaftObjectIdValuesHashLazyIntTest extends TestCase
 {
     public function test_DaftObjectIdHash() : void
     {
-        $a = new ReadOnlyTwoColumnPrimaryKey(['Foo' => 'bar', 'Bar' => 'foo']);
-        $b = new ReadOnlyTwoColumnPrimaryKey(['Foo' => 'bar', 'Bar' => 'foo']);
+        $a = new ReadOnlyTwoColumnPrimaryKey(['Foo' => 'bar', 'Bar' => 1.2]);
+        $b = new ReadOnlyTwoColumnPrimaryKey(['Foo' => 'bar', 'Bar' => 1.2]);
 
         static::assertSame(
             ReadOnlyTwoColumnPrimaryKey::DaftObjectIdHash($a),

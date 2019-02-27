@@ -28,6 +28,8 @@ interface DaftJson extends DaftObject, JsonSerializable
     public static function DaftObjectJsonPropertyNames() : array;
 
     /**
+    * @param array<int|string, scalar|(scalar|array|object|null)[]|object|null> $array
+    *
     * @return static
     *
     * @psalm-return T

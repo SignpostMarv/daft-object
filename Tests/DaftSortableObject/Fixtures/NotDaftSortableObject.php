@@ -29,7 +29,7 @@ class NotDaftSortableObject extends Base
 
     public function GetIntSortOrder() : int
     {
-        return (int) $this->RetrievePropertyValueFromData('intSortOrder');
+        return $this->RetrievePropertyValueFromDataExpectIntish('intSortOrder');
     }
 
     public function SetIntSortOrder(int $value) : void

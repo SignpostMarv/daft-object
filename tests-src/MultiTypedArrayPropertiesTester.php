@@ -52,7 +52,7 @@ class MultiTypedArrayPropertiesTester
         /**
         * @var array<int, DateTimeImmutable>
         */
-        $out = (array) $this->RetrievePropertyValueFromData('dates');
+        $out = $this->RetrievePropertyValueFromDataExpectArray('dates');
 
         return $out;
     }
@@ -73,7 +73,7 @@ class MultiTypedArrayPropertiesTester
         /**
         * @var array<int, DateTimeImmutable|string>
         */
-        $out = (array) $this->RetrievePropertyValueFromData('datesOrStrings');
+        $out = $this->RetrievePropertyValueFromDataExpectArray('datesOrStrings');
 
         return $out;
     }
@@ -94,7 +94,7 @@ class MultiTypedArrayPropertiesTester
         /**
         * @var array<int, string>
         */
-        $out = (array) $this->RetrievePropertyValueFromData('trimmedStrings');
+        $out = $this->RetrievePropertyValueFromDataExpectArray('trimmedStrings');
 
         return $out;
     }
@@ -109,7 +109,7 @@ class MultiTypedArrayPropertiesTester
 
     public function GetTrimmedString() : string
     {
-        return (string) $this->RetrievePropertyValueFromData('trimmedString');
+        return $this->RetrievePropertyValueFromDataExpectString('trimmedString');
     }
 
     /**

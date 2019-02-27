@@ -53,7 +53,7 @@ trait DaftObjectIdValuesHashLazyInt
             '::',
             array_map(
                 /**
-                * @param mixed $val
+                * @param scalar|array|object|null $val
                 */
                 function ($val) : string {
                     return static::VarExportNonScalars($val);
@@ -76,7 +76,7 @@ trait DaftObjectIdValuesHashLazyInt
     }
 
     /**
-    * @param mixed $maybe
+    * @param scalar|array|object|null $maybe
     */
     private static function VarExportNonScalars($maybe) : string
     {

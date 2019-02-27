@@ -333,7 +333,6 @@ abstract class TestCase extends Base
     final public function dataProvider_DaftObject__interface__has_properties() : Generator
     {
         foreach ($this->dataProviderImplementations_interfaces() as $args) {
-            if (is_subclass_of($args[0], DaftObject::class, true)) {
                 $reflector = new ReflectionClass($args[0]);
 
                 foreach ($reflector->getMethods() as $method) {
@@ -346,7 +345,6 @@ abstract class TestCase extends Base
                         break;
                     }
                 }
-            }
         }
     }
 

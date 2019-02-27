@@ -43,7 +43,7 @@
         ],
         "other-tests": [
             "phpstan analyse -c ./phpstan.neon .php_cs.dist src Tests ./quick-checks/json-ld.php",
-            "psalm --find-dead-code",
+            "psalm --find-dead-code --show-info=false",
             "phpcpd ./src/ ./Tests/ ./tests-src/",
             "phpmnd ./ --exclude=./phpdoc/ --exclude=./phpunit/ --exclude=./vendor/ --non-zero-exit-on-violation --hint",
             "composer-require-checker check --config-file=./composer-require-checker.json ./composer.json",
@@ -55,6 +55,7 @@
     },
     "require": {
         "php": "^7.1,>=7.1.3",
+        "ext-ctype": "*",
         "ext-json": "*",
         "ext-mbstring": "*",
         "signpostmarv/daft-magic-property-analysis": "^0.7.0",

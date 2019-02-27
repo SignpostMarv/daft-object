@@ -33,6 +33,8 @@ class JsonTypeUtilities
     *
     * @psalm-param class-string<T> $jsonType
     *
+    * @param array<int|string, scalar|(scalar|array|object|null)[]|object|null> $propVal
+    *
     * @return array<int, DaftJson>|DaftJson
     *
     * @psalm-return array<int, T>|T
@@ -46,9 +48,11 @@ class JsonTypeUtilities
     }
 
     /**
-    * @param array<int|string, mixed> $array
+    * @param array<int|string, scalar|(scalar|array|object|null)[]|object|null> $array
     *
     * @psalm-param class-string<DaftJson> $type
+    *
+    * @return array<int|string, scalar|(scalar|array|object|null)[]|object|null>
     */
     public static function ThrowIfJsonDefNotValid(string $type, array $array) : array
     {
@@ -59,7 +63,7 @@ class JsonTypeUtilities
         $keys = array_keys($array);
 
         /**
-        * @var array<int|string, mixed>
+        * @var array<int|string, scalar|(scalar|array|object|null)[]|object|null>
         */
         $out = array_combine($keys, array_map(
             JsonTypeUtilities::MakeMapperThrowIfJsonDefNotValid($type, $jsonDef, $array),
@@ -88,9 +92,11 @@ class JsonTypeUtilities
     /**
     * @template T as DaftJson
     *
-    * @param mixed[] $propVal
+    * @param (scalar|array|object|null)[] $propVal
     *
     * @psalm-param class-string<T> $jsonType
+    *
+    * @param array<int|string, scalar|(scalar|(scalar|array|object|null)[]|object|null)[]|object|null> $propVal
     *
     * @return array<int, DaftJson>
     *
@@ -104,7 +110,7 @@ class JsonTypeUtilities
     ) : array {
         return array_map(
             /**
-            * @param mixed $val
+            * @param scalar|(scalar|(scalar|array|object|null)[]|object|null)[]|object|null $val
             *
             * @psalm-return T
             *
@@ -123,6 +129,7 @@ class JsonTypeUtilities
 
     /**
     * @param array<string|int, string> $jsonDef
+    * @param (scalar|array|object|null)[] $array
     *
     * @psalm-param class-string $class
     */
@@ -133,7 +140,7 @@ class JsonTypeUtilities
     ) : Closure {
         $mapper =
             /**
-            * @return mixed
+            * @return scalar|array|object|null
             */
             function (string $prop) use ($jsonDef, $array, $class) {
                 if (isset($jsonDef[$prop]) && false === is_array($array[$prop])) {
@@ -152,6 +159,10 @@ class JsonTypeUtilities
 
     /**
     * @psalm-param class-string<DaftJson> $class
+    *
+    * @param (scalar|array|object|null)[] $array
+    *
+    * @return (scalar|array|object|null)[]
     */
     private static function FilterThrowIfJsonDefNotValid(
         string $class,
@@ -173,6 +184,8 @@ class JsonTypeUtilities
     * @template T as DaftJson
     *
     * @psalm-param class-string<T> $type
+    *
+    * @param array<int|string, scalar|(scalar|array|object|null)[]|object|null> $value
     *
     * @psalm-return T
     */

@@ -773,7 +773,7 @@ class DaftObjectImplementationTest extends TestCase
         foreach ($properties as $property) {
             $checkGetterIsNull = (
                 in_array($property, $getters, true) &&
-                isset($args[$property]) &&
+                array_key_exists($property, $args) &&
                 false === is_null($args[$property])
             );
 
@@ -859,7 +859,7 @@ class DaftObjectImplementationTest extends TestCase
             );
 
             /**
-            * @var array
+            * @var array<int|string, scalar|(scalar|array|object|null)[]|object|null>
             */
             $decoded = $decoded;
 

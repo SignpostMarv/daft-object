@@ -43,7 +43,7 @@ class MultiTypedArrayPropertyImplementationTest extends TestCase
                 (
                     'Argument 3 passed to ' .
                     DefinitionAssistant::class .
-                    '::MaybeThrowIfNotArrayIntKeys must be array<int, mixed>'
+                    '::MaybeThrowIfNotArrayIntKeys must be array<int, scalar|array|object|null>'
                 ),
             ],
             [

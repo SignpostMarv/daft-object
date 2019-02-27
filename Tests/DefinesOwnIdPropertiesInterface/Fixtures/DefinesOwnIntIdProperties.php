@@ -42,7 +42,7 @@ class DefinesOwnIntIdProperties extends AbstractArrayBackedDaftObject implements
 
     public function GetId() : int
     {
-        return (int) $this->RetrievePropertyValueFromData('id');
+        return $this->RetrievePropertyValueFromDataExpectIntish('id');
     }
 
     public static function DaftObjectIdProperties() : array

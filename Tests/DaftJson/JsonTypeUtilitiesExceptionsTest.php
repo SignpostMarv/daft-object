@@ -77,7 +77,7 @@ class JsonTypeUtilitiesExceptionsTest extends TestCase
     }
 
     /**
-    * @param mixed[] $array
+    * @param (scalar|(scalar|array|object|null)[]|object|null)[] $array
     *
     * @psalm-param class-string<\SignpostMarv\DaftObject\DaftJson> $className
     * @psalm-param class-string<\Throwable> $exception

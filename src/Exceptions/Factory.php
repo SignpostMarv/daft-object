@@ -237,6 +237,31 @@ abstract class Factory extends SprintfExceptionFactory
     }
 
     /**
+    * @psalm-param class-string<DaftObject> $className
+    */
+    public static function PropertyValueNotOfExpectedTypeException(
+        string $class_name,
+        string $property,
+        string $expected_value,
+        int $code = self::DEFAULT_INT_CODE,
+        Throwable $previous = null
+    ) : PropertyValueNotOfExpectedTypeException {
+        /**
+        * @var PropertyValueNotOfExpectedTypeException
+        */
+        $out = static::AbstractPropertyNotThingableException(
+            PropertyValueNotOfExpectedTypeException::class,
+            ('of expected type ' . $expected_value),
+            $class_name,
+            $property,
+            $code,
+            $previous
+        );
+
+        return $out;
+    }
+
+    /**
     * @psalm-param class-string<AbstractPropertyNotThingableException> $type
     */
     protected static function AbstractPropertyNotThingableException(

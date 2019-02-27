@@ -24,7 +24,7 @@ abstract class AbstractArrayBackedDaftObject extends AbstractDaftObject implemen
     /**
     * data for this instance.
     *
-    * @var array<string, mixed>
+    * @var array<string, scalar|array|object|null>
     */
     private $data = [];
 
@@ -101,7 +101,7 @@ abstract class AbstractArrayBackedDaftObject extends AbstractDaftObject implemen
         return array_filter(
             array_map(
                 /**
-                * @return mixed
+                * @return scalar|array|object|null
                 */
                 function (string $property) {
                     return $this->DoGetSet($property, false);
@@ -109,7 +109,7 @@ abstract class AbstractArrayBackedDaftObject extends AbstractDaftObject implemen
                 $properties
             ),
             /**
-            * @param mixed $maybe
+            * @param scalar|array|object|null $maybe
             */
             function ($maybe) : bool {
                 return ! is_null($maybe);
@@ -117,6 +117,9 @@ abstract class AbstractArrayBackedDaftObject extends AbstractDaftObject implemen
         );
     }
 
+    /**
+    * @param array<int|string, scalar|(scalar|array|object|null)[]|object|null> $array
+    */
     final public static function DaftObjectFromJsonArray(
         array $array,
         bool $writeAll = self::BOOL_DEFAULT_WRITEALL
@@ -142,7 +145,7 @@ abstract class AbstractArrayBackedDaftObject extends AbstractDaftObject implemen
     public static function DaftObjectFromJsonString(string $string) : DaftJson
     {
         /**
-        * @var scalar|array|object|null
+        * @var scalar|array<int|string, scalar|(scalar|array|object|null)[]|object|null>|object|null
         */
         $decoded = json_decode($string, true);
 
@@ -170,7 +173,7 @@ abstract class AbstractArrayBackedDaftObject extends AbstractDaftObject implemen
     *
     * @throws Exceptions\PropertyNotNullableException if value is not set and $property is not listed as nullabe
     *
-    * @return mixed the property value
+    * @return scalar|array|object|null the property value
     */
     protected function RetrievePropertyValueFromData(string $property)
     {
@@ -187,6 +190,195 @@ abstract class AbstractArrayBackedDaftObject extends AbstractDaftObject implemen
         }
 
         return $this->data[$property];
+    }
+
+    protected function RetrievePropertyValueFromDataExpectString(string $property) : string
+    {
+        return $this->ExpectRetrievedValueIsString(
+            $property,
+            $this->RetrievePropertyValueFromData($property)
+        );
+    }
+
+    protected function RetrievePropertyValueFromDataExpectStringOrNull(string $property) : ? string
+    {
+        $value = $this->RetrievePropertyValueFromData($property);
+
+        if (is_null($value)) {
+            return null;
+        }
+
+        return $this->ExpectRetrievedValueIsString($property, $value);
+    }
+
+    /**
+    * @param scalar|array|object|null $value
+    */
+    protected function ExpectRetrievedValueIsString(string $property, $value) : string
+    {
+        if ( ! is_string($value)) {
+            throw Exceptions\Factory::PropertyValueNotOfExpectedTypeException(
+                static::class,
+                $property,
+                'string'
+            );
+        }
+
+        return $value;
+    }
+
+    protected function RetrievePropertyValueFromDataExpectArray(string $property) : array
+    {
+        return $this->ExpectRetrievedValueIsArray(
+            $property,
+            $this->RetrievePropertyValueFromData($property)
+        );
+    }
+
+    protected function RetrievePropertyValueFromDataExpectArrayOrNull(string $property) : ? array
+    {
+        $value = $this->RetrievePropertyValueFromData($property);
+
+        if (is_null($value)) {
+            return null;
+        }
+
+        return $this->ExpectRetrievedValueIsArray($property, $value);
+    }
+
+    /**
+    * @param scalar|array|object|null $value
+    */
+    protected function ExpectRetrievedValueIsArray(string $property, $value) : array
+    {
+        if ( ! is_array($value)) {
+            throw Exceptions\Factory::PropertyValueNotOfExpectedTypeException(
+                static::class,
+                $property,
+                'array'
+            );
+        }
+
+        return $value;
+    }
+
+    protected function RetrievePropertyValueFromDataExpectIntish(string $property) : int
+    {
+        return $this->ExpectRetrievedValueIsIntish(
+            $property,
+            $this->RetrievePropertyValueFromData($property)
+        );
+    }
+
+    protected function RetrievePropertyValueFromDataExpectIntishOrNull(string $property) : ? int
+    {
+        $value = $this->RetrievePropertyValueFromData($property);
+
+        if (is_null($value)) {
+            return null;
+        }
+
+        return $this->ExpectRetrievedValueIsIntish($property, $value);
+    }
+
+    /**
+    * @param scalar|array|object|null $value
+    */
+    protected function ExpectRetrievedValueIsIntish(string $property, $value) : int
+    {
+        if (is_string($value) && ctype_digit($value)) {
+            $value = (int) $value;
+        }
+
+        if ( ! is_int($value)) {
+            throw Exceptions\Factory::PropertyValueNotOfExpectedTypeException(
+                static::class,
+                $property,
+                'int'
+            );
+        }
+
+        return $value;
+    }
+
+    protected function RetrievePropertyValueFromDataExpectFloatish(string $property) : float
+    {
+        return $this->ExpectRetrievedValueIsFloatish(
+            $property,
+            $this->RetrievePropertyValueFromData($property)
+        );
+    }
+
+    protected function RetrievePropertyValueFromDataExpectFloatishOrNull(string $property) : ? float
+    {
+        $value = $this->RetrievePropertyValueFromData($property);
+
+        if (is_null($value)) {
+            return null;
+        }
+
+        return $this->ExpectRetrievedValueIsFloatish($property, $value);
+    }
+
+    /**
+    * @param scalar|array|object|null $value
+    */
+    protected function ExpectRetrievedValueIsFloatish(string $property, $value) : float
+    {
+        if (is_string($value) && is_numeric($value)) {
+            $value = (float) $value;
+        }
+
+        if ( ! is_float($value)) {
+            throw Exceptions\Factory::PropertyValueNotOfExpectedTypeException(
+                static::class,
+                $property,
+                'float'
+            );
+        }
+
+        return $value;
+    }
+
+    protected function RetrievePropertyValueFromDataExpectBoolish(string $property) : bool
+    {
+        return $this->ExpectRetrievedValueIsBoolish(
+            $property,
+            $this->RetrievePropertyValueFromData($property)
+        );
+    }
+
+    protected function RetrievePropertyValueFromDataExpectBoolishOrNull(string $property) : ? bool
+    {
+        $value = $this->RetrievePropertyValueFromData($property);
+
+        if (is_null($value)) {
+            return null;
+        }
+
+        return $this->ExpectRetrievedValueIsBoolish($property, $value);
+    }
+
+    /**
+    * @param scalar|array|object|null $value
+    */
+    protected function ExpectRetrievedValueIsBoolish(string $property, $value) : bool
+    {
+        if ('1' === $value || 1 === $value) {
+            return true;
+        } elseif ('0' === $value || 0 === $value) {
+            return false;
+        }
+
+        if ( ! is_bool($value)) {
+            throw Exceptions\Factory::PropertyValueNotOfExpectedTypeException(
+                static::class,
+                $property,
+                'bool'
+            );
+        }
+
+        return $value;
     }
 
     /**
@@ -224,13 +416,16 @@ abstract class AbstractArrayBackedDaftObject extends AbstractDaftObject implemen
         }
     }
 
+    /**
+    * @param array<int|string, scalar|array|object|null> $array
+    */
     private static function DaftJsonClosure(array $array, bool $writeAll) : Closure
     {
         $jsonDef = static::DaftObjectJsonProperties();
 
         return
             /**
-            * @return mixed
+            * @return scalar|array|object|null
             */
             function (string $prop) use ($array, $jsonDef, $writeAll) {
                 /**
@@ -242,6 +437,9 @@ abstract class AbstractArrayBackedDaftObject extends AbstractDaftObject implemen
                     return $array[$prop];
                 }
 
+                /**
+                * @var array<int|string, scalar|(scalar|(scalar|array|object|null)[]|object|null)[]|object|null>
+                */
                 $propVal = (is_array($array[$prop]) ? $array[$prop] : [$array[$prop]]);
 
                 if ('[]' === mb_substr($jsonType, -2)) {
@@ -329,7 +527,7 @@ abstract class AbstractArrayBackedDaftObject extends AbstractDaftObject implemen
     }
 
     /**
-    * @param mixed $value
+    * @param scalar|array|object|null $value
     *
     * @see AbstractArrayBackedDaftObject::NudgePropertyValue()
     */

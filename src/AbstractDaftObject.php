@@ -65,6 +65,9 @@ abstract class AbstractDaftObject implements DaftObject
         return $this->DoGetSet($property, false);
     }
 
+    /**
+    * @param scalar|array|object|null $v
+    */
     public function __set(string $property, $v) : void
     {
         $this->DoGetSet($property, true, $v);
@@ -93,11 +96,11 @@ abstract class AbstractDaftObject implements DaftObject
         });
 
         /**
-        * @var array<string, mixed>
+        * @var array<string, scalar|array|object|null>
         */
         $out = array_combine($properties, array_map(
             /**
-            * @return mixed
+            * @return scalar|array|object|null
             */
             function (string $prop) {
                 return $this->__get($prop);
@@ -263,7 +266,7 @@ abstract class AbstractDaftObject implements DaftObject
     }
 
     /**
-    * @param mixed $v
+    * @param scalar|array|object|null $v
     *
     * @return scalar|array|object|null
     */

@@ -65,6 +65,9 @@ class DefinesPropertyOnInterfaceClassImplementation extends AbstractDaftObject i
         }
     }
 
+    /**
+    * {@inheritdoc}
+    */
     protected function NudgePropertyValue(string $property, $value) : void
     {
         if ($this->__isset($property)) {

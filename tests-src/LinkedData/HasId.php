@@ -42,7 +42,7 @@ class HasId extends AbstractArrayBackedDaftObject implements DaftJsonLinkedData,
 
     public function ObtainId() : string
     {
-        return (string) $this->RetrievePropertyValueFromData('@id');
+        return $this->RetrievePropertyValueFromDataExpectString('@id');
     }
 
     public function GetId() : string

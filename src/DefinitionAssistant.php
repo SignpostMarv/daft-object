@@ -97,7 +97,7 @@ class DefinitionAssistant extends Base
     /**
     * @param scalar|array|object|null $value
     *
-    * @return array<int, mixed> filtered $value
+    * @return array<int, scalar|array|object|null> filtered $value
     */
     public static function MaybeThrowIfValueDoesNotMatchMultiTypedArray(
         bool $autoTrimStrings,
@@ -219,7 +219,7 @@ class DefinitionAssistant extends Base
     /**
     * @param (scalar|array|object|null)[] $value
     *
-    * @return array<int, mixed> filtered $value
+    * @return array<int, scalar|array|object|null> filtered $value
     */
     private static function MaybeThrowIfValueDoesNotMatchMultiTypedArrayValueArray(
         bool $autoTrimStrings,
@@ -238,7 +238,7 @@ class DefinitionAssistant extends Base
         $initialCount = count($value);
 
         /**
-        * @var array<int, mixed>
+        * @var array<int, scalar|array|object|null>
         */
         $out = [];
 
@@ -260,14 +260,14 @@ class DefinitionAssistant extends Base
     }
 
     /**
-    * @return array<int, mixed> filtered $value
+    * @return array<int, scalar|array|object|null> filtered $value
     */
     private static function MaybeThrowIfNotArrayIntKeys(array $value) : array
     {
         $initialCount = count($value);
 
         /**
-        * @var array<int, mixed>
+        * @var array<int, scalar|array|object|null>
         */
         $value = array_filter($value, 'is_int', ARRAY_FILTER_USE_KEY);
 
@@ -275,7 +275,7 @@ class DefinitionAssistant extends Base
             throw new InvalidArgumentException(
                 'Argument 3 passed to ' .
                 __METHOD__ .
-                ' must be array<int, mixed>'
+                ' must be array<int, scalar|array|object|null>'
             );
         }
 
@@ -283,9 +283,9 @@ class DefinitionAssistant extends Base
     }
 
     /**
-    * @param array<int, mixed> $value
+    * @param array<int, scalar|array|object|null> $value
     *
-    * @return array<int, mixed> filtered $value
+    * @return array<int, scalar|array|object|null> filtered $value
     */
     private static function MaybeThrowIfValueArrayDoesNotMatchTypes(
         array $value,
@@ -296,7 +296,7 @@ class DefinitionAssistant extends Base
         $value = array_filter(
             $value,
             /**
-            * @param mixed $maybe
+            * @param scalar|array|object|null $maybe
             */
             function ($maybe) use ($types) : bool {
                 if (is_object($maybe)) {
@@ -329,9 +329,9 @@ class DefinitionAssistant extends Base
     }
 
     /**
-    * @param array<int, mixed> $value
+    * @param array<int, scalar|array|object|null> $value
     *
-    * @return array<int, mixed>
+    * @return array<int, scalar|array|object|null>
     */
     private static function MaybeRemapStringsToTrimmedStrings(
         array $value,
@@ -344,9 +344,9 @@ class DefinitionAssistant extends Base
         ) {
             $value = array_map(
                 /**
-                * @param mixed $maybe
+                * @param scalar|array|object|null $maybe
                 *
-                * @return mixed
+                * @return scalar|array|object|null
                 */
                 function ($maybe) {
                     return is_string($maybe) ? trim($maybe) : $maybe;

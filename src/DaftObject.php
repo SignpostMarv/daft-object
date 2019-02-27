@@ -51,7 +51,7 @@ interface DaftObject
     /**
     * required to support var_dump(<DaftObject>);.
     *
-    * @return array<string, mixed>
+    * @return array<string, scalar|array|object|null>
     */
     public function __debugInfo() : array;
 
