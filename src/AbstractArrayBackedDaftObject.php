@@ -211,22 +211,6 @@ abstract class AbstractArrayBackedDaftObject extends AbstractDaftObject implemen
         return $this->ExpectRetrievedValueIsString($property, $value);
     }
 
-    /**
-    * @param scalar|array|object|null $value
-    */
-    private function ExpectRetrievedValueIsString(string $property, $value) : string
-    {
-        if ( ! is_string($value)) {
-            throw Exceptions\Factory::PropertyValueNotOfExpectedTypeException(
-                static::class,
-                $property,
-                'string'
-            );
-        }
-
-        return $value;
-    }
-
     protected function RetrievePropertyValueFromDataExpectArray(string $property) : array
     {
         return $this->ExpectRetrievedValueIsArray(
@@ -244,22 +228,6 @@ abstract class AbstractArrayBackedDaftObject extends AbstractDaftObject implemen
         }
 
         return $this->ExpectRetrievedValueIsArray($property, $value);
-    }
-
-    /**
-    * @param scalar|array|object|null $value
-    */
-    private function ExpectRetrievedValueIsArray(string $property, $value) : array
-    {
-        if ( ! is_array($value)) {
-            throw Exceptions\Factory::PropertyValueNotOfExpectedTypeException(
-                static::class,
-                $property,
-                'array'
-            );
-        }
-
-        return $value;
     }
 
     protected function RetrievePropertyValueFromDataExpectIntish(string $property) : int
@@ -281,26 +249,6 @@ abstract class AbstractArrayBackedDaftObject extends AbstractDaftObject implemen
         return $this->ExpectRetrievedValueIsIntish($property, $value);
     }
 
-    /**
-    * @param scalar|array|object|null $value
-    */
-    private function ExpectRetrievedValueIsIntish(string $property, $value) : int
-    {
-        if (is_string($value) && ctype_digit($value)) {
-            $value = (int) $value;
-        }
-
-        if ( ! is_int($value)) {
-            throw Exceptions\Factory::PropertyValueNotOfExpectedTypeException(
-                static::class,
-                $property,
-                'int'
-            );
-        }
-
-        return $value;
-    }
-
     protected function RetrievePropertyValueFromDataExpectFloatish(string $property) : float
     {
         return $this->ExpectRetrievedValueIsFloatish(
@@ -320,26 +268,6 @@ abstract class AbstractArrayBackedDaftObject extends AbstractDaftObject implemen
         return $this->ExpectRetrievedValueIsFloatish($property, $value);
     }
 
-    /**
-    * @param scalar|array|object|null $value
-    */
-    private function ExpectRetrievedValueIsFloatish(string $property, $value) : float
-    {
-        if (is_string($value) && is_numeric($value)) {
-            $value = (float) $value;
-        }
-
-        if ( ! is_float($value)) {
-            throw Exceptions\Factory::PropertyValueNotOfExpectedTypeException(
-                static::class,
-                $property,
-                'float'
-            );
-        }
-
-        return $value;
-    }
-
     protected function RetrievePropertyValueFromDataExpectBoolish(string $property) : bool
     {
         return $this->ExpectRetrievedValueIsBoolish(
@@ -357,28 +285,6 @@ abstract class AbstractArrayBackedDaftObject extends AbstractDaftObject implemen
         }
 
         return $this->ExpectRetrievedValueIsBoolish($property, $value);
-    }
-
-    /**
-    * @param scalar|array|object|null $value
-    */
-    private function ExpectRetrievedValueIsBoolish(string $property, $value) : bool
-    {
-        if ('1' === $value || 1 === $value) {
-            return true;
-        } elseif ('0' === $value || 0 === $value) {
-            return false;
-        }
-
-        if ( ! is_bool($value)) {
-            throw Exceptions\Factory::PropertyValueNotOfExpectedTypeException(
-                static::class,
-                $property,
-                'bool'
-            );
-        }
-
-        return $value;
     }
 
     /**
@@ -414,6 +320,100 @@ abstract class AbstractArrayBackedDaftObject extends AbstractDaftObject implemen
         if ($isChanged && true !== isset($this->changedProperties[$property])) {
             $this->changedProperties[$property] = $this->wormProperties[$property] = true;
         }
+    }
+
+    /**
+    * @param scalar|array|object|null $value
+    */
+    private function ExpectRetrievedValueIsString(string $property, $value) : string
+    {
+        if ( ! is_string($value)) {
+            throw Exceptions\Factory::PropertyValueNotOfExpectedTypeException(
+                static::class,
+                $property,
+                'string'
+            );
+        }
+
+        return $value;
+    }
+
+    /**
+    * @param scalar|array|object|null $value
+    */
+    private function ExpectRetrievedValueIsArray(string $property, $value) : array
+    {
+        if ( ! is_array($value)) {
+            throw Exceptions\Factory::PropertyValueNotOfExpectedTypeException(
+                static::class,
+                $property,
+                'array'
+            );
+        }
+
+        return $value;
+    }
+
+    /**
+    * @param scalar|array|object|null $value
+    */
+    private function ExpectRetrievedValueIsIntish(string $property, $value) : int
+    {
+        if (is_string($value) && ctype_digit($value)) {
+            $value = (int) $value;
+        }
+
+        if ( ! is_int($value)) {
+            throw Exceptions\Factory::PropertyValueNotOfExpectedTypeException(
+                static::class,
+                $property,
+                'int'
+            );
+        }
+
+        return $value;
+    }
+
+    /**
+    * @param scalar|array|object|null $value
+    */
+    private function ExpectRetrievedValueIsFloatish(string $property, $value) : float
+    {
+        if (is_string($value) && is_numeric($value)) {
+            $value = (float) $value;
+        }
+
+        if ( ! is_float($value)) {
+            throw Exceptions\Factory::PropertyValueNotOfExpectedTypeException(
+                static::class,
+                $property,
+                'float'
+            );
+        }
+
+        return $value;
+    }
+
+    /**
+    * @param scalar|array|object|null $value
+    */
+    private function ExpectRetrievedValueIsBoolish(string $property, $value) : bool
+    {
+        if ('1' === $value || 1 === $value) {
+            return true;
+        } elseif ('0' === $value || 0 === $value) {
+            return false;
+        }
+
+        if ( ! is_bool($value)) {
+            throw Exceptions\Factory::PropertyValueNotOfExpectedTypeException(
+                static::class,
+                $property,
+                'bool'
+            );
+        }
+
+        return $value;
     }
 
     /**
