@@ -333,18 +333,18 @@ abstract class TestCase extends Base
     final public function dataProvider_DaftObject__interface__has_properties() : Generator
     {
         foreach ($this->dataProviderImplementations_interfaces() as $args) {
-                $reflector = new ReflectionClass($args[0]);
+            $reflector = new ReflectionClass($args[0]);
 
-                foreach ($reflector->getMethods() as $method) {
-                    if (
-                        ! $method->isStatic() &&
-                        1 === preg_match('/^(Get|Set|Alter|Obtain)[A-Za-z]/', $method->getName())
-                    ) {
-                        yield $args;
+            foreach ($reflector->getMethods() as $method) {
+                if (
+                    ! $method->isStatic() &&
+                    1 === preg_match('/^(Get|Set|Alter|Obtain)[A-Za-z]/', $method->getName())
+                ) {
+                    yield $args;
 
-                        break;
-                    }
+                    break;
                 }
+            }
         }
     }
 
