@@ -49,7 +49,7 @@ class HasArrayOfHasId extends AbstractArrayBackedDaftObject implements DaftJson
         $out = array_values(array_filter(
             (array) $this->RetrievePropertyValueFromData('json'),
             /**
-            * @param mixed $maybe
+            * @param scalar|array|object|null $maybe
             */
             function ($maybe) : bool {
                 return $maybe instanceof HasId;

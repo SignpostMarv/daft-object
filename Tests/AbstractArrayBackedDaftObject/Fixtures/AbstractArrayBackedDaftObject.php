@@ -11,7 +11,7 @@ use SignpostMarv\DaftObject\AbstractArrayBackedDaftObject as Base;
 class AbstractArrayBackedDaftObject extends Base
 {
     /**
-    * @return mixed
+    * @return scalar|array|object|null
     */
     public function public_RetrievePropertyValueFromData(string $property)
     {

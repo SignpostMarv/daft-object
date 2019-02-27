@@ -1761,7 +1761,7 @@ class DaftObjectImplementationTest extends TestCase
     }
 
     /**
-    * @param mixed $val
+    * @param scalar|array|object|null $val
     */
     protected static function RegexForVal($val) : string
     {
