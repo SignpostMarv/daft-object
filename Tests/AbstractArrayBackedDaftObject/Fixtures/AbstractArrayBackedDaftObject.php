@@ -22,63 +22,38 @@ class AbstractArrayBackedDaftObject extends Base
         return $this->RetrievePropertyValueFromData($property);
     }
 
-    /**
-    * @param scalar|array|object|null $val
-    */
     public function public_RetrievePropertyValueFromDataExpectStringOrNull(
-        string $property,
-        $val
-    ) {
-        return $this->RetrievePropertyValueFromDataExpectStringOrNull($property, $val);
+        string $property
+    ) : ? string {
+        return $this->RetrievePropertyValueFromDataExpectStringOrNull($property);
     }
 
-    /**
-    * @param scalar|array|object|null $val
-    */
     public function public_RetrievePropertyValueFromDataExpectArrayOrNull(
-        string $property,
-        $val
-    ) {
-        return $this->RetrievePropertyValueFromDataExpectArrayOrNull($property, $val);
+        string $property
+    ) : ? array {
+        return $this->RetrievePropertyValueFromDataExpectArrayOrNull($property);
     }
 
-    /**
-    * @param scalar|array|object|null $val
-    */
     public function public_RetrievePropertyValueFromDataExpectIntishOrNull(
-        string $property,
-        $val
-    ) {
-        return $this->RetrievePropertyValueFromDataExpectIntishOrNull($property, $val);
+        string $property
+    ) : ? int {
+        return $this->RetrievePropertyValueFromDataExpectIntishOrNull($property);
     }
 
-    /**
-    * @param scalar|array|object|null $val
-    */
     public function public_RetrievePropertyValueFromDataExpectFloatishOrNull(
-        string $property,
-        $val
-    ) {
-        return $this->RetrievePropertyValueFromDataExpectFloatishOrNull($property, $val);
+        string $property
+    ) : ? float {
+        return $this->RetrievePropertyValueFromDataExpectFloatishOrNull($property);
     }
 
-    /**
-    * @param scalar|array|object|null $val
-    */
     public function public_RetrievePropertyValueFromDataExpectBoolishOrNull(
-        string $property,
-        $val
-    ) {
-        return $this->RetrievePropertyValueFromDataExpectBoolishOrNull($property, $val);
+        string $property
+    ) : ? bool {
+        return $this->RetrievePropertyValueFromDataExpectBoolishOrNull($property);
     }
 
-    /**
-    * @param scalar|array|object|null $val
-    */
-    public function public_RetrievePropertyValueFromDataExpectBoolish(
-        string $property,
-        $val
-    ) {
-        return $this->RetrievePropertyValueFromDataExpectBoolish($property, $val);
+    public function public_RetrievePropertyValueFromDataExpectBoolish(string $property) : bool
+    {
+        return $this->RetrievePropertyValueFromDataExpectBoolish($property);
     }
 }

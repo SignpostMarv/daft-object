@@ -214,7 +214,7 @@ abstract class AbstractArrayBackedDaftObject extends AbstractDaftObject implemen
     /**
     * @param scalar|array|object|null $value
     */
-    protected function ExpectRetrievedValueIsString(string $property, $value) : string
+    private function ExpectRetrievedValueIsString(string $property, $value) : string
     {
         if ( ! is_string($value)) {
             throw Exceptions\Factory::PropertyValueNotOfExpectedTypeException(
@@ -249,7 +249,7 @@ abstract class AbstractArrayBackedDaftObject extends AbstractDaftObject implemen
     /**
     * @param scalar|array|object|null $value
     */
-    protected function ExpectRetrievedValueIsArray(string $property, $value) : array
+    private function ExpectRetrievedValueIsArray(string $property, $value) : array
     {
         if ( ! is_array($value)) {
             throw Exceptions\Factory::PropertyValueNotOfExpectedTypeException(
@@ -284,7 +284,7 @@ abstract class AbstractArrayBackedDaftObject extends AbstractDaftObject implemen
     /**
     * @param scalar|array|object|null $value
     */
-    protected function ExpectRetrievedValueIsIntish(string $property, $value) : int
+    private function ExpectRetrievedValueIsIntish(string $property, $value) : int
     {
         if (is_string($value) && ctype_digit($value)) {
             $value = (int) $value;
@@ -323,7 +323,7 @@ abstract class AbstractArrayBackedDaftObject extends AbstractDaftObject implemen
     /**
     * @param scalar|array|object|null $value
     */
-    protected function ExpectRetrievedValueIsFloatish(string $property, $value) : float
+    private function ExpectRetrievedValueIsFloatish(string $property, $value) : float
     {
         if (is_string($value) && is_numeric($value)) {
             $value = (float) $value;
@@ -362,7 +362,7 @@ abstract class AbstractArrayBackedDaftObject extends AbstractDaftObject implemen
     /**
     * @param scalar|array|object|null $value
     */
-    protected function ExpectRetrievedValueIsBoolish(string $property, $value) : bool
+    private function ExpectRetrievedValueIsBoolish(string $property, $value) : bool
     {
         if ('1' === $value || 1 === $value) {
             return true;

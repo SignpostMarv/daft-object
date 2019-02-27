@@ -150,8 +150,7 @@ class AbstractArrayBackedDaftObjectTest extends Base
         $obj = new Fixtures\AbstractArrayBackedDaftObject();
 
         static::assertNull($obj->public_RetrievePropertyValueFromDataExpectStringOrNull(
-            'allows_null',
-            $val
+            'allows_null'
         ));
 
         $obj = new Fixtures\AbstractArrayBackedDaftObject([
@@ -163,7 +162,7 @@ class AbstractArrayBackedDaftObjectTest extends Base
             static::expectExceptionMessage($exception_message);
         }
 
-        $out = $obj->public_RetrievePropertyValueFromDataExpectStringOrNull('allows_null', $val);
+        $out = $obj->public_RetrievePropertyValueFromDataExpectStringOrNull('allows_null');
 
         if (is_null($exception_message)) {
             static::assertIsString($out);
@@ -182,8 +181,7 @@ class AbstractArrayBackedDaftObjectTest extends Base
         $obj = new Fixtures\AbstractArrayBackedDaftObject();
 
         static::assertNull($obj->public_RetrievePropertyValueFromDataExpectArrayOrNull(
-            'allows_null',
-            $val
+            'allows_null'
         ));
 
         $obj = new Fixtures\AbstractArrayBackedDaftObject([
@@ -195,7 +193,7 @@ class AbstractArrayBackedDaftObjectTest extends Base
             static::expectExceptionMessage($exception_message);
         }
 
-        $out = $obj->public_RetrievePropertyValueFromDataExpectArrayOrNull('allows_null', $val);
+        $out = $obj->public_RetrievePropertyValueFromDataExpectArrayOrNull('allows_null');
 
         if (is_null($exception_message)) {
             static::assertIsArray($out);
@@ -214,8 +212,7 @@ class AbstractArrayBackedDaftObjectTest extends Base
         $obj = new Fixtures\AbstractArrayBackedDaftObject();
 
         static::assertNull($obj->public_RetrievePropertyValueFromDataExpectIntishOrNull(
-            'allows_null',
-            $val
+            'allows_null'
         ));
 
         $obj = new Fixtures\AbstractArrayBackedDaftObject([
@@ -227,7 +224,7 @@ class AbstractArrayBackedDaftObjectTest extends Base
             static::expectExceptionMessage($exception_message);
         }
 
-        $out = $obj->public_RetrievePropertyValueFromDataExpectIntishOrNull('allows_null', $val);
+        $out = $obj->public_RetrievePropertyValueFromDataExpectIntishOrNull('allows_null');
 
         if (is_null($exception_message)) {
             static::assertIsInt($out);
@@ -246,8 +243,7 @@ class AbstractArrayBackedDaftObjectTest extends Base
         $obj = new Fixtures\AbstractArrayBackedDaftObject();
 
         static::assertNull($obj->public_RetrievePropertyValueFromDataExpectFloatishOrNull(
-            'allows_null',
-            $val
+            'allows_null'
         ));
 
         $obj = new Fixtures\AbstractArrayBackedDaftObject([
@@ -259,7 +255,7 @@ class AbstractArrayBackedDaftObjectTest extends Base
             static::expectExceptionMessage($exception_message);
         }
 
-        $out = $obj->public_RetrievePropertyValueFromDataExpectFloatishOrNull('allows_null', $val);
+        $out = $obj->public_RetrievePropertyValueFromDataExpectFloatishOrNull('allows_null');
 
         if (is_null($exception_message)) {
             static::assertIsFloat($out);
@@ -278,8 +274,7 @@ class AbstractArrayBackedDaftObjectTest extends Base
         $obj = new Fixtures\AbstractArrayBackedDaftObject();
 
         static::assertNull($obj->public_RetrievePropertyValueFromDataExpectBoolishOrNull(
-            'allows_null',
-            $val
+            'allows_null'
         ));
 
         $obj = new Fixtures\AbstractArrayBackedDaftObject([
@@ -291,16 +286,16 @@ class AbstractArrayBackedDaftObjectTest extends Base
             static::expectExceptionMessage($exception_message);
         }
 
-        $out = $obj->public_RetrievePropertyValueFromDataExpectBoolishOrNull('allows_null', $val);
+        $out = $obj->public_RetrievePropertyValueFromDataExpectBoolishOrNull('allows_null');
 
         if (is_null($exception_message)) {
             static::assertIsBool($out);
 
             if (is_bool($val)) {
-                static::assertIsBool($obj->public_RetrievePropertyValueFromDataExpectBoolish(
-                    'allows_null',
-                    $val
-                ));
+                static::assertSame(
+                    $val,
+                    $obj->public_RetrievePropertyValueFromDataExpectBoolish('allows_null')
+                );
             }
         }
     }

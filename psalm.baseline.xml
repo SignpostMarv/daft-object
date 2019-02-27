@@ -1,8 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <files>
   <file src="Tests\AbstractArrayBackedDaftObject\AbstractArrayBackedDaftObjectTest.php">
-    <PossiblyUnusedMethod occurrences="1">
+    <PossiblyUnusedMethod occurrences="11">
       <code>public function test_RetrievePropertyValueFromData__not_nullable() : void</code>
+      <code>public function dataProvider_RetrievePropertyValueFromDataExpectStringOrNull() : array</code>
+      <code>public function dataProvider_RetrievePropertyValueFromDataExpectArrayOrNull() : array</code>
+      <code>public function dataProvider_RetrievePropertyValueFromDataExpectIntishOrNull() : array</code>
+      <code>public function dataProvider_RetrievePropertyValueFromDataExpectFloatishOrNull() : array</code>
+      <code>public function dataProvider_RetrievePropertyValueFromDataExpectBoolishOrNull() : array</code>
+      <code>public function test_RetrievePropertyValueFromDataExpectStringOrNull(</code>
+      <code>public function test_RetrievePropertyValueFromDataExpectArrayOrNull(</code>
+      <code>public function test_RetrievePropertyValueFromDataExpectIntishOrNull(</code>
+      <code>public function test_RetrievePropertyValueFromDataExpectFloatishOrNull(</code>
+      <code>public function test_RetrievePropertyValueFromDataExpectBoolishOrNull(</code>
     </PossiblyUnusedMethod>
   </file>
   <file src="Tests\AbstractDaftObject\AbstractDaftObjectImplementationTest.php">
@@ -156,14 +166,8 @@
     <DocblockTypeContradiction occurrences="1">
       <code>'0' === $value || 0 === $value</code>
     </DocblockTypeContradiction>
-    <PossiblyUnusedMethod occurrences="7">
+    <PossiblyUnusedMethod occurrences="1">
       <code>public function jsonSerialize() : array</code>
-      <code>protected function RetrievePropertyValueFromDataExpectStringOrNull(string $property) : ? string</code>
-      <code>protected function RetrievePropertyValueFromDataExpectArrayOrNull(string $property) : ? array</code>
-      <code>protected function RetrievePropertyValueFromDataExpectIntishOrNull(string $property) : ? int</code>
-      <code>protected function RetrievePropertyValueFromDataExpectFloatishOrNull(string $property) : ? float</code>
-      <code>protected function RetrievePropertyValueFromDataExpectBoolish(string $property) : bool</code>
-      <code>protected function RetrievePropertyValueFromDataExpectBoolishOrNull(string $property) : ? bool</code>
     </PossiblyUnusedMethod>
   </file>
   <file src="src\DaftObjectHasPropertiesWithMultiTypedArraysOfUniqueValues.php">
