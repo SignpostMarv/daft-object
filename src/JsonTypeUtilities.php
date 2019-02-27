@@ -92,8 +92,6 @@ class JsonTypeUtilities
     /**
     * @template T as DaftJson
     *
-    * @param (scalar|array|object|null)[] $propVal
-    *
     * @psalm-param class-string<T> $jsonType
     *
     * @param array<int|string, scalar|(scalar|(scalar|array|object|null)[]|object|null)[]|object|null> $propVal
