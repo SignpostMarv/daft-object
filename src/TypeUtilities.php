@@ -118,6 +118,125 @@ class TypeUtilities
     }
 
     /**
+    * @param scalar|array|object|null $value
+    *
+    * @psalm-param class-string<DaftObject> $class_name
+    */
+    public static function ExpectRetrievedValueIsString(
+        string $property,
+        $value,
+        string $class_name
+    ) : string {
+        if ( ! is_string($value)) {
+            throw Exceptions\Factory::PropertyValueNotOfExpectedTypeException(
+                $class_name,
+                $property,
+                'string'
+            );
+        }
+
+        return $value;
+    }
+
+    /**
+    * @param scalar|array|object|null $value
+    *
+    * @psalm-param class-string<DaftObject> $class_name
+    */
+    public static function ExpectRetrievedValueIsArray(
+        string $property,
+        $value,
+        string $class_name
+    ) : array {
+        if ( ! is_array($value)) {
+            throw Exceptions\Factory::PropertyValueNotOfExpectedTypeException(
+                $class_name,
+                $property,
+                'array'
+            );
+        }
+
+        return $value;
+    }
+
+    /**
+    * @param scalar|array|object|null $value
+    *
+    * @psalm-param class-string<DaftObject> $class_name
+    */
+    public static function ExpectRetrievedValueIsIntish(
+        string $property,
+        $value,
+        string $class_name
+    ) : int {
+        if (is_string($value) && ctype_digit($value)) {
+            $value = (int) $value;
+        }
+
+        if ( ! is_int($value)) {
+            throw Exceptions\Factory::PropertyValueNotOfExpectedTypeException(
+                $class_name,
+                $property,
+                'int'
+            );
+        }
+
+        return $value;
+    }
+
+    /**
+    * @param scalar|array|object|null $value
+    *
+    * @psalm-param class-string<DaftObject> $class_name
+    */
+    public static function ExpectRetrievedValueIsFloatish(
+        string $property,
+        $value,
+        string $class_name
+    ) : float {
+        if (is_string($value) && is_numeric($value)) {
+            $value = (float) $value;
+        }
+
+        if ( ! is_float($value)) {
+            throw Exceptions\Factory::PropertyValueNotOfExpectedTypeException(
+                $class_name,
+                $property,
+                'float'
+            );
+        }
+
+        return $value;
+    }
+
+    /**
+    * @param scalar|array|object|null $value
+    *
+    * @psalm-param class-string<DaftObject> $class_name
+    */
+    public static function ExpectRetrievedValueIsBoolish(
+        string $property,
+        $value,
+        string $class_name
+    ) : bool {
+        if ('1' === $value || 1 === $value) {
+            return true;
+        } elseif ('0' === $value || 0 === $value) {
+            return false;
+        }
+
+        if ( ! is_bool($value)) {
+            throw Exceptions\Factory::PropertyValueNotOfExpectedTypeException(
+                $class_name,
+                $property,
+                'bool'
+            );
+        }
+
+        return $value;
+    }
+
+    /**
     * @template T as DaftObject
     *
     * @psalm-param class-string<T> $class

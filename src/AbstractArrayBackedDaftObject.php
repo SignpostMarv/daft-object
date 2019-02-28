@@ -194,9 +194,10 @@ abstract class AbstractArrayBackedDaftObject extends AbstractDaftObject implemen
 
     protected function RetrievePropertyValueFromDataExpectString(string $property) : string
     {
-        return $this->ExpectRetrievedValueIsString(
+        return TypeUtilities::ExpectRetrievedValueIsString(
             $property,
-            $this->RetrievePropertyValueFromData($property)
+            $this->RetrievePropertyValueFromData($property),
+            static::class
         );
     }
 
@@ -208,14 +209,15 @@ abstract class AbstractArrayBackedDaftObject extends AbstractDaftObject implemen
             return null;
         }
 
-        return $this->ExpectRetrievedValueIsString($property, $value);
+        return TypeUtilities::ExpectRetrievedValueIsString($property, $value, static::class);
     }
 
     protected function RetrievePropertyValueFromDataExpectArray(string $property) : array
     {
-        return $this->ExpectRetrievedValueIsArray(
+        return TypeUtilities::ExpectRetrievedValueIsArray(
             $property,
-            $this->RetrievePropertyValueFromData($property)
+            $this->RetrievePropertyValueFromData($property),
+            static::class
         );
     }
 
@@ -227,14 +229,15 @@ abstract class AbstractArrayBackedDaftObject extends AbstractDaftObject implemen
             return null;
         }
 
-        return $this->ExpectRetrievedValueIsArray($property, $value);
+        return TypeUtilities::ExpectRetrievedValueIsArray($property, $value, static::class);
     }
 
     protected function RetrievePropertyValueFromDataExpectIntish(string $property) : int
     {
-        return $this->ExpectRetrievedValueIsIntish(
+        return TypeUtilities::ExpectRetrievedValueIsIntish(
             $property,
-            $this->RetrievePropertyValueFromData($property)
+            $this->RetrievePropertyValueFromData($property),
+            static::class
         );
     }
 
@@ -246,14 +249,15 @@ abstract class AbstractArrayBackedDaftObject extends AbstractDaftObject implemen
             return null;
         }
 
-        return $this->ExpectRetrievedValueIsIntish($property, $value);
+        return TypeUtilities::ExpectRetrievedValueIsIntish($property, $value, static::class);
     }
 
     protected function RetrievePropertyValueFromDataExpectFloatish(string $property) : float
     {
-        return $this->ExpectRetrievedValueIsFloatish(
+        return TypeUtilities::ExpectRetrievedValueIsFloatish(
             $property,
-            $this->RetrievePropertyValueFromData($property)
+            $this->RetrievePropertyValueFromData($property),
+            static::class
         );
     }
 
@@ -265,14 +269,15 @@ abstract class AbstractArrayBackedDaftObject extends AbstractDaftObject implemen
             return null;
         }
 
-        return $this->ExpectRetrievedValueIsFloatish($property, $value);
+        return TypeUtilities::ExpectRetrievedValueIsFloatish($property, $value, static::class);
     }
 
     protected function RetrievePropertyValueFromDataExpectBoolish(string $property) : bool
     {
-        return $this->ExpectRetrievedValueIsBoolish(
+        return TypeUtilities::ExpectRetrievedValueIsBoolish(
             $property,
-            $this->RetrievePropertyValueFromData($property)
+            $this->RetrievePropertyValueFromData($property),
+            static::class
         );
     }
 
@@ -284,7 +289,7 @@ abstract class AbstractArrayBackedDaftObject extends AbstractDaftObject implemen
             return null;
         }
 
-        return $this->ExpectRetrievedValueIsBoolish($property, $value);
+        return TypeUtilities::ExpectRetrievedValueIsBoolish($property, $value, static::class);
     }
 
     /**
@@ -320,100 +325,6 @@ abstract class AbstractArrayBackedDaftObject extends AbstractDaftObject implemen
         if ($isChanged && true !== isset($this->changedProperties[$property])) {
             $this->changedProperties[$property] = $this->wormProperties[$property] = true;
         }
-    }
-
-    /**
-    * @param scalar|array|object|null $value
-    */
-    private function ExpectRetrievedValueIsString(string $property, $value) : string
-    {
-        if ( ! is_string($value)) {
-            throw Exceptions\Factory::PropertyValueNotOfExpectedTypeException(
-                static::class,
-                $property,
-                'string'
-            );
-        }
-
-        return $value;
-    }
-
-    /**
-    * @param scalar|array|object|null $value
-    */
-    private function ExpectRetrievedValueIsArray(string $property, $value) : array
-    {
-        if ( ! is_array($value)) {
-            throw Exceptions\Factory::PropertyValueNotOfExpectedTypeException(
-                static::class,
-                $property,
-                'array'
-            );
-        }
-
-        return $value;
-    }
-
-    /**
-    * @param scalar|array|object|null $value
-    */
-    private function ExpectRetrievedValueIsIntish(string $property, $value) : int
-    {
-        if (is_string($value) && ctype_digit($value)) {
-            $value = (int) $value;
-        }
-
-        if ( ! is_int($value)) {
-            throw Exceptions\Factory::PropertyValueNotOfExpectedTypeException(
-                static::class,
-                $property,
-                'int'
-            );
-        }
-
-        return $value;
-    }
-
-    /**
-    * @param scalar|array|object|null $value
-    */
-    private function ExpectRetrievedValueIsFloatish(string $property, $value) : float
-    {
-        if (is_string($value) && is_numeric($value)) {
-            $value = (float) $value;
-        }
-
-        if ( ! is_float($value)) {
-            throw Exceptions\Factory::PropertyValueNotOfExpectedTypeException(
-                static::class,
-                $property,
-                'float'
-            );
-        }
-
-        return $value;
-    }
-
-    /**
-    * @param scalar|array|object|null $value
-    */
-    private function ExpectRetrievedValueIsBoolish(string $property, $value) : bool
-    {
-        if ('1' === $value || 1 === $value) {
-            return true;
-        } elseif ('0' === $value || 0 === $value) {
-            return false;
-        }
-
-        if ( ! is_bool($value)) {
-            throw Exceptions\Factory::PropertyValueNotOfExpectedTypeException(
-                static::class,
-                $property,
-                'bool'
-            );
-        }
-
-        return $value;
     }
 
     /**
