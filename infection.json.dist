@@ -42,7 +42,8 @@
                 "SignpostMarv\\DaftObject\\DefinitionAssistant::RegisterDaftObjectTypeFromTypeAndProps",
                 "SignpostMarv\\DaftObject\\Exceptions\\Factory::AbstractPropertyNotThingableException",
                 "SignpostMarv\\DaftObject\\TypeUtilities::CachePublicGettersAndSettersProperties",
-                "SignpostMarv\\DaftObject\\TypeUtilities::CachePublicGettersAndSettersProperty"
+                "SignpostMarv\\DaftObject\\TypeUtilities::CachePublicGettersAndSettersProperty",
+                "SignpostMarv\\DaftObject\\TypeUtilities::MaybeThrowIfNotType"
             ]
         },
         "PublicVisibility": {
