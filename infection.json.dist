@@ -12,15 +12,15 @@
         "@default": true,
         "FalseValue": {
             "ignore": [
-                "SignpostMarv\\DaftObject\\AbstractArrayBackedDaftObject::ExpectRetrievedValueIsBoolish"
+                "SignpostMarv\\DaftObject\\TypeUtilities::ExpectRetrievedValueIsBoolish"
             ]
         },
         "LogicalAnd": {
             "ignore": [
-                "SignpostMarv\\DaftObject\\AbstractArrayBackedDaftObject::ExpectRetrievedValueIsIntish",
                 "SignpostMarv\\DaftObject\\AbstractArrayBackedDaftObject::NudgePropertyValue",
                 "SignpostMarv\\DaftObject\\DefinitionAssistant::MaybeRemapStringsToTrimmedStrings",
                 "SignpostMarv\\DaftObject\\TypeUtilities::CachePublicGettersAndSettersProperties",
+                "SignpostMarv\\DaftObject\\TypeUtilities::ExpectRetrievedValueIsIntish",
                 "SignpostMarv\\DaftObject\\TypeUtilities::HasMethod"
             ]
         },
@@ -52,7 +52,7 @@
         },
         "TrueValue": {
             "ignore": [
-                "SignpostMarv\\DaftObject\\AbstractArrayBackedDaftObject::ExpectRetrievedValueIsBoolish"
+                "SignpostMarv\\DaftObject\\TypeUtilities::ExpectRetrievedValueIsBoolish"
             ]
         }
     }
