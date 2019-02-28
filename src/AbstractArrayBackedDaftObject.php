@@ -52,9 +52,7 @@ abstract class AbstractArrayBackedDaftObject extends AbstractDaftObject implemen
                 $this->__set($k, $v);
             }
         } else {
-            foreach ($data as $k => $v) {
-                $this->data[$k] = $v;
-            }
+            $this->data = $data;
         }
     }
 
@@ -132,12 +130,11 @@ abstract class AbstractArrayBackedDaftObject extends AbstractDaftObject implemen
         * @var array<int, string>
         */
         $props = array_keys($array);
-        $mapper = static::DaftJsonClosure($array, $writeAll);
 
         /**
         * @var array<int, scalar|object|array|null>
         */
-        $vals = array_map($mapper, $props);
+        $vals = array_map(static::DaftJsonClosure($array, $writeAll), $props);
 
         return new $type(array_combine($props, $vals), $writeAll);
     }
