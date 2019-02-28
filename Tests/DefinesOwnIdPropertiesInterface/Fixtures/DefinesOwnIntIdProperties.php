@@ -12,6 +12,7 @@ use InvalidArgumentException;
 use SignpostMarv\DaftObject\AbstractArrayBackedDaftObject;
 use SignpostMarv\DaftObject\DaftObjectIdValuesHashLazyInt;
 use SignpostMarv\DaftObject\DefinesOwnIntegerIdInterface;
+use SignpostMarv\DaftObject\TypeUtilities;
 
 /**
 * @property-read int $id
@@ -42,7 +43,11 @@ class DefinesOwnIntIdProperties extends AbstractArrayBackedDaftObject implements
 
     public function GetId() : int
     {
-        return $this->RetrievePropertyValueFromDataExpectIntish('id');
+        return TypeUtilities::ExpectRetrievedValueIsIntish(
+            'id',
+            $this->RetrievePropertyValueFromData('id'),
+            static::class
+        );
     }
 
     public static function DaftObjectIdProperties() : array

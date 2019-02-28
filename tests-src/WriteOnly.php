@@ -42,7 +42,11 @@ class WriteOnly extends AbstractTestObject implements DefinesOwnStringIdInterfac
 
     public function GetId() : string
     {
-        return $this->RetrievePropertyValueFromDataExpectString('Foo');
+        return TypeUtilities::ExpectRetrievedValueIsString(
+            'Foo',
+            $this->RetrievePropertyValueFromData('Foo'),
+            static::class
+        );
     }
 
     public static function DaftObjectIdProperties() : array

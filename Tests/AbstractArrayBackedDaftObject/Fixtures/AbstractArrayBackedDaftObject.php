@@ -51,9 +51,4 @@ class AbstractArrayBackedDaftObject extends Base
     ) : ? bool {
         return $this->RetrievePropertyValueFromDataExpectBoolishOrNull($property);
     }
-
-    public function public_RetrievePropertyValueFromDataExpectBoolish(string $property) : bool
-    {
-        return $this->RetrievePropertyValueFromDataExpectBoolish($property);
-    }
 }

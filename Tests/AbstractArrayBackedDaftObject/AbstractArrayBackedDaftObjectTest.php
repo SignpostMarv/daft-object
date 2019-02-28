@@ -290,13 +290,6 @@ class AbstractArrayBackedDaftObjectTest extends Base
 
         if (is_null($exception_message)) {
             static::assertIsBool($out);
-
-            if (is_bool($val)) {
-                static::assertSame(
-                    $val,
-                    $obj->public_RetrievePropertyValueFromDataExpectBoolish('allows_null')
-                );
-            }
         }
     }
 }

@@ -209,9 +209,10 @@
     </PossiblyUnusedMethod>
   </file>
   <file src="tests-src\NonPublicGetter.php">
-    <UnusedClass occurrences="1">
-      <code>class NonPublicGetter extends AbstractArrayBackedDaftObject</code>
-    </UnusedClass>
+    <PossiblyUnusedMethod occurrences="2">
+      <code>public function SetFoo(string $val) : void</code>
+      <code>protected function GetFoo() : string</code>
+    </PossiblyUnusedMethod>
   </file>
   <file src="tests-src\PasswordHashTestObject.php">
     <PossiblyUnusedMethod occurrences="2">

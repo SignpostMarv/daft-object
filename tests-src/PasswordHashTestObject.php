@@ -35,6 +35,10 @@ final class PasswordHashTestObject extends AbstractArrayBackedDaftObject
 
     public function GetPasswordHash() : string
     {
-        return $this->RetrievePropertyValueFromDataExpectString('passwordHash');
+        return TypeUtilities::ExpectRetrievedValueIsString(
+            'passwordHash',
+            $this->RetrievePropertyValueFromData('passwordHash'),
+            static::class
+        );
     }
 }

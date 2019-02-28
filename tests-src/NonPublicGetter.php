@@ -22,6 +22,10 @@ class NonPublicGetter extends AbstractArrayBackedDaftObject
 
     protected function GetFoo() : string
     {
-        return $this->RetrievePropertyValueFromDataExpectString('foo');
+        return TypeUtilities::ExpectRetrievedValueIsString(
+            'foo',
+            $this->RetrievePropertyValueFromData('foo'),
+            static::class
+        );
     }
 }

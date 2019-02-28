@@ -12,6 +12,7 @@ use SignpostMarv\DaftObject\AbstractArrayBackedDaftObject;
 use SignpostMarv\DaftObject\DaftJsonLinkedData;
 use SignpostMarv\DaftObject\DefinesOwnStringIdInterface;
 use SignpostMarv\DaftObject\DaftObjectIdValuesHashLazyInt;
+use SignpostMarv\DaftObject\TypeUtilities;
 
 /**
 * @template T as HasId
@@ -42,7 +43,11 @@ class HasId extends AbstractArrayBackedDaftObject implements DaftJsonLinkedData,
 
     public function ObtainId() : string
     {
-        return $this->RetrievePropertyValueFromDataExpectString('@id');
+        return TypeUtilities::ExpectRetrievedValueIsString(
+            '@id',
+            $this->RetrievePropertyValueFromData('@id'),
+            static::class
+        );
     }
 
     public function GetId() : string

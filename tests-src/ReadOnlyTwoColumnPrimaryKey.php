@@ -44,17 +44,29 @@ class ReadOnlyTwoColumnPrimaryKey extends AbstractTestObject implements DefinesO
 
     public function GetFoo() : string
     {
-        return $this->RetrievePropertyValueFromDataExpectString('Foo');
+        return TypeUtilities::ExpectRetrievedValueIsString(
+            'Foo',
+            $this->RetrievePropertyValueFromData('Foo'),
+            static::class
+        );
     }
 
     public function GetBar() : float
     {
-        return $this->RetrievePropertyValueFromDataExpectFloatish('Bar');
+        return TypeUtilities::ExpectRetrievedValueIsFloatish(
+            'Bar',
+            $this->RetrievePropertyValueFromData('Bar'),
+            static::class
+        );
     }
 
     public function GetBaz() : int
     {
-        return $this->RetrievePropertyValueFromDataExpectIntish('Baz');
+        return TypeUtilities::ExpectRetrievedValueIsIntish(
+            'Baz',
+            $this->RetrievePropertyValueFromData('Baz'),
+            static::class
+        );
     }
 
     public function GetBat() : ? bool

@@ -189,15 +189,6 @@ abstract class AbstractArrayBackedDaftObject extends AbstractDaftObject implemen
         return $this->data[$property];
     }
 
-    protected function RetrievePropertyValueFromDataExpectString(string $property) : string
-    {
-        return TypeUtilities::ExpectRetrievedValueIsString(
-            $property,
-            $this->RetrievePropertyValueFromData($property),
-            static::class
-        );
-    }
-
     protected function RetrievePropertyValueFromDataExpectStringOrNull(string $property) : ? string
     {
         $value = $this->RetrievePropertyValueFromData($property);
@@ -207,15 +198,6 @@ abstract class AbstractArrayBackedDaftObject extends AbstractDaftObject implemen
         }
 
         return TypeUtilities::ExpectRetrievedValueIsString($property, $value, static::class);
-    }
-
-    protected function RetrievePropertyValueFromDataExpectArray(string $property) : array
-    {
-        return TypeUtilities::ExpectRetrievedValueIsArray(
-            $property,
-            $this->RetrievePropertyValueFromData($property),
-            static::class
-        );
     }
 
     protected function RetrievePropertyValueFromDataExpectArrayOrNull(string $property) : ? array
@@ -229,15 +211,6 @@ abstract class AbstractArrayBackedDaftObject extends AbstractDaftObject implemen
         return TypeUtilities::ExpectRetrievedValueIsArray($property, $value, static::class);
     }
 
-    protected function RetrievePropertyValueFromDataExpectIntish(string $property) : int
-    {
-        return TypeUtilities::ExpectRetrievedValueIsIntish(
-            $property,
-            $this->RetrievePropertyValueFromData($property),
-            static::class
-        );
-    }
-
     protected function RetrievePropertyValueFromDataExpectIntishOrNull(string $property) : ? int
     {
         $value = $this->RetrievePropertyValueFromData($property);
@@ -249,15 +222,6 @@ abstract class AbstractArrayBackedDaftObject extends AbstractDaftObject implemen
         return TypeUtilities::ExpectRetrievedValueIsIntish($property, $value, static::class);
     }
 
-    protected function RetrievePropertyValueFromDataExpectFloatish(string $property) : float
-    {
-        return TypeUtilities::ExpectRetrievedValueIsFloatish(
-            $property,
-            $this->RetrievePropertyValueFromData($property),
-            static::class
-        );
-    }
-
     protected function RetrievePropertyValueFromDataExpectFloatishOrNull(string $property) : ? float
     {
         $value = $this->RetrievePropertyValueFromData($property);
@@ -267,15 +231,6 @@ abstract class AbstractArrayBackedDaftObject extends AbstractDaftObject implemen
         }
 
         return TypeUtilities::ExpectRetrievedValueIsFloatish($property, $value, static::class);
-    }
-
-    protected function RetrievePropertyValueFromDataExpectBoolish(string $property) : bool
-    {
-        return TypeUtilities::ExpectRetrievedValueIsBoolish(
-            $property,
-            $this->RetrievePropertyValueFromData($property),
-            static::class
-        );
     }
 
     protected function RetrievePropertyValueFromDataExpectBoolishOrNull(string $property) : ? bool

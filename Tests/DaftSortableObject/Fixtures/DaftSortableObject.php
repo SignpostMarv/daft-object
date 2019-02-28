@@ -9,6 +9,7 @@ namespace SignpostMarv\DaftObject\Tests\DaftSortableObject\Fixtures;
 use SignpostMarv\DaftObject\AbstractArrayBackedDaftObject as Base;
 use SignpostMarv\DaftObject\DaftSortableObject as Target;
 use SignpostMarv\DaftObject\TraitSortableDaftObject;
+use SignpostMarv\DaftObject\TypeUtilities;
 
 /**
 * @template T as DaftSortableObject
@@ -36,7 +37,11 @@ class DaftSortableObject extends Base implements Target
 
     public function GetIntSortOrder() : int
     {
-        return $this->RetrievePropertyValueFromDataExpectIntish('intSortOrder');
+        return TypeUtilities::ExpectRetrievedValueIsIntish(
+            'intSortOrder',
+            $this->RetrievePropertyValueFromData('intSortOrder'),
+            static::class
+        );
     }
 
     public function SetIntSortOrder(int $value) : void
