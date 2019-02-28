@@ -1,0 +1,6 @@
+includes:
+    - ./phpstan.neon
+
+parameters:
+    ignoreErrors:
+        - "/^Method SignpostMarv\\\\DaftObject\\\\Tests\\\\DefinesOwnIdPropertiesInterface\\\\Fixtures\\\\DefinesOwn(Array|Scalar|Int)IdProperties/"
