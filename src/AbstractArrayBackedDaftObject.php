@@ -301,12 +301,11 @@ abstract class AbstractArrayBackedDaftObject extends AbstractDaftObject implemen
         bool $autoTrimStrings = self::BOOL_DEFAULT_AUTOTRIMSTRINGS,
         bool $throwIfNotUnique = self::BOOL_DEFAULT_THROWIFNOTUNIQUE
     ) : void {
-        /**
-        * @var array<int, string>
-        */
-        $nullables = static::DaftObjectNullableProperties();
+        TypeUtilities::MaybeThrowOnNudge(static::class, $property, $value);
 
-        $this->MaybeThrowOnNudge($property, $value, $nullables);
+        if ($this->DaftObjectWormPropertyWritten($property)) {
+            throw Exceptions\Factory::PropertyNotRewriteableException(static::class, $property);
+        }
 
         $value = $this->MaybeModifyValueBeforeNudge(
             $property,
@@ -419,38 +418,5 @@ abstract class AbstractArrayBackedDaftObject extends AbstractDaftObject implemen
         }
 
         return $value;
-    }
-
-    /**
-    * @see AbstractArrayBackedDaftObject::NudgePropertyValue()
-    */
-    private function MaybeThrowForPropertyOnNudge(string $property) : string
-    {
-        $properties = static::DaftObjectProperties();
-
-        if ( ! in_array($property, $properties, DefinitionAssistant::IN_ARRAY_STRICT_MODE)) {
-            throw Exceptions\Factory::UndefinedPropertyException(static::class, $property);
-        } elseif ($this->DaftObjectWormPropertyWritten($property)) {
-            throw Exceptions\Factory::PropertyNotRewriteableException(static::class, $property);
-        }
-
-        return $property;
-    }
-
-    /**
-    * @param scalar|array|object|null $value
-    *
-    * @see AbstractArrayBackedDaftObject::NudgePropertyValue()
-    */
-    private function MaybeThrowOnNudge(string $property, $value, array $properties) : void
-    {
-        $property = $this->MaybeThrowForPropertyOnNudge($property);
-
-        if (
-            true === is_null($value) &&
-            ! in_array($property, $properties, DefinitionAssistant::IN_ARRAY_STRICT_MODE)
-        ) {
-            throw Exceptions\Factory::PropertyNotNullableException(static::class, $property);
-        }
     }
 }

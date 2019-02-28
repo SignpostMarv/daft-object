@@ -237,6 +237,36 @@ class TypeUtilities
     }
 
     /**
+    * @psalm-param class-string<DaftObject> $class_name
+    *
+    * @param scalar|array|object|null $value
+    */
+    public static function MaybeThrowOnNudge(
+        string $class_name,
+        string $property,
+        $value
+    ) : void {
+        if (
+            ! in_array(
+                $property,
+                $class_name::DaftObjectProperties(),
+                DefinitionAssistant::IN_ARRAY_STRICT_MODE
+            )
+        ) {
+            throw Exceptions\Factory::UndefinedPropertyException($class_name, $property);
+        } elseif (
+            true === is_null($value) &&
+            ! in_array(
+                $property,
+                $class_name::DaftObjectNullableProperties(),
+                DefinitionAssistant::IN_ARRAY_STRICT_MODE
+            )
+        ) {
+            throw Exceptions\Factory::PropertyNotNullableException($class_name, $property);
+        }
+    }
+
+    /**
     * @template T as DaftObject
     *
     * @psalm-param class-string<T> $class
