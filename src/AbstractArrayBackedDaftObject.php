@@ -8,8 +8,6 @@ declare(strict_types=1);
 
 namespace SignpostMarv\DaftObject;
 
-use Closure;
-
 /**
 * Array-backed daft objects.
 */
