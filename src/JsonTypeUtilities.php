@@ -126,6 +126,64 @@ class JsonTypeUtilities
     }
 
     /**
+    * @param array<int|string, scalar|array|object|null> $array
+    *
+    * @psalm-param class-string<DaftJson> $class_name
+    */
+    public static function DaftJsonClosure(
+        array $array,
+        bool $writeAll,
+        string $class_name
+    ) : Closure {
+        $jsonDef = $class_name::DaftObjectJsonProperties();
+
+        return
+            /**
+            * @return scalar|array|object|null
+            */
+            function (string $prop) use ($array, $jsonDef, $writeAll) {
+                /**
+                * @var string|null
+                */
+                $jsonType = $jsonDef[$prop] ?? null;
+
+                if ( ! is_string($jsonType)) {
+                    return $array[$prop];
+                }
+
+                /**
+                * @var array<int|string, scalar|(scalar|(scalar|array|object|null)[]|object|null)[]|object|null>
+                */
+                $propVal = (is_array($array[$prop]) ? $array[$prop] : [$array[$prop]]);
+
+                if ('[]' === mb_substr($jsonType, -2)) {
+                    /**
+                    * @psalm-var class-string<DaftObject>
+                    */
+                    $jsonType = mb_substr($jsonType, 0, -2);
+
+                    $jsonType = JsonTypeUtilities::ThrowIfNotJsonType($jsonType);
+
+                    return JsonTypeUtilities::DaftObjectFromJsonTypeArray(
+                        $jsonType,
+                        $prop,
+                        $propVal,
+                        $writeAll
+                    );
+                }
+
+                /**
+                * @psalm-var class-string<DaftObject>
+                */
+                $jsonType = $jsonType;
+
+                $jsonType = JsonTypeUtilities::ThrowIfNotJsonType($jsonType);
+
+                return JsonTypeUtilities::DaftJsonFromJsonType($jsonType, $propVal, $writeAll);
+            };
+    }
+
+    /**
     * @param array<string|int, string> $jsonDef
     * @param (scalar|array|object|null)[] $array
     *

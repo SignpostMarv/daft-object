@@ -48,6 +48,7 @@
         },
         "PublicVisibility": {
             "ignore": [
+                "SignpostMarv\\DaftObject\\JsonTypeUtilities::DaftJsonFromJsonType",
                 "SignpostMarv\\DaftObject\\TypeUtilities::HasMethod"
             ]
         },

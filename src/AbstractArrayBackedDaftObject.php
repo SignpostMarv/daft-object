@@ -134,7 +134,14 @@ abstract class AbstractArrayBackedDaftObject extends AbstractDaftObject implemen
         /**
         * @var array<int, scalar|object|array|null>
         */
-        $vals = array_map(static::DaftJsonClosure($array, $writeAll), $props);
+        $vals = array_map(
+            JsonTypeUtilities::DaftJsonClosure(
+                $array,
+                $writeAll,
+                $type
+            ),
+            $props
+        );
 
         return new $type(array_combine($props, $vals), $writeAll);
     }
@@ -276,59 +283,6 @@ abstract class AbstractArrayBackedDaftObject extends AbstractDaftObject implemen
         if ($isChanged && true !== isset($this->changedProperties[$property])) {
             $this->changedProperties[$property] = $this->wormProperties[$property] = true;
         }
-    }
-
-    /**
-    * @param array<int|string, scalar|array|object|null> $array
-    */
-    private static function DaftJsonClosure(array $array, bool $writeAll) : Closure
-    {
-        $jsonDef = static::DaftObjectJsonProperties();
-
-        return
-            /**
-            * @return scalar|array|object|null
-            */
-            function (string $prop) use ($array, $jsonDef, $writeAll) {
-                /**
-                * @var string|null
-                */
-                $jsonType = $jsonDef[$prop] ?? null;
-
-                if ( ! is_string($jsonType)) {
-                    return $array[$prop];
-                }
-
-                /**
-                * @var array<int|string, scalar|(scalar|(scalar|array|object|null)[]|object|null)[]|object|null>
-                */
-                $propVal = (is_array($array[$prop]) ? $array[$prop] : [$array[$prop]]);
-
-                if ('[]' === mb_substr($jsonType, -2)) {
-                    /**
-                    * @psalm-var class-string<DaftObject>
-                    */
-                    $jsonType = mb_substr($jsonType, 0, -2);
-
-                    $jsonType = JsonTypeUtilities::ThrowIfNotJsonType($jsonType);
-
-                    return JsonTypeUtilities::DaftObjectFromJsonTypeArray(
-                        $jsonType,
-                        $prop,
-                        $propVal,
-                        $writeAll
-                    );
-                }
-
-                /**
-                * @psalm-var class-string<DaftObject>
-                */
-                $jsonType = $jsonType;
-
-                $jsonType = JsonTypeUtilities::ThrowIfNotJsonType($jsonType);
-
-                return JsonTypeUtilities::DaftJsonFromJsonType($jsonType, $propVal, $writeAll);
-            };
     }
 
     /**
