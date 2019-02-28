@@ -118,6 +118,8 @@ class TypeUtilities
     }
 
     /**
+    * @template T as string
+    *
     * @param scalar|array|object|null $value
     *
     * @psalm-param class-string<DaftObject> $class_name
@@ -127,18 +129,17 @@ class TypeUtilities
         $value,
         string $class_name
     ) : string {
-        if ( ! is_string($value)) {
-            throw Exceptions\Factory::PropertyValueNotOfExpectedTypeException(
-                $class_name,
-                $property,
-                'string'
-            );
-        }
+        /**
+        * @psalm-var T
+        */
+        $value = static::MaybeThrowIfNotType($property, $value, $class_name, 'string');
 
         return $value;
     }
 
     /**
+    * @template T as array
+    *
     * @param scalar|array|object|null $value
     *
     * @psalm-param class-string<DaftObject> $class_name
@@ -148,18 +149,17 @@ class TypeUtilities
         $value,
         string $class_name
     ) : array {
-        if ( ! is_array($value)) {
-            throw Exceptions\Factory::PropertyValueNotOfExpectedTypeException(
-                $class_name,
-                $property,
-                'array'
-            );
-        }
+        /**
+        * @psalm-var T
+        */
+        $value = static::MaybeThrowIfNotType($property, $value, $class_name, 'array');
 
         return $value;
     }
 
     /**
+    * @template T as int
+    *
     * @param scalar|array|object|null $value
     *
     * @psalm-param class-string<DaftObject> $class_name
@@ -173,18 +173,17 @@ class TypeUtilities
             $value = (int) $value;
         }
 
-        if ( ! is_int($value)) {
-            throw Exceptions\Factory::PropertyValueNotOfExpectedTypeException(
-                $class_name,
-                $property,
-                'int'
-            );
-        }
+        /**
+        * @psalm-var T
+        */
+        $value = static::MaybeThrowIfNotType($property, $value, $class_name, 'integer');
 
         return $value;
     }
 
     /**
+    * @template T as float
+    *
     * @param scalar|array|object|null $value
     *
     * @psalm-param class-string<DaftObject> $class_name
@@ -198,18 +197,17 @@ class TypeUtilities
             $value = (float) $value;
         }
 
-        if ( ! is_float($value)) {
-            throw Exceptions\Factory::PropertyValueNotOfExpectedTypeException(
-                $class_name,
-                $property,
-                'float'
-            );
-        }
+        /**
+        * @psalm-var T
+        */
+        $value = static::MaybeThrowIfNotType($property, $value, $class_name, 'double');
 
         return $value;
     }
 
     /**
+    * @template T as bool
+    *
     * @param scalar|array|object|null $value
     *
     * @psalm-param class-string<DaftObject> $class_name
@@ -225,13 +223,10 @@ class TypeUtilities
             return false;
         }
 
-        if ( ! is_bool($value)) {
-            throw Exceptions\Factory::PropertyValueNotOfExpectedTypeException(
-                $class_name,
-                $property,
-                'bool'
-            );
-        }
+        /**
+        * @psalm-var T
+        */
+        $value = static::MaybeThrowIfNotType($property, $value, $class_name, 'boolean');
 
         return $value;
     }
@@ -264,6 +259,37 @@ class TypeUtilities
         ) {
             throw Exceptions\Factory::PropertyNotNullableException($class_name, $property);
         }
+    }
+
+    /**
+    * @template T
+    *
+    * @param scalar|array|object|null $value
+    *
+    * @psalm-return T
+    *
+    * @return mixed
+    */
+    protected static function MaybeThrowIfNotType(
+        string $property,
+        $value,
+        string $class_name,
+        string $type
+    ) {
+        if ($type !== gettype($value)) {
+            throw Exceptions\Factory::PropertyValueNotOfExpectedTypeException(
+                $class_name,
+                $property,
+                $type
+            );
+        }
+
+        /**
+        * @var T
+        */
+        $value = $value;
+
+        return $value;
     }
 
     /**

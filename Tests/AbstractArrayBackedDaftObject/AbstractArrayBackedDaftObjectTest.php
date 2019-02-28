@@ -62,7 +62,7 @@ class AbstractArrayBackedDaftObjectTest extends Base
             [
                 1.0,
                 (
-                    'Property not of expected type int: ' .
+                    'Property not of expected type integer: ' .
                     Fixtures\AbstractArrayBackedDaftObject::class .
                     '::$allows_null'
                 ),
@@ -84,7 +84,7 @@ class AbstractArrayBackedDaftObjectTest extends Base
             [
                 1,
                 (
-                    'Property not of expected type float: ' .
+                    'Property not of expected type double: ' .
                     Fixtures\AbstractArrayBackedDaftObject::class .
                     '::$allows_null'
                 ),
@@ -106,7 +106,7 @@ class AbstractArrayBackedDaftObjectTest extends Base
             [
                 [],
                 (
-                    'Property not of expected type bool: ' .
+                    'Property not of expected type boolean: ' .
                     Fixtures\AbstractArrayBackedDaftObject::class .
                     '::$allows_null'
                 ),
