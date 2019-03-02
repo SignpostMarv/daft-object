@@ -24,9 +24,6 @@ use SignpostMarv\DaftObject\DaftObjectHasPropertiesWithMultiTypedArraysOfUniqueV
 use SignpostMarv\DaftObject\DaftObjectWorm;
 use SignpostMarv\DaftObject\DaftSortableObject;
 use SignpostMarv\DaftObject\DateTimeImmutableTestObject;
-use SignpostMarv\DaftObject\DefinesOwnArrayIdInterface;
-use SignpostMarv\DaftObject\DefinesOwnIntegerIdInterface;
-use SignpostMarv\DaftObject\DefinesOwnStringIdInterface;
 use SignpostMarv\DaftObject\Exceptions\ClassDoesNotImplementClassException;
 use SignpostMarv\DaftObject\Exceptions\DaftObjectNotDaftJsonBadMethodCallException;
 use SignpostMarv\DaftObject\Exceptions\NotPublicGetterPropertyException;
