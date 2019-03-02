@@ -1639,8 +1639,6 @@ class DaftObjectImplementationTest extends TestCase
                     '()'
                 )
             );
-
-            static::assertSame($matches[1], $getter_matches[2]);
         }
     }
 
