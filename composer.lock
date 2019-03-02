@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "ea530a5c74754509e81a7c4d3fee0350",
+    "content-hash": "59a39936aba382a8e29b3ca758e37840",
     "packages": [
         {
             "name": "signpostmarv/daft-magic-property-analysis",
@@ -3082,28 +3082,28 @@
         },
         {
             "name": "psalm/plugin-phpunit",
-            "version": "0.4.1",
+            "version": "0.5.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/psalm/phpunit-psalm-plugin.git",
-                "reference": "707b2472bad6655d85c39a4e2e1d210800c73b75"
+                "reference": "2fcf618ba9a710e22a0da9fab465770ee6314cfa"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/psalm/phpunit-psalm-plugin/zipball/707b2472bad6655d85c39a4e2e1d210800c73b75",
-                "reference": "707b2472bad6655d85c39a4e2e1d210800c73b75",
+                "url": "https://api.github.com/repos/psalm/phpunit-psalm-plugin/zipball/2fcf618ba9a710e22a0da9fab465770ee6314cfa",
+                "reference": "2fcf618ba9a710e22a0da9fab465770ee6314cfa",
                 "shasum": ""
             },
             "require": {
                 "composer/semver": "^1.4",
                 "muglug/package-versions-56": "^1.2",
-                "phpunit/phpunit": "^5.0 || ^6.0 || ^7.0",
-                "vimeo/psalm": "^3.0 || dev-master"
+                "phpunit/phpunit": "^6.0 || ^7.0 || ^8.0",
+                "vimeo/psalm": "^3.0.13 || dev-master"
             },
             "require-dev": {
                 "codeception/base": "^2.5",
                 "squizlabs/php_codesniffer": "^3.3.1",
-                "weirdan/codeception-psalm-module": "^0.1.0"
+                "weirdan/codeception-psalm-module": "^0.2.1"
             },
             "type": "psalm-plugin",
             "extra": {
@@ -3115,6 +3115,12 @@
                 "psr-4": {
                     "Psalm\\PhpUnitPlugin\\": [
                         "."
+                    ],
+                    "Psalm\\PhpUnitPlugin\\Hooks\\": [
+                        "hooks"
+                    ],
+                    "Psalm\\PhpUnitPlugin\\Exception\\": [
+                        "Exception"
                     ]
                 }
             },
@@ -3129,7 +3135,7 @@
                 }
             ],
             "description": "Psalm plugin for PHPUnit",
-            "time": "2019-02-14T05:10:52+00:00"
+            "time": "2019-03-01T18:53:36+00:00"
         },
         {
             "name": "psr/container",

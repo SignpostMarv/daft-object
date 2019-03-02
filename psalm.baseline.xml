@@ -1,109 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <files>
-  <file src="Tests\AbstractArrayBackedDaftObject\AbstractArrayBackedDaftObjectTest.php">
-    <PossiblyUnusedMethod occurrences="11">
-      <code>public function test_RetrievePropertyValueFromData__not_nullable() : void</code>
-      <code>public function dataProvider_RetrievePropertyValueFromDataExpectStringOrNull() : array</code>
-      <code>public function dataProvider_RetrievePropertyValueFromDataExpectArrayOrNull() : array</code>
-      <code>public function dataProvider_RetrievePropertyValueFromDataExpectIntishOrNull() : array</code>
-      <code>public function dataProvider_RetrievePropertyValueFromDataExpectFloatishOrNull() : array</code>
-      <code>public function dataProvider_RetrievePropertyValueFromDataExpectBoolishOrNull() : array</code>
-      <code>public function test_RetrievePropertyValueFromDataExpectStringOrNull(</code>
-      <code>public function test_RetrievePropertyValueFromDataExpectArrayOrNull(</code>
-      <code>public function test_RetrievePropertyValueFromDataExpectIntishOrNull(</code>
-      <code>public function test_RetrievePropertyValueFromDataExpectFloatishOrNull(</code>
-      <code>public function test_RetrievePropertyValueFromDataExpectBoolishOrNull(</code>
-    </PossiblyUnusedMethod>
-  </file>
-  <file src="Tests\AbstractDaftObject\AbstractDaftObjectImplementationTest.php">
-    <PossiblyUnusedMethod occurrences="6">
-      <code>public function dataProvider_FuzzingImplementations_NotPublicGetter() : Generator</code>
-      <code>public function dataProvider_FuzzingImplementations_NotPublicSetter() : Generator</code>
-      <code>public function dataProvider_FuzzingImplementations_NotDefined() : Generator</code>
-      <code>public function test_FuzzingImplementations_NotPublicGetter(</code>
-      <code>public function test_FuzzingImplementations_NotPublicSetter(</code>
-      <code>public function test_FuzzingImplementations_NotDefined(</code>
-    </PossiblyUnusedMethod>
-  </file>
-  <file src="Tests\DaftJson\DaftJsonExceptionTest.php">
-    <PossiblyUnusedMethod occurrences="1">
-      <code>public function test_ThrowIfNotJsonType(string $type) : void</code>
-    </PossiblyUnusedMethod>
-  </file>
-  <file src="Tests\DaftJson\DaftJsonTest.php">
-    <PossiblyUnusedMethod occurrences="2">
-      <code>public function test__json_decode() : void</code>
-      <code>public function test__json_encode() : void</code>
-    </PossiblyUnusedMethod>
-  </file>
-  <file src="Tests\DaftJson\JsonTypeUtilitiesExceptionsTest.php">
-    <PossiblyUnusedMethod occurrences="5">
-      <code>public function test_DaftObjectFromJsonTypeArray_fails_with_non_array() : void</code>
-      <code>public function dataProvider_ThrowIfJsonDefNotValid_fails() : array</code>
-      <code>public function test_ThrowIfJsonDefNotValid_fails(</code>
-      <code>final public function dataProvider_AbstractDaftObject__is_subclass_of__not_DaftJson() : Generator</code>
-      <code>public function test_ThrowIFNotDaftJson_fails(string $className) : void</code>
-    </PossiblyUnusedMethod>
-  </file>
-  <file src="Tests\DaftObject\DaftObjectImplementationTest.php">
-    <PossiblyUnusedMethod occurrences="26">
-      <code>final public function testHasDefinedAllPropertiesCorrectly(</code>
-      <code>final public function testHasDefinedAllPropertiesCorrectlyExceptMixedCase(</code>
-      <code>final public function testHasDefinedAllNullablesCorrectly(</code>
-      <code>final public function testHasDefinedAllExportablesCorrectly(</code>
-      <code>final public function testHasDefinedImplementationCorrectly(</code>
-      <code>final public function testHasAllGettersAndSettersDefinedAsProperties(</code>
-      <code>final public function testProviderNonAbstractGoodFuzzingSetFromBlank(</code>
-      <code>final public function testProviderNonAbstractGoodFuzzingSetFromBlankThenJsonSerialiseMaybeFailure(</code>
-      <code>final public function testProviderNonAbstractGoodFuzzingJsonFromArrayFailure(</code>
-      <code>final public function dataProviderNonAbstractGoodFuzzingHasSetters_DaftJson() : Generator</code>
-      <code>final public function dataProviderNonAbstractGoodFuzzingHasSetters_Not_DaftJson() : Generator</code>
-      <code>final public function dataProviderNonAbstractNonWormGoodFuzzingHasSetters() : Generator</code>
-      <code>final public function dataProviderNonAbstractJsonArrayBackedGoodFuzzingHasSetters() : Generator</code>
-      <code>final public function testProviderNonAbstractGoodFuzzingJsonFromStringFailure_dataProviderNonAbstractGoodFuzzingHasSetters(</code>
-      <code>final public function testProviderNonAbstractGoodFuzzingSetFromBlankThenJsonSerialiseMaybePropertiesFailure(</code>
-      <code>final public function testProviderNonAbstractGoodFuzzingHasSettersPerPropertyWorm(</code>
-      <code>final public function testProviderNonAbstractGoodFuzzingHasSettersPerPropertyWormAfterCreate(</code>
-      <code>final public function testNonAbstractGoodFuzzingHasSettersPerPropertyNotNullable(</code>
-      <code>final public function DataProviderNotDaftObjectHasPropertiesWithMultiTypedArraysOfUniqueValues(</code>
-      <code>final public function dataProviderNonAbstractGoodFuzzingHasSettersPerPropertyWorm() : Generator</code>
-      <code>final public function dataProviderNonAbstractGoodFuzzingHasSettersPerPropertyNotNullable(</code>
-      <code>public function testSortableImplementation(string $className) : void</code>
-      <code>public function testNotDaftObjectHasPropertiesWithMultiTypedArraysOfUniqueValues(</code>
-      <code>public function test_public_NudgePropertyValue() : void</code>
-      <code>public function test_AbstractDaftObject__has_properties_each_property(</code>
-      <code>final public function test_NonAbstract_AbstractDaftObject__and__DaftObjectCreatedByArray__has_properties_each_defined_property__writeOnly(</code>
-    </PossiblyUnusedMethod>
-  </file>
-  <file src="Tests\DaftObject\LinkedDataTest.php">
-    <PossiblyUnusedMethod occurrences="1">
-      <code>public function testJsonEncode() : void</code>
-    </PossiblyUnusedMethod>
-  </file>
-  <file src="Tests\DaftObject\MultiTypedArrayPropertyImplementationTest.php">
-    <PossiblyUnusedMethod occurrences="6">
-      <code>public function DataProviderObjectPropertyValueException() : Generator</code>
-      <code>public function DataProviderObjectPropertyValueNotUniqueAutoDouble() : Generator</code>
-      <code>public function DataProviderObjectPropertyValueTrimmedStrings() : Generator</code>
-      <code>public function testNudgingThrows(</code>
-      <code>public function testNonUniqueThrows(</code>
-      <code>public function testAutoTrimmedStrings(</code>
-    </PossiblyUnusedMethod>
-  </file>
-  <file src="Tests\DaftObject\TypeUtilitiesTest.php">
-    <PossiblyUnusedMethod occurrences="1">
-      <code>public function test_hasMethod_is_false(string $class_name, string $property) : void</code>
-    </PossiblyUnusedMethod>
-  </file>
-  <file src="Tests\DaftSortableObject\DaftSortableObjectTest.php">
-    <PossiblyUnusedMethod occurrences="5">
-      <code>public function dataProvider_UsesTrait_NotInterface() : Generator</code>
-      <code>final public function dataProvider_SortableDaftObject_and_AbstractDaftObject__has_sortable_properties() : Generator</code>
-      <code>public function test_TraitSortableDaftObject_CompareFails(string $className) : void</code>
-      <code>public function test_SortableDaftObject_and_AbstractDaftObject(string $className) : void</code>
-      <code>public function test_DaftSortableObject_CompareToDaftSortableObject() : void</code>
-    </PossiblyUnusedMethod>
-  </file>
   <file src="Tests\DaftSortableObject\Fixtures\DaftSortableObject.php">
     <PossiblyUnusedMethod occurrences="2">
       <code>public function GetIntSortOrder() : int</code>
@@ -122,27 +18,13 @@
       <code>public function SetFoo(string $value) : void;</code>
     </PossiblyUnusedMethod>
   </file>
-  <file src="Tests\DefinitionAssistant\DefinitionAssistantTest.php">
-    <PossiblyUnusedMethod occurrences="4">
-      <code>public function testIsTypeUnregistered(string $className) : void</code>
-      <code>public function DataProviderExceptionsInRegisterType() : array</code>
-      <code>public function testExceptionsInRegisterType(</code>
-      <code>public function testRegisterAbstractDaftObjectTypeHasAlreadyBeenRegistered() : void</code>
+  <file src="Tests\DefinitionAssistant\DefinitionAssistant.php">
+    <PossiblyUnusedMethod occurrences="2">
+      <code>public static function public_RegisterDaftObjectTypeFromTypeAndProps(</code>
+      <code>public static function public_MaybeRegisterAdditionalTypes(string $maybe) : string</code>
     </PossiblyUnusedMethod>
   </file>
   <file src="Tests\TestCase.php">
-    <PossiblyUnusedMethod occurrences="10">
-      <code>final public function dataProviderNonAbstractGoodImplementationsWithMixedCaseProperties() : Generator</code>
-      <code>final public function dataProviderNonAbstractGoodNullableImplementations() : Generator</code>
-      <code>final public function dataProviderNonAbstractGoodExportableImplementations() : Generator</code>
-      <code>final public function dataProviderNonAbstractGoodPropertiesImplementations() : Generator</code>
-      <code>final public function dataProviderGoodNonAbstractGetterSetters() : Generator</code>
-      <code>final public function dataProviderNonAbstractGoodSortableImplementations() : Generator</code>
-      <code>public function dataProvider_DaftObject__has_properties() : Generator</code>
-      <code>public function dataProvider_AbstractDaftObject__has_properties_but_not_this_one() : Generator</code>
-      <code>public function dataProvider_DaftObject__has_properties_each_defined_property() : Generator</code>
-      <code>public function dataProvider_NonAbstract_AbstractDaftObject__and__DaftObjectCreatedByArray__has_properties_each_defined_property__writeOnly() : Generator</code>
-    </PossiblyUnusedMethod>
     <UnusedProperty occurrences="3">
       <code>$backupGlobals</code>
       <code>$backupStaticAttributes</code>

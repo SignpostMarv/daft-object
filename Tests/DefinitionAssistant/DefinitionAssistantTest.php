@@ -50,58 +50,6 @@ class DefinitionAssistantTest extends TestCase
         }
     }
 
-    /**
-    * @psalm-return array<int, array{0:class-string<DaftObject>, 1:array, 2:class-string<\Throwable>, 3:string}>
-    */
-    public function DataProviderExceptionsInRegisterType() : array
-    {
-        return [
-            [
-                DateTimeImmutableTestObject::class,
-                ['foo' => 'foo'],
-                Error::class,
-                'Cannot unpack array with string keys',
-            ],
-        ];
-    }
-
-    /**
-    * @param array<int, string> $properties
-    *
-    * @psalm-param class-string<AbstractDaftObject> $type
-    * @psalm-param class-string<\Throwable> $exception
-    *
-    * @dataProvider DataProviderExceptionsInRegisterType
-    */
-    public function testExceptionsInRegisterType(
-        string $type,
-        array $properties,
-        string $exception,
-        string $message
-    ) : void {
-        DefinitionAssistant::ClearTypes();
-
-        static::assertTrue(DefinitionAssistant::IsTypeUnregistered($type));
-
-        static::expectException($exception);
-        static::expectExceptionMessage($message);
-
-        static::assertSame(
-            $type,
-            DefinitionAssistant::public_RegisterDaftObjectTypeFromTypeAndProps(
-                $type,
-                ...$properties
-            )
-        );
-
-        DefinitionAssistant::ClearTypes();
-
-        static::assertSame(
-            $type,
-            DefinitionAssistant::public_MaybeRegisterAdditionalTypes($type)
-        );
-    }
-
     public function testRegisterAbstractDaftObjectTypeHasAlreadyBeenRegistered() : void
     {
         DefinitionAssistant::ClearTypes();

@@ -64,7 +64,9 @@ class DaftSortableObjectTest extends Base
     /**
     * @dataProvider dataProvider_UsesTrait_NotInterface
     *
-    * @psalm-param class-string<AbstractDaftObject&DaftSortableObject> $className
+    * @psalm-param class-string<AbstractDaftObject> $className
+    *
+    * @psalm-suppress UndefinedMethod
     */
     public function test_TraitSortableDaftObject_CompareFails(string $className) : void
     {

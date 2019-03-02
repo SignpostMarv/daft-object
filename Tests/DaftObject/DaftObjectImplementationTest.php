@@ -940,7 +940,9 @@ class DaftObjectImplementationTest extends TestCase
     *
     * @depends testHasDefinedImplementationCorrectly
     *
-    * @psalm-param class-string<AbstractArrayBackedDaftObject> $className
+    * @psalm-param class-string<DaftObject> $className
+    *
+    * @psalm-suppress UndefinedMethod
     */
     final public function testProviderNonAbstractGoodFuzzingJsonFromStringFailure(
         string $className
@@ -968,7 +970,7 @@ class DaftObjectImplementationTest extends TestCase
     }
 
     /**
-    * @psalm-return Generator<int, array{0:class-string<T&DaftJson>, 1:ReflectionClass, 2:array<string, scalar|array|object|null>, 3:array<int, string>, 4:array<int, string>}, mixed, void>
+    * @psalm-return Generator<int, array{0:class-string<DaftJson>, 1:ReflectionClass, 2:array<string, scalar|array|object|null>, 3:array<int, string>, 4:array<int, string>}, mixed, void>
     */
     final public function dataProviderNonAbstractGoodFuzzingHasSetters_DaftJson() : Generator
     {
@@ -980,7 +982,7 @@ class DaftObjectImplementationTest extends TestCase
     }
 
     /**
-    * @psalm-return Generator<int, array{0:class-string<T>, 1:ReflectionClass, 2:array<string, scalar|array|object|null>, 3:array<int, string>, 4:array<int, string>}, mixed, void>
+    * @psalm-return Generator<int, array{0:class-string<DaftObject>, 1:ReflectionClass, 2:array<string, scalar|array|object|null>, 3:array<int, string>, 4:array<int, string>}, mixed, void>
     */
     final public function dataProviderNonAbstractGoodFuzzingHasSetters_Not_DaftJson() : Generator
     {
@@ -1004,7 +1006,7 @@ class DaftObjectImplementationTest extends TestCase
     }
 
     /**
-    * @psalm-return Generator<int, array{0:class-string<T&AbstractArrayBackedDaftObject>, 1:ReflectionClass, 2:array<string, scalar|array|object|null>, 3:array<int, string>, 4:array<int, string>}, mixed, void>
+    * @psalm-return Generator<int, array{0:class-string<AbstractArrayBackedDaftObject>, 1:ReflectionClass, 2:array<string, scalar|array|object|null>, 3:array<int, string>, 4:array<int, string>}, mixed, void>
     */
     final public function dataProviderNonAbstractJsonArrayBackedGoodFuzzingHasSetters() : Generator
     {
@@ -1039,7 +1041,7 @@ class DaftObjectImplementationTest extends TestCase
     * @depends testHasDefinedImplementationCorrectly
     * @depends testProviderNonAbstractGoodFuzzingJsonFromStringFailure
     *
-    * @psalm-param class-string<AbstractArrayBackedDaftObject> $className
+    * @psalm-param class-string<DaftObject> $className
     */
     final public function testProviderNonAbstractGoodFuzzingJsonFromStringFailure_dataProviderNonAbstractGoodFuzzingHasSetters(
         string $className
@@ -1243,7 +1245,7 @@ class DaftObjectImplementationTest extends TestCase
     /**
     * @dataProvider dataProviderNonAbstractGoodFuzzingHasSettersPerPropertyNotNullable
     *
-    * @psalm-param class-string<AbstractDaftObject> $className
+    * @psalm-param class-string<DaftObject> $className
     */
     final public function testNonAbstractGoodFuzzingHasSettersPerPropertyNotNullable(
         string $className,
@@ -1304,7 +1306,7 @@ class DaftObjectImplementationTest extends TestCase
     }
 
     /**
-    * @psalm-return Generator<int, array{0:class-string<T>, 1:ReflectionClass, 2:array<string, scalar|array|object|null>, 3:array<int, string>, 4:array<int, string>, 5:string}, mixed, void>
+    * @psalm-return Generator<int, array{0:class-string<DaftObject>, 1:ReflectionClass, 2:array<string, scalar|array|object|null>, 3:array<int, string>, 4:array<int, string>, 5:string}, mixed, void>
     */
     final public function dataProviderNonAbstractGoodFuzzingHasSettersPerPropertyNotNullable(
     ) : Generator {

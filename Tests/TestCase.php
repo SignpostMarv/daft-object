@@ -263,7 +263,7 @@ abstract class TestCase extends Base
     }
 
     /**
-    * @psalm-return Generator<int, array{0:class-string<T&DaftSortableObject>, 1:ReflectionClass}, mixed, void>
+    * @psalm-return Generator<int, array{0:class-string<DaftSortableObject>, 1:ReflectionClass}, mixed, void>
     */
     final public function dataProviderNonAbstractGoodSortableImplementations() : Generator
     {

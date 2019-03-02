@@ -28,6 +28,9 @@ class AbstractArrayBackedDaftObjectTest extends Base
         $obj->public_RetrievePropertyValueFromData('foo');
     }
 
+    /**
+    * @psalm-return array<int, array{0:scalar, 1:string|null}>
+    */
     public function dataProvider_RetrievePropertyValueFromDataExpectStringOrNull() : array
     {
         return [
@@ -42,6 +45,9 @@ class AbstractArrayBackedDaftObjectTest extends Base
         ];
     }
 
+    /**
+    * @psalm-return array<int, array{0:scalar, 1:string|null}>
+    */
     public function dataProvider_RetrievePropertyValueFromDataExpectArrayOrNull() : array
     {
         return [
@@ -56,6 +62,9 @@ class AbstractArrayBackedDaftObjectTest extends Base
         ];
     }
 
+    /**
+    * @psalm-return array<int, array{0:scalar, 1:string|null}>
+    */
     public function dataProvider_RetrievePropertyValueFromDataExpectIntishOrNull() : array
     {
         return [
@@ -78,6 +87,9 @@ class AbstractArrayBackedDaftObjectTest extends Base
         ];
     }
 
+    /**
+    * @psalm-return array<int, array{0:scalar, 1:string|null}>
+    */
     public function dataProvider_RetrievePropertyValueFromDataExpectFloatishOrNull() : array
     {
         return [
@@ -100,6 +112,9 @@ class AbstractArrayBackedDaftObjectTest extends Base
         ];
     }
 
+    /**
+    * @psalm-return array<int, array{0:(scalar|scalar[]), 1:string|null}>
+    */
     public function dataProvider_RetrievePropertyValueFromDataExpectBoolishOrNull() : array
     {
         return [
