@@ -6,12 +6,10 @@ declare(strict_types=1);
 
 namespace SignpostMarv\DaftObject\Tests\DefinitionAssistant;
 
-use Error;
 use InvalidArgumentException;
 use SignpostMarv\DaftMagicPropertyAnalysis\DefinitionAssistant as ParentDefinitionAssistant;
 use SignpostMarv\DaftObject\AbstractDaftObject;
 use SignpostMarv\DaftObject\DaftObject;
-use SignpostMarv\DaftObject\DateTimeImmutableTestObject;
 use SignpostMarv\DaftObject\Tests\TestCase;
 
 class DefinitionAssistantTest extends TestCase
