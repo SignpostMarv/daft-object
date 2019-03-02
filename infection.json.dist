@@ -29,6 +29,11 @@
                 "SignpostMarv\\DaftObject\\AbstractArrayBackedDaftObject::DaftObjectWormPropertyWritten"
             ]
         },
+        "MethodCallRemoval": {
+            "ignore": [
+                "SignpostMarv\\DaftObject\\DefinitionAssistant::RegisterDaftObjectTypeFromTypeAndProps"
+            ]
+        },
         "NotIdentical": {
             "ignore": [
                 "SignpostMarv\\DaftObject\\AbstractArrayBackedDaftObject::NudgePropertyValue",
