@@ -404,45 +404,45 @@ class DaftObjectImplementationTest extends TestCase
                     )
                 );
 
+                static::assertTrue(
+                    $reflectorGetter->hasReturnType(),
+                    (
+                        $reflectorGetter->getNumberOfParameters() .
+                        $reflectorGetter->getDeclaringClass()->getName() .
+                        '::' .
+                        $reflectorGetter->getName() .
+                        '() must have a return type.'
+                    )
+                );
+
+                /**
+                * @var ReflectionType
+                */
+                $returnType = $reflectorGetter->getReturnType();
+
+                static::assertTrue(
+                    ('void' !== $returnType->__toString()),
+                    (
+                        $reflectorGetter->getNumberOfParameters() .
+                        $reflectorGetter->getDeclaringClass()->getName() .
+                        '::' .
+                        $reflectorGetter->getName() .
+                        '() must have a non-void return type.'
+                    )
+                );
+
+                if ($isNullable) {
                     static::assertTrue(
-                        $reflectorGetter->hasReturnType(),
+                        $returnType->allowsNull(),
                         (
                             $reflectorGetter->getNumberOfParameters() .
                             $reflectorGetter->getDeclaringClass()->getName() .
                             '::' .
                             $reflectorGetter->getName() .
-                            '() must have a return type.'
+                            '() must have a nullable return type.'
                         )
                     );
-
-                    /**
-                    * @var ReflectionType
-                    */
-                    $returnType = $reflectorGetter->getReturnType();
-
-                    static::assertTrue(
-                        ('void' !== $returnType->__toString()),
-                        (
-                            $reflectorGetter->getNumberOfParameters() .
-                            $reflectorGetter->getDeclaringClass()->getName() .
-                            '::' .
-                            $reflectorGetter->getName() .
-                            '() must have a non-void return type.'
-                        )
-                    );
-
-                    if ($isNullable) {
-                        static::assertTrue(
-                            $returnType->allowsNull(),
-                            (
-                                $reflectorGetter->getNumberOfParameters() .
-                                $reflectorGetter->getDeclaringClass()->getName() .
-                                '::' .
-                                $reflectorGetter->getName() .
-                                '() must have a nullable return type.'
-                            )
-                        );
-                    }
+                }
             }
 
             if ($reflectorSetter instanceof ReflectionMethod) {
@@ -1641,7 +1641,7 @@ class DaftObjectImplementationTest extends TestCase
                 )
             );
 
-                static::assertSame($matches[1], $getter_matches[2]);
+            static::assertSame($matches[1], $getter_matches[2]);
         }
     }
 
