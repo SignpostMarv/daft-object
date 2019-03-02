@@ -1586,7 +1586,7 @@ class DaftObjectImplementationTest extends TestCase
                 );
 
                 $regex_setter_type =
-                    '/\* @param (.+) \$' .
+                    '/\* @(psalm-param|param) (.+) \$' .
                     preg_quote($setter_param->getName(), '/') .
                     '\n/';
 
@@ -1595,7 +1595,7 @@ class DaftObjectImplementationTest extends TestCase
                     preg_match($regex_setter_type, $setter_docblock, $setter_matches),
                     (
                         $className .
-                        ' must specify an @param docblock entry for ' .
+                        ' must specify an @psalm-param or @param docblock entry for ' .
                         $className .
                         '::' .
                         $setter->getName() .
