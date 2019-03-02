@@ -264,34 +264,6 @@ abstract class TestCase extends Base
     }
 
     /**
-    * @psalm-return Generator<int, array{0:class-string<T>, 1:ReflectionMethod}, mixed, void>
-    */
-    final public function dataProviderGoodNonAbstractGetterSettersNotId() : Generator
-    {
-        foreach ($this->dataProviderGoodNonAbstractGetterSetters() as $args) {
-            $property = mb_substr($args[1]->getName(), 3);
-
-            $properties = $args[0]::DaftObjectProperties();
-
-            if (
-                ! (
-                    ! (
-                        in_array($property, $properties, true) ||
-                        in_array(lcfirst($property), $properties, true)
-                    ) &&
-                    is_a(
-                        $args[0],
-                        DefinesOwnIdPropertiesInterface::class,
-                        true
-                    )
-                )
-            ) {
-                yield $args;
-            }
-        }
-    }
-
-    /**
     * @psalm-return Generator<int, array{0:class-string<T&DaftSortableObject>, 1:ReflectionClass}, mixed, void>
     */
     final public function dataProviderNonAbstractGoodSortableImplementations() : Generator
@@ -357,18 +329,6 @@ abstract class TestCase extends Base
         yield from $this->dataProvider_DaftObject__interface__has_properties();
     }
 
-    public function dataProvider_DefinesOwnIdPropertiesInterface_NonAbstract() : Generator
-    {
-        foreach ($this->dataProvider_AbstractDaftObject__has_properties() as $args) {
-            if (
-                is_a($args[0], DefinesOwnIdPropertiesInterface::class, true) &&
-                ! (new ReflectionClass($args[0]))->isAbstract()
-            ) {
-                yield $args;
-            }
-        }
-    }
-
     /**
     * @psalm-return Generator<string, array{0:class-string<AbstractDaftObject>, 1:string}, mixed, void>
     */
@@ -394,6 +354,32 @@ abstract class TestCase extends Base
             foreach (DefinitionAssistant::ObtainExpectedProperties($args[0]) as $prop) {
                 if ( ! in_array($prop, $properties, true)) {
                     yield ($args[0] . '::$' . $prop) => [$args[0], $prop];
+                }
+            }
+        }
+    }
+
+    /**
+    * @psalm-return Generator<string, array{0:class-string<AbstractDaftObject>, 1:string}, mixed, void>
+    */
+    public function dataProvider_AbstractDaftObject__has_properties_but_not_this_one() : Generator
+    {
+        foreach ($this->dataProvider_AbstractDaftObject__has_properties() as $args) {
+            /**
+            * @var array<int, string>
+            */
+            $expected = array_unique(
+                array_merge(
+                    array_filter((array) $args[0]::PROPERTIES, 'is_string'),
+                    DefinitionAssistant::ObtainExpectedProperties($args[0])
+                )
+            );
+
+            foreach ($expected as $prop) {
+                $porp = strrev($prop);
+
+                if ( ! in_array($porp, $expected, true)) {
+                    yield ($args[0] . '::$' . $porp) => [$args[0], $porp];
                 }
             }
         }

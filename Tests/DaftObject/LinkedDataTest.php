@@ -15,10 +15,6 @@ class LinkedDataTest extends TestCase
     {
         $arr = ['@id' => 'foo'];
 
-        foreach (HasId::DaftObjectIdProperties() as $prop) {
-            static::assertArrayHasKey($prop, $arr);
-        }
-
         $foo = new HasId($arr);
 
         static::assertSame('{"@id":"foo"}', json_encode($foo));
@@ -30,7 +26,5 @@ class LinkedDataTest extends TestCase
 
         $bar->__set('@id', 'bar');
         static::assertSame('{"@id":"bar"}', json_encode($bar));
-
-        static::assertSame($foo->id, $foo->__get('@id'));
     }
 }

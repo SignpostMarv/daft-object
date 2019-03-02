@@ -161,35 +161,7 @@ class DefinitionAssistant extends Base
     */
     protected static function MaybeRegisterAdditionalTypes(string $maybe) : string
     {
-        /**
-        * @psalm-var class-string<T>
-        */
-        $out = array_reduce(
-            array_filter(
-                [
-                    DefinesOwnIdPropertiesInterface::class,
-                ],
-                function (string $otherType) use ($maybe) : bool {
-                    return $otherType !== $maybe;
-                }
-            ),
-            /**
-            * @psalm-param class-string<T> $maybe
-            * @psalm-param class-string<T> $otherType
-            *
-            * @psalm-return class-string<T>
-            */
-            function (string $maybe, string $otherType) : string {
-                if (self::IsTypeUnregistered($otherType)) {
-                    return self::RegisterDaftObjectTypeFromTypeAndProps($otherType, 'id');
-                }
-
-                return $maybe;
-            },
-            $maybe
-        );
-
-        return $out;
+        return $maybe;
     }
 
     /**

@@ -46,7 +46,7 @@
     </PossiblyUnusedMethod>
   </file>
   <file src="Tests\DaftObject\DaftObjectImplementationTest.php">
-    <PossiblyUnusedMethod occurrences="27">
+    <PossiblyUnusedMethod occurrences="26">
       <code>final public function testHasDefinedAllPropertiesCorrectly(</code>
       <code>final public function testHasDefinedAllPropertiesCorrectlyExceptMixedCase(</code>
       <code>final public function testHasDefinedAllNullablesCorrectly(</code>
@@ -73,7 +73,6 @@
       <code>public function test_public_NudgePropertyValue() : void</code>
       <code>public function test_AbstractDaftObject__has_properties_each_property(</code>
       <code>final public function test_NonAbstract_AbstractDaftObject__and__DaftObjectCreatedByArray__has_properties_each_defined_property__writeOnly(</code>
-      <code>public function testWriteOnly() : void</code>
     </PossiblyUnusedMethod>
   </file>
   <file src="Tests\DaftObject\LinkedDataTest.php">
@@ -93,7 +92,7 @@
   </file>
   <file src="Tests\DaftObject\TypeUtilitiesTest.php">
     <PossiblyUnusedMethod occurrences="1">
-      <code>public function test_DaftObjectPublicOrProtectedGetters(string $className) : void</code>
+      <code>public function test_hasMethod_is_false(string $class_name, string $property) : void</code>
     </PossiblyUnusedMethod>
   </file>
   <file src="Tests\DaftSortableObject\DaftSortableObjectTest.php">
@@ -117,18 +116,6 @@
       <code>public function SetIntSortOrder(int $value) : void</code>
     </PossiblyUnusedMethod>
   </file>
-  <file src="Tests\DefinesOwnIdPropertiesInterface\DaftObjectIdValuesHashLazyIntTest.php">
-    <PossiblyUnusedMethod occurrences="1">
-      <code>public function test_DaftObjectIdHash() : void</code>
-    </PossiblyUnusedMethod>
-  </file>
-  <file src="Tests\DefinesOwnIdPropertiesInterface\DefinesOwnIdPropertiesInterfaceTest.php">
-    <PossiblyUnusedMethod occurrences="3">
-      <code>public function dataProvider_DefinesOwnScalarIdProperties() : array</code>
-      <code>public function test_DefinesOwnScalarIdProperties($id) : void</code>
-      <code>public function test_DefinesIdPropertiesCorrectly(string $className) : void</code>
-    </PossiblyUnusedMethod>
-  </file>
   <file src="Tests\DefinitionAssistant\DefinesPropertyOnInterface.php">
     <PossiblyUnusedMethod occurrences="2">
       <code>public function GetFoo() : string;</code>
@@ -149,10 +136,10 @@
       <code>final public function dataProviderNonAbstractGoodNullableImplementations() : Generator</code>
       <code>final public function dataProviderNonAbstractGoodExportableImplementations() : Generator</code>
       <code>final public function dataProviderNonAbstractGoodPropertiesImplementations() : Generator</code>
-      <code>final public function dataProviderGoodNonAbstractGetterSettersNotId() : Generator</code>
+      <code>final public function dataProviderGoodNonAbstractGetterSetters() : Generator</code>
       <code>final public function dataProviderNonAbstractGoodSortableImplementations() : Generator</code>
       <code>public function dataProvider_DaftObject__has_properties() : Generator</code>
-      <code>public function dataProvider_DefinesOwnIdPropertiesInterface_NonAbstract() : Generator</code>
+      <code>public function dataProvider_AbstractDaftObject__has_properties_but_not_this_one() : Generator</code>
       <code>public function dataProvider_DaftObject__has_properties_each_defined_property() : Generator</code>
       <code>public function dataProvider_NonAbstract_AbstractDaftObject__and__DaftObjectCreatedByArray__has_properties_each_defined_property__writeOnly() : Generator</code>
     </PossiblyUnusedMethod>
@@ -192,6 +179,9 @@
     </PossiblyUnusedMethod>
   </file>
   <file src="tests-src\LinkedData\HasId.php">
+    <InvalidDocblock occurrences="1">
+      <code>class HasId extends AbstractArrayBackedDaftObject implements DaftJsonLinkedData</code>
+    </InvalidDocblock>
     <PossiblyUnusedMethod occurrences="1">
       <code>public function AlterId(string $id) : void</code>
     </PossiblyUnusedMethod>
@@ -220,10 +210,17 @@
       <code>public function GetPasswordHash() : string</code>
     </PossiblyUnusedMethod>
   </file>
-  <file src="tests-src\ReadOnlyTwoColumnPrimaryKey.php">
-    <PossiblyUnusedMethod occurrences="2">
-      <code>public function GetBaz() : int</code>
-      <code>public function GetBat() : ? bool</code>
+  <file src="tests-src\WriteOnly.php">
+    <PossiblyUnusedMethod occurrences="4">
+      <code>public function SetFoo(string $value) : void</code>
+      <code>public function SetBar(float $value) : void</code>
+      <code>public function SetBaz(int $value) : void</code>
+      <code>public function SetBat(? bool $value) : void</code>
     </PossiblyUnusedMethod>
+  </file>
+  <file src="tests-src\WriteOnlyWorm.php">
+    <UnusedClass occurrences="1">
+      <code>class WriteOnlyWorm extends WriteOnly implements DaftObjectWorm</code>
+    </UnusedClass>
   </file>
 </files>

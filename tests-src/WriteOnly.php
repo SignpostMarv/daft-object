@@ -11,15 +11,9 @@ namespace SignpostMarv\DaftObject;
 * @property-write float $Bar
 * @property-write bool|null $Bat
 * @property-write int $Baz
-* @property-read string $id
 */
-class WriteOnly extends AbstractTestObject implements DefinesOwnStringIdInterface
+class WriteOnly extends AbstractTestObject
 {
-    /**
-    * @use DaftObjectIdValuesHashLazyInt<WriteOnly>
-    */
-    use DaftObjectIdValuesHashLazyInt;
-
     public function SetFoo(string $value) : void
     {
         $this->NudgePropertyValue('Foo', $value);
@@ -38,19 +32,5 @@ class WriteOnly extends AbstractTestObject implements DefinesOwnStringIdInterfac
     public function SetBat(? bool $value) : void
     {
         $this->NudgePropertyValue('Bat', $value);
-    }
-
-    public function GetId() : string
-    {
-        return TypeUtilities::ExpectRetrievedValueIsString(
-            'Foo',
-            $this->RetrievePropertyValueFromData('Foo'),
-            static::class
-        );
-    }
-
-    public static function DaftObjectIdProperties() : array
-    {
-        return ['Foo'];
     }
 }

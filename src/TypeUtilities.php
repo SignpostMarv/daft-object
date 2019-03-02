@@ -98,6 +98,9 @@ class TypeUtilities
         return ($SetNotGet ? 'Set' : 'Get') . ucfirst($prop);
     }
 
+    /**
+    * @psalm-param class-string<DaftObject> $class
+    */
     public static function HasMethod(
         string $class,
         string $property,
@@ -347,16 +350,6 @@ class TypeUtilities
         if (false === isset(self::$Getters[$class])) {
             self::$Getters[$class] = [];
             self::$publicSetters[$class] = [];
-
-            if (
-                is_a(
-                    $class,
-                    DefinesOwnIdPropertiesInterface::class,
-                    true
-                )
-            ) {
-                self::$Getters[$class]['id'] = self::BOOL_METHOD_IS_PUBLIC;
-            }
 
             /**
             * @psalm-var class-string<DaftObject>

@@ -8,8 +8,4 @@ namespace SignpostMarv\DaftObject;
 
 class WriteOnlyWorm extends WriteOnly implements DaftObjectWorm
 {
-    /**
-    * @use DaftObjectIdValuesHashLazyInt<WriteOnlyWorm>
-    */
-    use DaftObjectIdValuesHashLazyInt;
 }

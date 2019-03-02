@@ -404,12 +404,6 @@ class DaftObjectImplementationTest extends TestCase
                     )
                 );
 
-                if (
-                    'id' !== $property ||
-                    is_a($className, DefinesOwnArrayIdInterface::class, true) ||
-                    is_a($className, DefinesOwnIntegerIdInterface::class, true) ||
-                    is_a($className, DefinesOwnStringIdInterface::class, true)
-                ) {
                     static::assertTrue(
                         $reflectorGetter->hasReturnType(),
                         (
@@ -420,9 +414,7 @@ class DaftObjectImplementationTest extends TestCase
                             '() must have a return type.'
                         )
                     );
-                }
 
-                if ($reflectorGetter->hasReturnType()) {
                     /**
                     * @var ReflectionType
                     */
@@ -451,7 +443,6 @@ class DaftObjectImplementationTest extends TestCase
                             )
                         );
                     }
-                }
             }
 
             if ($reflectorSetter instanceof ReflectionMethod) {
@@ -561,7 +552,7 @@ class DaftObjectImplementationTest extends TestCase
     }
 
     /**
-    * @dataProvider dataProviderGoodNonAbstractGetterSettersNotId
+    * @dataProvider dataProviderGoodNonAbstractGetterSetters
     *
     * @depends testHasDefinedImplementationCorrectly
     *
@@ -579,6 +570,19 @@ class DaftObjectImplementationTest extends TestCase
             in_array($property, $properties, true) ||
             in_array(lcfirst($property), $properties, true)
         );
+
+        if ( ! $defined) {
+            foreach (TypeUtilities::SUPPORTED_INVALID_LEADING_CHARACTERS as $char) {
+                $defined = (
+                    in_array($char . $property, $properties, true) ||
+                    in_array($char . lcfirst($property), $properties, true)
+                );
+
+                if ($defined) {
+                    break;
+                }
+            }
+        }
 
         static::assertTrue(
             $defined,
@@ -1637,13 +1641,7 @@ class DaftObjectImplementationTest extends TestCase
                 )
             );
 
-            if (
-                'id' !== $property ||
-                is_a($className, DefinesOwnIntegerIdInterface::class, true) ||
-                is_a($className, DefinesOwnStringIdInterface::class, true)
-            ) {
                 static::assertSame($matches[1], $getter_matches[2]);
-            }
         }
     }
 
@@ -1670,23 +1668,6 @@ class DaftObjectImplementationTest extends TestCase
         );
 
         $obj->__get($property);
-    }
-
-    public function testWriteOnly() : void
-    {
-        $obj = new WriteOnly();
-
-        $obj->SetFoo('bar');
-        $obj->SetBar(1.2);
-        $obj->SetBaz(3);
-        $obj->SetBat(true);
-        $obj->SetBat(false);
-        $obj->SetBat(null);
-
-        static::assertSame('bar', $obj->GetId());
-
-        $obj->SetFoo('baz');
-        static::assertSame('baz', $obj->GetId());
     }
 
     /**
