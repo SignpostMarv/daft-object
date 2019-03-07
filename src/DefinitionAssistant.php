@@ -43,7 +43,7 @@ class DefinitionAssistant extends Base
         /**
         * @var array<int, string>
         */
-        $props = $maybe::PROPERTIES;
+        $props = $maybe::DaftObjectProperties();
 
         /**
         * @psalm-var class-string<A>
