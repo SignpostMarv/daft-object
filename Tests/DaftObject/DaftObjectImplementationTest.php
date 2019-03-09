@@ -1748,19 +1748,19 @@ class DaftObjectImplementationTest extends TestCase
 
             if (count($val) > 0) {
 
-            /**
-            * @var (scalar|object|array|null)[]
-            */
-            $val = $val;
+                /**
+                * @var (scalar|object|array|null)[]
+                */
+                $val = $val;
 
-            foreach ($val as $k => $v) {
-                $out .=
-                    '\[' .
-                    preg_quote((string) $k, '/') .
-                    '\] =>\s+' .
-                    static::RegexForVal($v) .
-                    '\s+';
-            }
+                foreach ($val as $k => $v) {
+                    $out .=
+                        '\[' .
+                        preg_quote((string) $k, '/') .
+                        '\] =>\s+' .
+                        static::RegexForVal($v) .
+                        '\s+';
+                }
 
             } else {
                 $out .= 'array\(0\) \{[ ]+\}[ ]+';
