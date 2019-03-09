@@ -116,7 +116,7 @@ abstract class AbstractArrayBackedDaftObject extends AbstractDaftObject implemen
     /**
     * @param array<int|string, scalar|(scalar|array|object|null)[]|object|null> $array
     */
-    final public static function DaftObjectFromJsonArray(
+    public static function DaftObjectFromJsonArray(
         array $array,
         bool $writeAll = self::BOOL_DEFAULT_WRITEALL
     ) : DaftJson {
