@@ -1746,13 +1746,24 @@ class DaftObjectImplementationTest extends TestCase
         if (is_array($val)) {
             $out = '(?:';
 
+            if (count($val) > 0) {
+
             /**
             * @var (scalar|object|array|null)[]
             */
             $val = $val;
 
-            foreach ($val as $v) {
-                $out .= static::RegexForVal($v);
+            foreach ($val as $k => $v) {
+                $out .=
+                    '\[' .
+                    preg_quote((string) $k, '/') .
+                    '\] =>\s+' .
+                    static::RegexForVal($v) .
+                    '\s+';
+            }
+
+            } else {
+                $out .= 'array\(0\) \{[ ]+\}[ ]+';
             }
 
             $out .= ')';
