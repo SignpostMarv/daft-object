@@ -1747,7 +1747,6 @@ class DaftObjectImplementationTest extends TestCase
             $out = '(?:';
 
             if (count($val) > 0) {
-
                 /**
                 * @var (scalar|object|array|null)[]
                 */
@@ -1761,7 +1760,6 @@ class DaftObjectImplementationTest extends TestCase
                         static::RegexForVal($v) .
                         '\s+';
                 }
-
             } else {
                 $out .= 'array\(0\) \{[ ]+\}[ ]+';
             }
