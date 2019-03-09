@@ -1718,7 +1718,7 @@ class DaftObjectImplementationTest extends TestCase
             '[\)]{0,1}#' .
             '\d+ \(' .
             preg_quote((string) count($props), '/') .
-            '\) \{.+';
+            '\) \{\s+';
 
         foreach ($props as $prop => $val) {
             $regex .=
@@ -1728,12 +1728,12 @@ class DaftObjectImplementationTest extends TestCase
                 preg_quote('["' . $prop . '"]', '/') .
                 ')[ ]{0,1}' .
                 preg_quote('=', '/') .
-                '>.+' .
+                '>\s+' .
                 static::RegexForVal($val) .
-                '.+';
+                '\s*';
         }
 
-        $regex .= '.+';
+        $regex .= '\}\s*';
 
         return $regex;
     }
@@ -1747,6 +1747,11 @@ class DaftObjectImplementationTest extends TestCase
             $out = '(?:';
 
             if (count($val) > 0) {
+                $out .=
+                    'array\(' .
+                    preg_quote((string) count($val), '/') .
+                    '\) {\s+';
+
                 /**
                 * @var (scalar|object|array|null)[]
                 */
@@ -1760,11 +1765,13 @@ class DaftObjectImplementationTest extends TestCase
                         static::RegexForVal($v) .
                         '\s+';
                 }
+
+                $out .= '\s+\}';
             } else {
                 $out .= 'array\(0\) \{[ ]+\}[ ]+';
             }
 
-            $out .= ')';
+            $out .= '|array\(\d+\) \{\s+\.\.\.\s+\}\s+)';
 
             return $out;
         } elseif ($val instanceof DateTimeImmutable) {
