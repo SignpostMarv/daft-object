@@ -49,13 +49,6 @@ interface DaftObject
     public function __unset(string $property) : void;
 
     /**
-    * required to support var_dump(<DaftObject>);.
-    *
-    * @return array<string, scalar|array|object|null>
-    */
-    public function __debugInfo() : array;
-
-    /**
     * Get the changed properties on an object.
     *
     * @return string[]
