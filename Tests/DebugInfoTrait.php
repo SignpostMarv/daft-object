@@ -8,20 +8,6 @@ namespace SignpostMarv\DaftObject\Tests;
 
 trait DebugInfoTrait
 {
-    /**
-    * List of exportable properties that can be defined on an implementation.
-    *
-    * @return array<int, string>
-    */
-    abstract public static function DaftObjectExportableProperties() : array;
-
-    /**
-    * List of public getter properties.
-    *
-    * @return array<int, string>
-    */
-    abstract public static function DaftObjectPublicGetters() : array;
-
     public function __debugInfo() : array
     {
         $getters = static::DaftObjectPublicGetters();
@@ -51,4 +37,18 @@ trait DebugInfoTrait
 
         return $out;
     }
+
+    /**
+    * List of exportable properties that can be defined on an implementation.
+    *
+    * @return array<int, string>
+    */
+    abstract public static function DaftObjectExportableProperties() : array;
+
+    /**
+    * List of public getter properties.
+    *
+    * @return array<int, string>
+    */
+    abstract public static function DaftObjectPublicGetters() : array;
 }
