@@ -17,6 +17,7 @@
         },
         "LogicalAnd": {
             "ignore": [
+                "SignpostMarv\\DaftObject\\AbstractArrayBackedDaftObject::__isset",
                 "SignpostMarv\\DaftObject\\AbstractArrayBackedDaftObject::NudgePropertyValue",
                 "SignpostMarv\\DaftObject\\DefinitionAssistant::MaybeRemapStringsToTrimmedStrings",
                 "SignpostMarv\\DaftObject\\TypeUtilities::CachePublicGettersAndSettersProperties",
