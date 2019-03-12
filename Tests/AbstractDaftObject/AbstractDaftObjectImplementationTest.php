@@ -11,15 +11,15 @@ use SignpostMarv\DaftObject\AbstractDaftObject;
 use SignpostMarv\DaftObject\Exceptions\NotPublicGetterPropertyException;
 use SignpostMarv\DaftObject\Exceptions\NotPublicSetterPropertyException;
 use SignpostMarv\DaftObject\Exceptions\UndefinedPropertyException;
-use SignpostMarv\DaftObject\Tests\DaftObject\DaftObjectImplementationTest;
+use SignpostMarv\DaftObject\Tests\DaftObject\DaftObjectFuzzingTest;
 use SignpostMarv\DaftObject\TypeUtilities;
 
 /**
 * @template T as AbstractDaftObject
 *
-* @template-extends DaftObjectImplementationTest<T>
+* @template-extends DaftObjectFuzzingTest<T>
 */
-class AbstractDaftObjectImplementationTest extends DaftObjectImplementationTest
+class AbstractDaftObjectImplementationTest extends DaftObjectFuzzingTest
 {
     /**
     * @psalm-return Generator<int, array{0:class-string<AbstractDaftObject>, 1:string}, mixed, void>
