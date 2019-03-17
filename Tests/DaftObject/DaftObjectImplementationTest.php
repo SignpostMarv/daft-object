@@ -665,7 +665,7 @@ class DaftObjectImplementationTest extends TestCase
             static::assertInstanceOf(ReflectionParameter::class, $setter_param);
 
             $getter_docblock = $getter->getDocComment();
-            $setter_docblock = $getter->getDocComment();
+            $setter_docblock = $setter->getDocComment();
 
             $skip = false;
 
