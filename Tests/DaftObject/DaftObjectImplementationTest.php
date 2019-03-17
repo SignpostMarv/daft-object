@@ -669,7 +669,9 @@ class DaftObjectImplementationTest extends TestCase
 
             $skip = false;
 
-            if (is_string($getter_docblock) && is_string($setter_docblock)) {
+            if (1 === preg_match('/\* ' . preg_quote('{@inheritdoc}', '/') . '/', $docblock)) {
+                $skip = true;
+            } elseif (is_string($getter_docblock) && is_string($setter_docblock)) {
                 $regex_setter_type =
                     '/\* @(psalm-param|param) (.+) $' .
                     preg_quote($setter_param->getName(), '/') .
