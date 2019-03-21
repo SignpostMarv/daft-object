@@ -10,8 +10,6 @@ use Generator;
 use ReflectionClass;
 use ReflectionException;
 use ReflectionMethod;
-use ReflectionNamedType;
-use ReflectionParameter;
 use ReflectionType;
 use SignpostMarv\DaftObject\AbstractDaftObject;
 use SignpostMarv\DaftObject\DaftJson;
