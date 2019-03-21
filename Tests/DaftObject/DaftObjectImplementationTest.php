@@ -623,6 +623,9 @@ class DaftObjectImplementationTest extends TestCase
             )
         );
 
+        $first = mb_substr($property, 0, 1);
+
+        if ( ! in_array($first, TypeUtilities::SUPPORTED_INVALID_LEADING_CHARACTERS, true)) {
         $docblock_getter = null;
         $docblock_setter = null;
 
@@ -692,6 +695,7 @@ class DaftObjectImplementationTest extends TestCase
                     $property
                 )
             );
+        }
         }
     }
 
