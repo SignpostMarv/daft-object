@@ -626,76 +626,76 @@ class DaftObjectImplementationTest extends TestCase
         $first = mb_substr($property, 0, 1);
 
         if ( ! in_array($first, TypeUtilities::SUPPORTED_INVALID_LEADING_CHARACTERS, true)) {
-        $docblock_getter = null;
-        $docblock_setter = null;
+            $docblock_getter = null;
+            $docblock_setter = null;
 
-        $getter_name = TypeUtilities::MethodNameFromProperty($property, false);
-        $setter_name = TypeUtilities::MethodNameFromProperty($property, true);
-        $has_getter = $reflection->hasMethod($getter_name);
-        $has_setter = $reflection->hasMethod($setter_name);
+            $getter_name = TypeUtilities::MethodNameFromProperty($property, false);
+            $setter_name = TypeUtilities::MethodNameFromProperty($property, true);
+            $has_getter = $reflection->hasMethod($getter_name);
+            $has_setter = $reflection->hasMethod($setter_name);
 
-        $getter = $has_getter ? $reflection->getMethod($getter_name) : null;
-        $setter = $has_setter ? $reflection->getMethod($setter_name) : null;
+            $getter = $has_getter ? $reflection->getMethod($getter_name) : null;
+            $setter = $has_setter ? $reflection->getMethod($setter_name) : null;
 
-        if ( ! is_null($getter)) {
-            $docblock_getter = $getter->getDeclaringClass()->getDocComment();
-        }
+            if ( ! is_null($getter)) {
+                $docblock_getter = $getter->getDeclaringClass()->getDocComment();
+            }
 
-        if ( ! is_null($setter)) {
-            $docblock_setter = $setter->getDeclaringClass()->getDocComment();
-        }
+            if ( ! is_null($setter)) {
+                $docblock_setter = $setter->getDeclaringClass()->getDocComment();
+            }
 
-        $read_regex =
-            '/\* @property(?:-read)? ([^\$]+) \$' .
-            preg_quote($property, '/') .
-            '[\r\n]/';
-        $write_regex =
-            '/\* @property(?:-write)? ([^\$]+) \$' .
-            preg_quote($property, '/') .
-            '[\r\n]/';
+            $read_regex =
+                '/\* @property(?:-read)? ([^\$]+) \$' .
+                preg_quote($property, '/') .
+                '[\r\n]/';
+            $write_regex =
+                '/\* @property(?:-write)? ([^\$]+) \$' .
+                preg_quote($property, '/') .
+                '[\r\n]/';
 
-        if ($maybe_mixed_case) {
-            $read_regex .= 'i';
-            $write_regex .= 'i';
-        }
+            if ($maybe_mixed_case) {
+                $read_regex .= 'i';
+                $write_regex .= 'i';
+            }
 
-        if ( ! is_null($getter)) {
-            static::assertIsString(
-                $docblock_getter,
-                (
-                    $getter->getDeclaringClass()->name .
-                    ' must implement a docblock!'
-                )
-            );
-            static::assertRegExp(
-                $read_regex,
-                $docblock_getter,
-                (
-                    $className .
-                    ' must specify an @property or @property-read docblocks entry for $' .
-                    $property
-                )
-            );
-        }
+            if ( ! is_null($getter)) {
+                static::assertIsString(
+                    $docblock_getter,
+                    (
+                        $getter->getDeclaringClass()->name .
+                        ' must implement a docblock!'
+                    )
+                );
+                static::assertRegExp(
+                    $read_regex,
+                    $docblock_getter,
+                    (
+                        $className .
+                        ' must specify an @property or @property-read docblocks entry for $' .
+                        $property
+                    )
+                );
+            }
 
-        if ( ! is_null($setter)) {
-            static::assertIsString(
-                $docblock_setter,
-                (
-                    $setter->getDeclaringClass()->name .
-                    ' must implement a docblock!'
-                )
-            );
-            static::assertRegExp(
-                $write_regex,
-                $docblock_setter,
-                (
-                    $className .
-                    ' must specify an @property or @property-write docblocks entry for $' .
-                    $property
-                )
-            );
-        }
+            if ( ! is_null($setter)) {
+                static::assertIsString(
+                    $docblock_setter,
+                    (
+                        $setter->getDeclaringClass()->name .
+                        ' must implement a docblock!'
+                    )
+                );
+                static::assertRegExp(
+                    $write_regex,
+                    $docblock_setter,
+                    (
+                        $className .
+                        ' must specify an @property or @property-write docblocks entry for $' .
+                        $property
+                    )
+                );
+            }
         }
     }
 
