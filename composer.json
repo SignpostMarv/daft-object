@@ -58,7 +58,7 @@
         "ext-ctype": "*",
         "ext-json": "*",
         "ext-mbstring": "*",
-        "signpostmarv/daft-magic-property-analysis": "^0.7.0",
+        "signpostmarv/daft-magic-property-analysis": "^0.7.1",
         "signpostmarv/sprintf-exception-factory": "^1.2"
     },
     "require-dev": {
