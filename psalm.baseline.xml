@@ -2,20 +2,20 @@
 <files>
   <file src="Tests\DaftSortableObject\Fixtures\DaftSortableObject.php">
     <PossiblyUnusedMethod occurrences="2">
-      <code>public function GetIntSortOrder() : int</code>
-      <code>public function SetIntSortOrder(int $value) : void</code>
+      <code>GetIntSortOrder</code>
+      <code>SetIntSortOrder</code>
     </PossiblyUnusedMethod>
   </file>
   <file src="Tests\DaftSortableObject\Fixtures\NotDaftSortableObject.php">
     <PossiblyUnusedMethod occurrences="2">
-      <code>public function GetIntSortOrder() : int</code>
-      <code>public function SetIntSortOrder(int $value) : void</code>
+      <code>GetIntSortOrder</code>
+      <code>SetIntSortOrder</code>
     </PossiblyUnusedMethod>
   </file>
   <file src="Tests\DefinitionAssistant\DefinesPropertyOnInterface.php">
     <PossiblyUnusedMethod occurrences="2">
-      <code>public function GetFoo() : string;</code>
-      <code>public function SetFoo(string $value) : void;</code>
+      <code>GetFoo</code>
+      <code>SetFoo</code>
     </PossiblyUnusedMethod>
   </file>
   <file src="Tests\DefinitionAssistant\DefinitionAssistant.php">
@@ -26,44 +26,37 @@
       <code>string</code>
     </MoreSpecificReturnType>
     <PossiblyUnusedMethod occurrences="2">
-      <code>public static function public_RegisterDaftObjectTypeFromTypeAndProps(</code>
-      <code>public static function public_MaybeRegisterAdditionalTypes(string $maybe) : string</code>
+      <code>public_RegisterDaftObjectTypeFromTypeAndProps</code>
+      <code>public_MaybeRegisterAdditionalTypes</code>
     </PossiblyUnusedMethod>
-  </file>
-  <file src="Tests\TestCase.php">
-    <UnusedProperty occurrences="3">
-      <code>$backupGlobals</code>
-      <code>$backupStaticAttributes</code>
-      <code>$runTestInSeparateProcess</code>
-    </UnusedProperty>
   </file>
   <file src="src\AbstractArrayBackedDaftObject.php">
     <PossiblyUnusedMethod occurrences="1">
-      <code>public function jsonSerialize() : array</code>
+      <code>jsonSerialize</code>
     </PossiblyUnusedMethod>
   </file>
   <file src="src\DaftObjectHasPropertiesWithMultiTypedArraysOfUniqueValues.php">
     <PossiblyUnusedMethod occurrences="1">
-      <code>public static function DaftObjectPropertiesWithMultiTypedArraysOfUniqueValues() : array;</code>
+      <code>DaftObjectPropertiesWithMultiTypedArraysOfUniqueValues</code>
     </PossiblyUnusedMethod>
   </file>
   <file src="src\DaftObjectWorm.php">
     <PossiblyUnusedMethod occurrences="1">
-      <code>public function DaftObjectWormPropertyWritten(string $property) : bool;</code>
+      <code>DaftObjectWormPropertyWritten</code>
     </PossiblyUnusedMethod>
   </file>
   <file src="tests-src\DateTimeImmutableTestObject.php">
     <PossiblyUnusedMethod occurrences="2">
-      <code>public function GetDatetime() : DateTimeImmutable</code>
-      <code>public function SetDatetime(DateTimeImmutable $value) : void</code>
+      <code>GetDatetime</code>
+      <code>SetDatetime</code>
     </PossiblyUnusedMethod>
   </file>
   <file src="tests-src\LinkedData\HasArrayOfHasId.php">
     <PossiblyUnusedMethod occurrences="4">
-      <code>public function GetJson() : array</code>
-      <code>public function SetJson(array $vals) : void</code>
-      <code>public function GetSingle() : ? HasId</code>
-      <code>public function SetSingle(? HasId $value) : void</code>
+      <code>GetJson</code>
+      <code>SetJson</code>
+      <code>GetSingle</code>
+      <code>SetSingle</code>
     </PossiblyUnusedMethod>
   </file>
   <file src="tests-src\LinkedData\HasId.php">
@@ -71,19 +64,19 @@
       <code>class HasId extends AbstractArrayBackedDaftObject implements DaftJsonLinkedData</code>
     </InvalidDocblock>
     <PossiblyUnusedMethod occurrences="1">
-      <code>public function AlterId(string $id) : void</code>
+      <code>AlterId</code>
     </PossiblyUnusedMethod>
   </file>
   <file src="tests-src\MultiTypedArrayPropertiesTester.php">
     <PossiblyUnusedMethod occurrences="8">
-      <code>public function GetDates() : array</code>
-      <code>public function SetDates($value) : void</code>
-      <code>public function GetDatesOrStrings() : array</code>
-      <code>public function SetDatesOrStrings($value) : void</code>
-      <code>public function GetTrimmedStrings() : array</code>
-      <code>public function SetTrimmedStrings($value) : void</code>
-      <code>public function GetTrimmedString() : string</code>
-      <code>public function SetTrimmedString($value) : void</code>
+      <code>GetDates</code>
+      <code>SetDates</code>
+      <code>GetDatesOrStrings</code>
+      <code>SetDatesOrStrings</code>
+      <code>GetTrimmedStrings</code>
+      <code>SetTrimmedStrings</code>
+      <code>GetTrimmedString</code>
+      <code>SetTrimmedString</code>
     </PossiblyUnusedMethod>
   </file>
   <file src="tests-src\NonPublicGetter.php">
@@ -93,16 +86,16 @@
   </file>
   <file src="tests-src\PasswordHashTestObject.php">
     <PossiblyUnusedMethod occurrences="2">
-      <code>public function SetPassword(string $password) : void</code>
-      <code>public function GetPasswordHash() : string</code>
+      <code>SetPassword</code>
+      <code>GetPasswordHash</code>
     </PossiblyUnusedMethod>
   </file>
   <file src="tests-src\WriteOnly.php">
     <PossiblyUnusedMethod occurrences="4">
-      <code>public function SetFoo(string $value) : void</code>
-      <code>public function SetBar(float $value) : void</code>
-      <code>public function SetBaz(int $value) : void</code>
-      <code>public function SetBat(? bool $value) : void</code>
+      <code>SetFoo</code>
+      <code>SetBar</code>
+      <code>SetBaz</code>
+      <code>SetBat</code>
     </PossiblyUnusedMethod>
   </file>
   <file src="tests-src\WriteOnlyWorm.php">
