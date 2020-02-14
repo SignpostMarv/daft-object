@@ -352,16 +352,16 @@ class DaftObjectImplementationTest extends TestCase
                 $returnType = $reflectorGetter->getReturnType();
 
                 if ($returnType instanceof ReflectionNamedType) {
-                static::assertTrue(
-                    ('void' !== $returnType->getName()),
-                    (
-                        $reflectorGetter->getNumberOfParameters() .
-                        $reflectorGetter->getDeclaringClass()->getName() .
-                        '::' .
-                        $reflectorGetter->getName() .
-                        '() must have a non-void return type.'
-                    )
-                );
+                    static::assertTrue(
+                        ('void' !== $returnType->getName()),
+                        (
+                            $reflectorGetter->getNumberOfParameters() .
+                            $reflectorGetter->getDeclaringClass()->getName() .
+                            '::' .
+                            $reflectorGetter->getName() .
+                            '() must have a non-void return type.'
+                        )
+                    );
                 }
 
                 if ($isNullable) {
@@ -407,18 +407,18 @@ class DaftObjectImplementationTest extends TestCase
                 $returnType = $reflectorSetter->getReturnType();
 
                 if ($returnType instanceof ReflectionNamedType) {
-                static::assertSame(
-                    'void',
-                    $returnType->getName(),
-                    (
-                        $reflectorSetter->getDeclaringClass()->getName() .
-                        '::' .
-                        $reflectorSetter->getName() .
-                        '() must specify a void return type, "' .
-                        $returnType->getName() .
-                        '" found.'
-                    )
-                );
+                    static::assertSame(
+                        'void',
+                        $returnType->getName(),
+                        (
+                            $reflectorSetter->getDeclaringClass()->getName() .
+                            '::' .
+                            $reflectorSetter->getName() .
+                            '() must specify a void return type, "' .
+                            $returnType->getName() .
+                            '" found.'
+                        )
+                    );
                 }
 
                 $type = ($reflectorSetter->getParameters()[0])->getType();
