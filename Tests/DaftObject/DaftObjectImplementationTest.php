@@ -11,6 +11,7 @@ use ReflectionClass;
 use ReflectionException;
 use ReflectionMethod;
 use ReflectionType;
+use ReflectionNamedType;
 use SignpostMarv\DaftObject\AbstractDaftObject;
 use SignpostMarv\DaftObject\DaftJson;
 use SignpostMarv\DaftObject\DaftObject;
@@ -350,8 +351,9 @@ class DaftObjectImplementationTest extends TestCase
                 */
                 $returnType = $reflectorGetter->getReturnType();
 
+                if ($returnType instanceof ReflectionNamedType) {
                 static::assertTrue(
-                    ('void' !== $returnType->__toString()),
+                    ('void' !== $returnType->getName()),
                     (
                         $reflectorGetter->getNumberOfParameters() .
                         $reflectorGetter->getDeclaringClass()->getName() .
@@ -360,6 +362,7 @@ class DaftObjectImplementationTest extends TestCase
                         '() must have a non-void return type.'
                     )
                 );
+                }
 
                 if ($isNullable) {
                     static::assertTrue(
@@ -403,18 +406,20 @@ class DaftObjectImplementationTest extends TestCase
                 */
                 $returnType = $reflectorSetter->getReturnType();
 
+                if ($returnType instanceof ReflectionNamedType) {
                 static::assertSame(
                     'void',
-                    $returnType->__toString(),
+                    $returnType->getName(),
                     (
                         $reflectorSetter->getDeclaringClass()->getName() .
                         '::' .
                         $reflectorSetter->getName() .
                         '() must specify a void return type, "' .
-                        $returnType->__toString() .
+                        $returnType->getName() .
                         '" found.'
                     )
                 );
+                }
 
                 $type = ($reflectorSetter->getParameters()[0])->getType();
 
